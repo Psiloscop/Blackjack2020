@@ -1,6 +1,3 @@
-# Setting up output directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BJ2020_BIN_DIR}/tests)
-
 # Linking headers
 #include_directories(${BJ2020_TYPE_DIR})
 #include_directories(${BJ2020_SYSTEM_DIR})

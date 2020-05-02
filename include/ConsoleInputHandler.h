@@ -1,5 +1,5 @@
-#ifndef __CIN_INPUT_HANDLER_H_INCLUDED__
-#define __CIN_INPUT_HANDLER_H_INCLUDED__
+#ifndef __CONSOLE_INPUT_HANDLER_H_INCLUDED__
+#define __CONSOLE_INPUT_HANDLER_H_INCLUDED__
 
 #include <iostream>
 
@@ -10,4 +10,4 @@ class ConsoleInputHandler: public AbstractInputHandler
 
 };
 
-#endif // __CIN_INPUT_HANDLER_H_INCLUDED__
+#endif // __CONSOLE_INPUT_HANDLER_H_INCLUDED__

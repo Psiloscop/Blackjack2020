@@ -19,9 +19,9 @@ private:
 
 	AbstractInputHandler* inputHandler;
 
-	AbstractDisplayHandler* displayHandler;
+//	AbstractDisplayHandler* displayHandler;
 
-	std::map<std::string, AbstractDisplayEntity*> displayEntityList;
+//	std::map<std::string, AbstractDisplayEntity*> displayEntityList;
 
 public:
     void displayMessage(std::string messageId) const;

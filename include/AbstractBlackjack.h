@@ -3,6 +3,7 @@
 
 class Application;
 class AbstractBlackjackAction;
+class Box;
 
 #include <vector>
 
@@ -17,7 +18,7 @@ class AbstractBlackjack
 private:
 	Application* app;
 
-	std::vector<Box> boxes;
+	std::vector<Box*> boxes;
 
 	std::vector<Card*> shoe;
 

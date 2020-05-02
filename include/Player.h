@@ -2,6 +2,7 @@
 #define __PLAYER_H_INCLUDED__
 
 class Application;
+class AbstractInputValidator;
 
 #include <string>
 
@@ -16,9 +17,13 @@ private:
 
 	std::string name;
 
-	unsigned cash;
+    u32 cash;
 
 public:
+    Player(Application* app, std::string name, u32 cash)
+        : app{app}, name{name}, cash{cash}
+    {}
+
 	void increaseCash(u32 amount);
 
 	void decreaseCash(u32 amount);

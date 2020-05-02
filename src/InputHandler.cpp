@@ -1,7 +1,7 @@
-#include "ConsoleInputHandler.h"
+#include "InputHandler.h"
 
 template <typename T>
-T AbstractInputHandler::requestInput(AbstractInputValidator &validator)
+T InputHandler::requestInput(AbstractInputAdapter<T>& adapter, AbstractInputValidator& validator) const
 {
     T value = NULL;
 
@@ -15,7 +15,7 @@ T AbstractInputHandler::requestInput(AbstractInputValidator &validator)
             ? this->app->displayMessages(messages)
             : this->app->displayMessage(reqMesId);
 
-        std::cin >> value;
+        value = adapter.input();
     }
 
     return value;

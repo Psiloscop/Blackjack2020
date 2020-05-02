@@ -26,15 +26,17 @@ add_executable(BlackJack2020
         ${BJ2020_SOURCE_DIR}/AbstractDisplayHandler.cpp
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayHandler.cpp
-        ${BJ2020_INCLUDE_DIR}/AbstractInputHandler.h
-        ${BJ2020_SOURCE_DIR}/AbstractInputHandler.cpp
-        ${BJ2020_INCLUDE_DIR}/ConsoleInputHandler.h
-        ${BJ2020_SOURCE_DIR}/ConsoleInputHandler.cpp
+        ${BJ2020_INCLUDE_DIR}/AbstractInputAdapter.h
+        ${BJ2020_INCLUDE_DIR}/ConsoleInputAdapter.h
+        ${BJ2020_SOURCE_DIR}/ConsoleInputAdapter.cpp
+        ${BJ2020_INCLUDE_DIR}/InputHandler.h
+        ${BJ2020_SOURCE_DIR}/InputHandler.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractInputValidator.h
         ${BJ2020_SOURCE_DIR}/AbstractInputValidator.cpp
         ${BJ2020_INCLUDE_DIR}/Card.h
         ${BJ2020_INCLUDE_DIR}/Box.h
+        ${BJ2020_SOURCE_DIR}/Box.cpp
         ${BJ2020_INCLUDE_DIR}/Player.h
         ${BJ2020_SOURCE_DIR}/Player.cpp
         ${BJ2020_SOURCE_DIR}/Card.cpp
-        ${BJ2020_SOURCE_DIR}/main.cpp src/Box.cpp)
+        ${BJ2020_SOURCE_DIR}/main.cpp)

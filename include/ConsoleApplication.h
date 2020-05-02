@@ -11,10 +11,6 @@ template <typename T>
 class ConsoleApplication: public Application
 {
 private:
-	AbstractBlackjack* game;
-
-	AbstractInputHandler* inputHandler;
-
 	AbstractDisplayHandler<T>* displayHandler;
 
 	std::map<std::string, AbstractDisplayEntity<T>*> displayEntityList;

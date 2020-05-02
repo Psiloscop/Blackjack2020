@@ -3,8 +3,9 @@
 
 #include "Card.h"
 #include "ConsoleDisplayEntity.h"
-#include "intDisplayEntity.h"
+#include "AbstractDisplayHandler.h"
 #include "ConsoleDisplayHandler.h"
+#include "ConsoleApplication.h"
 
 int main()
 {
@@ -12,14 +13,12 @@ int main()
 //    Card* cardEx2 = new Card(3, CardSuit(1));
 //    *cardEx1 == *cardEx2;
 
-    std::string tmp = "Entity string";
-    ConsoleDisplayEntity entity(tmp);
-    ConsoleDisplayHandler handler;
-    handler.display(entity);
+//    std::string tmp = "Entity string";
+//    ConsoleDisplayEntity entity(tmp);
+//    ConsoleDisplayHandler handler;
+//    handler.display(entity);
 
-//    int tmp2 = 111;
-//    IntDisplayEntity entity2(tmp2);
-//    handler.display(entity2);
+    Application* app = new ConsoleApplication<std::string>(new ConsoleDisplayHandler());
 
     return 0;
 }

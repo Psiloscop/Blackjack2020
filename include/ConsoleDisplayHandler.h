@@ -11,7 +11,7 @@ class ConsoleDisplayHandler: public AbstractDisplayHandler<std::string>
 {
 public:
     void display(const AbstractDisplayEntity<std::string>& entity) const override;
-//    void display(const ConsoleDisplayEntity& entity) const override;
+//    void display(const ConsoleDisplayEntity& entity) const;
 };
 
 #endif // __CONSOLE_DISPLAY_HANDLER_H_INCLUDED__

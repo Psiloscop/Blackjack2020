@@ -6,6 +6,6 @@ void ConsoleDisplayHandler::display(const AbstractDisplayEntity<std::string> &en
 }
 
 //void ConsoleDisplayHandler::display(const ConsoleDisplayEntity &entity) const
-//{
-//    std::cin >> entity.getDisplayEntity();
-//}
+////{
+////    std::cout << entity.getDisplayEntity();
+////}

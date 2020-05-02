@@ -11,8 +11,6 @@ public:
     explicit AbstractDisplayEntity(T& value)
         : entity(value) {}
 
-	virtual void setDisplayEntity(T& value) const = 0;
-
 	virtual T& getDisplayEntity() const = 0;
 };
 

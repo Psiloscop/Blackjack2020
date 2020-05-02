@@ -12,8 +12,6 @@ public:
         : AbstractDisplayEntity(value)
     {}
 
-    void setDisplayEntity(std::string&) const override;
-
     std::string& getDisplayEntity() const override;
 };
 

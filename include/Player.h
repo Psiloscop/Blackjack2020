@@ -1,25 +1,25 @@
 #ifndef __PLAYER_H_INCLUDED__
 #define __PLAYER_H_INCLUDED__
 
-class Application;
+class BaseApplication;
 
 #include <string>
 
-#include "Application.h"
+#include "BaseApplication.h"
 #include "AppTypes.h"
 #include "AbstractInputValidator.h"
 
 class Player
 {
 private:
-	Application* app;
+    BaseApplication* app;
 
 	std::string name;
 
     u32 cash;
 
 public:
-    Player(Application* app, std::string name, u32 cash)
+    Player(BaseApplication* app, std::string name, u32 cash)
         : app{app}, name{name}, cash{cash}
     {}
 

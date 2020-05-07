@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 
-void InputHandler::assignApp(Application* app)
+void InputHandler::assignApp(BaseApplication* app)
 {
     this->app = app;
 }

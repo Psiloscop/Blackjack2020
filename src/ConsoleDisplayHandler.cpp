@@ -1,7 +1,6 @@
 #include "ConsoleDisplayHandler.h"
 
-template<typename T>
-void ConsoleDisplayHandler::display(const AbstractDisplayEntity<T> &)
+void ConsoleDisplayHandler::display(const ConsoleDisplayEntity& entity) const
 {
 
 }

@@ -1,9 +1,9 @@
 #ifndef __INPUT_HANDLER_H_INCLUDED__
 #define __INPUT_HANDLER_H_INCLUDED__
 
-class Application;
+class BaseApplication;
 
-#include "Application.h"
+#include "BaseApplication.h"
 #include "AbstractInputAdapter.h"
 #include "AbstractInputValidator.h"
 
@@ -12,10 +12,10 @@ class Application;
 class InputHandler
 {
 protected:
-    Application* app;
+    BaseApplication* app;
 
 public:
-    void assignApp(Application*);
+    void assignApp(BaseApplication*);
 
 	template<typename Type, template <class> typename TAbstractInputAdapter, template <class> typename TAbstractInputValidator>
     Type requestInput() const

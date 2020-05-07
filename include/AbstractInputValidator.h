@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "Application.h"
+#include "BaseApplication.h"
 
 template <typename T>
 class AbstractInputValidator

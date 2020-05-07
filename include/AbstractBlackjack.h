@@ -1,13 +1,13 @@
 #ifndef __ABSTRACT_BLACKJACK_H_INCLUDED__
 #define __ABSTRACT_BLACKJACK_H_INCLUDED__
 
-class Application;
+class BaseApplication;
 class AbstractBlackjackAction;
 class Box;
 
 #include <vector>
 
-#include "Application.h"
+#include "BaseApplication.h"
 #include "AppTypes.h"
 #include "AbstractBlackjackAction.h"
 #include "Box.h"
@@ -16,7 +16,7 @@ class Box;
 class AbstractBlackjack
 {
 private:
-	Application* app;
+    BaseApplication* app;
 
 	std::vector<Box*> boxes;
 

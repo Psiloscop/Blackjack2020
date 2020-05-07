@@ -8,7 +8,7 @@
 #include "ConsoleDisplayHandler.h"
 #include "ConsoleInputAdapter.h"
 #include "InputHandler.h"
-#include "CoreApplication.h"
+#include "Application.h"
 
 //class A
 //{
@@ -59,7 +59,7 @@ int main()
 //    handler.display(entity);
 
 //    auto* app = new CoreApplication<InputHandler, ConsoleInputAdapter, ConsoleDisplayHandler, std::string>();
-    auto* app = new CoreApplication<InputHandler, ConsoleInputAdapter, ConsoleDisplayHandler, std::string>();
+    auto* app = new Application<InputHandler, ConsoleInputAdapter, ConsoleDisplayHandler, std::string>();
     app->createPlayer();
 
 //    int val;

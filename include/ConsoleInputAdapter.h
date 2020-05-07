@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "Application.h"
+#include "BaseApplication.h"
 #include "AbstractInputAdapter.h"
 
 template <typename T>

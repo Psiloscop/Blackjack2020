@@ -1,10 +1,5 @@
 #include "Application.h"
 
-void Application::createPlayer()
-{
-
-}
-
 void Application::displayMessage(std::string messageId) const
 {
 

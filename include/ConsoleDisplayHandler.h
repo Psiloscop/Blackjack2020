@@ -7,10 +7,13 @@
 #include "AbstractDisplayHandler.h"
 #include "ConsoleDisplayEntity.h"
 
-class ConsoleDisplayHandler: public AbstractDisplayHandler<std::string>
+class ConsoleDisplayHandler: public AbstractDisplayHandler
 {
 public:
-    void display(const AbstractDisplayEntity<std::string>& entity) const override;
+    template <typename T>
+    void display(const AbstractDisplayEntity<T>&);
+
+//    void display(const AbstractDisplayEntity<std::string>& entity) const override;
 //    void display(const ConsoleDisplayEntity& entity) const;
 };
 

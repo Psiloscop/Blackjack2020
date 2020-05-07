@@ -3,11 +3,11 @@
 
 #include "AbstractDisplayEntity.h"
 
-template <typename T>
 class AbstractDisplayHandler
 {
 public:
-	virtual void display(const AbstractDisplayEntity<T>&) const = 0;
+    template <typename T>
+	void display(const AbstractDisplayEntity<T>&);
 };
 
 #endif // __ABSTRACT_DISPLAY_HANDLER_H_INCLUDED__

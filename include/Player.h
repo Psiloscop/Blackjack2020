@@ -2,7 +2,6 @@
 #define __PLAYER_H_INCLUDED__
 
 class Application;
-class AbstractInputValidator;
 
 #include <string>
 
@@ -28,8 +27,8 @@ public:
 
 	void decreaseCash(u32 amount);
 
-	template<typename T>
-	T requestInput(const AbstractInputValidator& validator);
+//	template<typename T>
+//	T requestInput(const AbstractInputValidator& validator);
 };
 
 #endif // __PLAYER_H_INCLUDED__

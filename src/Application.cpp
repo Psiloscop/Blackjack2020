@@ -1,11 +1,10 @@
 #include "Application.h"
 
-//template<typename TAbstractInputAdapter, typename TAbstractDisplayHandler, typename TDisplayEntity>
-//void CoreApplication<TAbstractInputAdapter, TAbstractDisplayHandler, TDisplayEntity>::createPlayer()
+//template<typename TInputHandler, template <class> typename TAbstractInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
+//void Application<TInputHandler, TAbstractInputAdapter, TDisplayHandler, TDisplayEntity>::createPlayer()
 //{
-//    PlayerNameInputValidator validator(*this);
-//
-//    std::string playerName = this->inputHandler->requestInput(this->inputAdapter, validator);
+//    std::string playerName = this->inputHandler
+//            .template requestInput<std::string, TAbstractInputAdapter, PlayerNameInputValidator>();
 //
 //    std::cout << playerName;
 //}

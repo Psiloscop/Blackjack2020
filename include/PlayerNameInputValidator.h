@@ -16,12 +16,12 @@ public:
 
 	std::string getErrorMessageId() override
     {
-        return "Name is incorrect";
+        return "mes_id_error_player_name_invalid";
     }
 
 	std::string getRequestMessageId() override
     {
-        return "Please enter your nickname";
+        return "mes_id_info_player_enter_name";
     }
 };
 

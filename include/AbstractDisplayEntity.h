@@ -1,17 +1,19 @@
 #ifndef __ABSTRACT_DISPLAY_ENTITY_H_INCLUDED__
 #define __ABSTRACT_DISPLAY_ENTITY_H_INCLUDED__
 
+#include "BaseDisplayEntity.h"
+
 template <typename T>
-class AbstractDisplayEntity
+class AbstractDisplayEntity: public BaseDisplayEntity
 {
 protected:
-    T& entity;
+    T entity;
 
 public:
-    explicit AbstractDisplayEntity(T& value)
+    AbstractDisplayEntity(T value)
         : entity(value) {}
 
-	virtual T& getDisplayEntity() const = 0;
+	virtual T& getDisplayEntity() = 0;
 };
 
 #endif // __ABSTRACT_DISPLAY_ENTITY_H_INCLUDED__

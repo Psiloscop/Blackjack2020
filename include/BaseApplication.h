@@ -1,18 +1,14 @@
 #ifndef __BASE_APPLICATION_H_INCLUDED__
 #define __BASE_APPLICATION_H_INCLUDED__
 
-class AbstractBlackjack;
-
-#include "AbstractBlackjack.h"
+#include <string>
+#include <vector>
 
 class BaseApplication
 {
-protected:
-    AbstractBlackjack* game;
-
 public:
-    void displayMessage(std::string messageId) const;
-    void displayMessages(std::string messageId[]) const;
+    virtual void displayMessage(std::string messageId) const = 0;
+    virtual void displayMessages(std::vector<std::string> messageIds) const = 0;
 };
 
 #endif // __BASE_APPLICATION_H_INCLUDED__

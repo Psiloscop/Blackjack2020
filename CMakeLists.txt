@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(BlackJack2020)
+project(Blackjack2020)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -10,7 +10,7 @@ include(cmake/tests.cmake)
 # Setting up output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BJ2020_BIN_DIR})
 
-add_executable(BlackJack2020
+add_executable(Blackjack2020
         ${BJ2020_INCLUDE_DIR}/BaseApplication.h
         ${BJ2020_SOURCE_DIR}/BaseApplication.cpp
         ${BJ2020_INCLUDE_DIR}/Application.h
@@ -24,6 +24,7 @@ add_executable(BlackJack2020
         ${BJ2020_SOURCE_DIR}/AbstractDisplayHandler.cpp
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayHandler.cpp
+        ${BJ2020_INCLUDE_DIR}/BaseDisplayEntity.h
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayEntity.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayEntity.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayEntity.cpp

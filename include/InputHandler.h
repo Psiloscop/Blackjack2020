@@ -27,7 +27,7 @@ public:
 
         std::string errMesId = validator->getErrorMessageId();
         std::string reqMesId = validator->getRequestMessageId();
-        std::string messages[] = {errMesId, reqMesId};
+        std::vector<std::string> messageIds = {errMesId, reqMesId};
 
         this->app->displayMessage(reqMesId);
 
@@ -36,7 +36,7 @@ public:
         while (!validator->validateValue(value))
         {
             value != prevVal
-                ? this->app->displayMessages(messages)
+                ? this->app->displayMessages(messageIds)
                 : this->app->displayMessage(reqMesId);
 
             prevVal = value;

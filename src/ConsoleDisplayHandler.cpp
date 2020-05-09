@@ -1,43 +1,39 @@
 #include "ConsoleDisplayHandler.h"
 
-void ConsoleDisplayHandler::clearConsole()
+void ConsoleDisplayHandler::clearConsole() const
 {
-    system("cls"); // For Windows OS only
+//    std::cout << std::string(50, '\n');
 }
 
 void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity) const
 {
     this->clearConsole();
 
-    std::cout << entity->getDisplayEntity();
+    std::string cache = entity->getDisplayEntity();
 
     if (entity->hasEndLine())
     {
-        std::cout << std::endl;
+        cache += "\n";
     }
+
+    std::cout << cache << std::flush;
 }
 
 void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities) const
 {
     this->clearConsole();
 
+    std::string cache;
+
     for (auto const& entity: entities)
     {
-        std::cout << entity->getDisplayEntity();
+        cache += entity->getDisplayEntity();
 
         if (entity->hasEndLine())
         {
-            std::cout << std::endl;
+            cache += "\n";
         }
     }
+
+    std::cout << cache << std::flush;
 }
-
-//void ConsoleDisplayHandler::display(const AbstractDisplayEntity<std::string> &entity) const
-//{
-//    std::cout << entity.getDisplayEntity();
-//}
-
-//void ConsoleDisplayHandler::display(const ConsoleDisplayEntity &entity) const
-////{
-////    std::cout << entity.getDisplayEntity();
-////}

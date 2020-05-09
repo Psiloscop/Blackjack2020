@@ -38,7 +38,7 @@ add_executable(Blackjack2020
         ${BJ2020_INCLUDE_DIR}/AbstractInputValidator.h
         ${BJ2020_SOURCE_DIR}/AbstractInputValidator.cpp
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h
-        ${BJ2020_SOURCE_DIR}/PlayerNameInputValidator.cpp
+        ${BJ2020_INCLUDE_DIR}/PlayerStartCashInputValidator.h
         ${BJ2020_INCLUDE_DIR}/Card.h
         ${BJ2020_INCLUDE_DIR}/Box.h
         ${BJ2020_SOURCE_DIR}/Box.cpp

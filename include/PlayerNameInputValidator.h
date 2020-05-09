@@ -5,11 +5,10 @@
 
 #include "AbstractInputValidator.h"
 
-template <typename T>
-class PlayerNameInputValidator: public AbstractInputValidator<T>
+class PlayerNameInputValidator: public AbstractInputValidator<std::string>
 {
 public:
-	bool validateValue(const T& value) override
+	bool validateValue(const std::string& value) override
     {
         return true;
     }

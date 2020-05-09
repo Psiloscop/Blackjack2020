@@ -17,9 +17,10 @@ class AbstractBlackjack;
 #include "AbstractInputAdapter.h"
 #include "ConsoleDisplayHandler.h"
 #include "PlayerNameInputValidator.h"
+#include "PlayerStartCashInputValidator.h"
 #include "InputHandler.h"
 
-template <typename TInputHandler, template <class> typename TAbstractInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
+template <typename TInputHandler, template <class> typename TInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
 class Application: public BaseApplication
 {
 protected:
@@ -39,7 +40,7 @@ public:
         // Compile-time check for template types
         static_assert(std::is_base_of<InputHandler, TInputHandler>::value,
                 "Type parameter of this class must be InputHandler");
-        static_assert(std::is_base_of<BaseInputAdapter, TAbstractInputAdapter<void>>::value,
+        static_assert(std::is_base_of<BaseInputAdapter, TInputAdapter<void>>::value,
                 "Type parameter of this class must derive from AbstractInputAdapter");
         static_assert(std::is_base_of<BaseDisplayHandler, TDisplayHandler>::value,
                 "Type parameter of this class must derive from AbstractDisplayHandler");
@@ -70,13 +71,19 @@ public:
 
         this->displayHandler.displayBatch(entities);
     }
+    
+    template <typename TType, typename TInputValidator>
+    TType requestInput()
+    {
+        return this->inputHandler.template requestInput<TType, TInputAdapter, TInputValidator>();
+    }
 
     void createPlayer()
     {
-        std::string playerName = this->inputHandler
-                .template requestInput<std::string, TAbstractInputAdapter, PlayerNameInputValidator>();
+        std::string playerName = this->requestInput<std::string, PlayerNameInputValidator>();
+        u32 playerCash = this->requestInput<u32, PlayerStartCashInputValidator>();
 
-        std::cout << playerName;
+
     }
 };
 

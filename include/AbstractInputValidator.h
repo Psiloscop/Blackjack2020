@@ -4,6 +4,7 @@
 #include <string>
 
 #include "BaseApplication.h"
+#include "AppTypes.h"
 
 template <typename T>
 class AbstractInputValidator

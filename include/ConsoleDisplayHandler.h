@@ -10,14 +10,11 @@
 class ConsoleDisplayHandler: public AbstractDisplayHandler<ConsoleDisplayEntity>
 {
 protected:
-    static void clearConsole();
+    void clearConsole() const;
 
 public:
     void display(ConsoleDisplayEntity*) const override;
     void displayBatch(std::vector<ConsoleDisplayEntity*>) const override;
-
-//    void display(const AbstractDisplayEntity<std::string>& entity) const override;
-//    void display(const ConsoleDisplayEntity& entity) const;
 };
 
 #endif // __CONSOLE_DISPLAY_HANDLER_H_INCLUDED__

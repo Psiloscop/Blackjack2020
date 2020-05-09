@@ -3,6 +3,8 @@
 
 class BaseApplication;
 
+#include <iostream>
+
 #include "BaseApplication.h"
 #include "AbstractInputAdapter.h"
 #include "AbstractInputValidator.h"
@@ -17,31 +19,27 @@ protected:
 public:
     void assignApp(BaseApplication*);
 
-	template<typename Type, template <class> typename TAbstractInputAdapter, template <class> typename TAbstractInputValidator>
+	template<typename Type, template <class> typename TInputAdapter, typename TInputValidator>
     Type requestInput() const
     {
-        Type value, prevVal = "";
+        Type value;
 
-        auto* adapter = new TAbstractInputAdapter<Type>;
-        auto* validator = new TAbstractInputValidator<Type>;
+        TInputAdapter<Type> adapter;
+        TInputValidator validator;
 
-        std::string errMesId = validator->getErrorMessageId();
-        std::string reqMesId = validator->getRequestMessageId();
+        std::string errMesId = validator.getErrorMessageId();
+        std::string reqMesId = validator.getRequestMessageId();
         std::vector<std::string> messageIds = {errMesId, reqMesId};
 
         this->app->displayMessage(reqMesId);
 
-        value = adapter->input();
+        value = adapter.input();
 
-        while (!validator->validateValue(value))
+        while (!validator.validateValue(value))
         {
-            value != prevVal
-                ? this->app->displayMessages(messageIds)
-                : this->app->displayMessage(reqMesId);
+            this->app->displayMessages(messageIds);
 
-            prevVal = value;
-
-            value = adapter->input();
+            value = adapter.input();
         }
 
         return value;

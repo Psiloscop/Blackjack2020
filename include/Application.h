@@ -32,7 +32,7 @@ protected:
 
 	std::map<std::string, TDisplayEntity*> displayEntityList;
 
-    std::vector<Player*> players;
+    std::vector<Player> players;
 
 public:
     Application(): BaseApplication()
@@ -83,7 +83,9 @@ public:
         std::string playerName = this->requestInput<std::string, PlayerNameInputValidator>();
         u32 playerCash = this->requestInput<u32, PlayerStartCashInputValidator>();
 
+        Player player(this, playerName, playerCash);
 
+        this->players.push_back(std::move(player));
     }
 };
 

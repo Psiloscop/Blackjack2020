@@ -11,7 +11,7 @@ class BaseApplication;
 
 class Player
 {
-private:
+public:
     BaseApplication* app;
 
 	std::string name;

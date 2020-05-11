@@ -1,5 +1,5 @@
-#ifndef C_ARRAY_UNIT_TEST_CPP_INCLUDED
-#define C_ARRAY_UNIT_TEST_CPP_INCLUDED
+#ifndef __ABSTRACT_BLACKJACK_UNIT_TEST_CPP_INCLUDED__
+#define __ABSTRACT_BLACKJACK_UNIT_TEST_CPP_INCLUDED__
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -80,5 +80,4 @@ TEST(AbstractBlackjack, shuffleShoe)
     ASSERT_TRUE(*cardEx1 != *card1 || *cardEx2 != *card2 || *cardEx3 != *card3);
 }
 
-
-#endif
+#endif // __ABSTRACT_BLACKJACK_UNIT_TEST_CPP_INCLUDED__

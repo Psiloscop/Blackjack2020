@@ -1,7 +1,7 @@
 #ifndef __APPLICATION_H_INCLUDED__
 #define __APPLICATION_H_INCLUDED__
 
-class Player;
+//class Player;
 class AbstractBlackjack;
 
 #include <map>
@@ -21,7 +21,8 @@ class AbstractBlackjack;
 #include "InputHandler.h"
 
 template <typename TInputHandler, template <class> typename TInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
-class Application: public BaseApplication
+class Application
+        : public BaseApplication
 {
 protected:
     AbstractBlackjack* game;
@@ -35,7 +36,8 @@ protected:
     std::vector<Player> players;
 
 public:
-    Application(): BaseApplication()
+    Application()
+    : BaseApplication()
     {
         // Compile-time check for template types
         static_assert(std::is_base_of<InputHandler, TInputHandler>::value,
@@ -55,12 +57,12 @@ public:
         this->displayEntityList.insert(std::pair<std::string, TDisplayEntity*>(key, entity));
     }
 
-    void displayMessage(std::string messageId) const override
+    void displayMessage(std::string messageId) const
     {
         this->displayHandler.display(this->displayEntityList.at(messageId));
     }
 
-    void displayMessages(std::vector<std::string> messageIds) const override
+    void displayMessages(std::vector<std::string> messageIds) const
     {
         std::vector<TDisplayEntity*> entities;
 
@@ -78,15 +80,38 @@ public:
         return this->inputHandler.template requestInput<TType, TInputAdapter, TInputValidator>();
     }
 
-    void createPlayer()
+    void requestInputToCreatePlayer()
     {
         std::string playerName = this->requestInput<std::string, PlayerNameInputValidator>();
         u32 playerCash = this->requestInput<u32, PlayerStartCashInputValidator>();
 
+        this->createPlayer(playerName, playerCash);
+    }
+
+    void createPlayer(const std::string& playerName, u32 playerCash)
+    {
         Player player(this, playerName, playerCash);
 
         this->players.push_back(std::move(player));
     }
+
+    Player& getPlayer(u8 index)
+    {
+        if (index >= this->players.size())
+        {
+            throw std::out_of_range("Application::getPlayer(index) - index is out of range");
+        }
+
+        return this->players[index];
+    }
 };
+
+//#include "Application.h"
+//#include "InputHandler.h"
+//#include "ConsoleInputAdapter.h"
+//#include "ConsoleDisplayHandler.h"
+//#include "ConsoleDisplayEntity.h"
+//
+//using TApplication = Application<InputHandler, ConsoleInputAdapter, ConsoleDisplayHandler, ConsoleDisplayEntity>;
 
 #endif // __APPLICATION_H_INCLUDED__

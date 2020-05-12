@@ -1,13 +1,8 @@
-#ifndef __ABSTRACT_BLACKJACK_H_INCLUDED__
-#define __ABSTRACT_BLACKJACK_H_INCLUDED__
-
-class BaseApplication;
-class AbstractBlackjackAction;
-class Box;
+#pragma once
 
 #include <vector>
 
-#include "BaseApplication.h"
+#include "Application.h"
 #include "AppTypes.h"
 #include "AbstractBlackjackAction.h"
 #include "Box.h"
@@ -16,18 +11,16 @@ class Box;
 class AbstractBlackjack
 {
 private:
-    BaseApplication* app;
+    Application* app;
 
-	std::vector<Box*> boxes;
+    std::vector<Box> boxes;
 
-	std::vector<Card*> shoe;
+    std::vector<Card> shoe;
 
-	std::vector<AbstractBlackjackAction> actions;
+    std::vector<AbstractBlackjackAction> actions;
 
 public:
-    virtual std::vector<Card*>& createShoe(u8 deckCount);
+    virtual std::vector<Card>& createShoe(u8 deckCount);
 
-    std::vector<Card*>& shuffleShoe();
+    std::vector<Card>& shuffleShoe();
 };
-
-#endif // __ABSTRACT_BLACKJACK_H_INCLUDED__

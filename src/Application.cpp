@@ -1,4 +1,4 @@
-#include "Application.h"
+//#include "Application.h"
 
 //template<typename TInputHandler, template <class> typename TAbstractInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
 //void Application<TInputHandler, TAbstractInputAdapter, TDisplayHandler, TDisplayEntity>::createPlayer()

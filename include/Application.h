@@ -1,60 +1,39 @@
-#ifndef __APPLICATION_H_INCLUDED__
-#define __APPLICATION_H_INCLUDED__
+#pragma once
 
-//class Player;
 class AbstractBlackjack;
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "AbstractBlackjack.h"
-#include "BaseApplication.h"
-#include "BaseDisplayHandler.h"
-#include "BaseDisplayEntity.h"
-#include "AbstractDisplayHandler.h"
-#include "AbstractDisplayEntity.h"
-#include "AbstractInputAdapter.h"
-#include "ConsoleDisplayHandler.h"
+#include "Player.h"
 #include "PlayerNameInputValidator.h"
 #include "PlayerStartCashInputValidator.h"
-#include "InputHandler.h"
+#include "AppAliases.h"
 
-template <typename TInputHandler, template <class> typename TInputAdapter, typename TDisplayHandler, typename TDisplayEntity>
 class Application
-        : public BaseApplication
 {
 protected:
     AbstractBlackjack* game;
 
-    TInputHandler inputHandler;
+    AInputHandler inputHandler;
 
-    TDisplayHandler displayHandler;
+    ADisplayHandler displayHandler;
 
-	std::map<std::string, TDisplayEntity*> displayEntityList;
+    std::map<std::string, ADisplayEntity*> displayEntityList;
 
     std::vector<Player> players;
 
 public:
-    Application()
-    : BaseApplication()
+    Application(AInputHandler& inputHandler, ADisplayHandler& displayHandler)
+            : inputHandler{inputHandler}, displayHandler{displayHandler}
     {
-        // Compile-time check for template types
-        static_assert(std::is_base_of<InputHandler, TInputHandler>::value,
-                "Type parameter of this class must be InputHandler");
-        static_assert(std::is_base_of<BaseInputAdapter, TInputAdapter<void>>::value,
-                "Type parameter of this class must derive from AbstractInputAdapter");
-        static_assert(std::is_base_of<BaseDisplayHandler, TDisplayHandler>::value,
-                "Type parameter of this class must derive from AbstractDisplayHandler");
-        static_assert(std::is_base_of<BaseDisplayEntity, TDisplayEntity>::value,
-                      "Type parameter of this class must derive from AbstractDisplayEntity");
-
         this->inputHandler.assignApp(this);
     }
 
-    void addMessageEntity(const std::string& key, TDisplayEntity* entity)
+    void addMessageEntity(const std::string& key, ADisplayEntity* entity)
     {
-        this->displayEntityList.insert(std::pair<std::string, TDisplayEntity*>(key, entity));
+        this->displayEntityList.insert(std::pair<std::string, ADisplayEntity*>(key, entity));
     }
 
     void displayMessage(std::string messageId) const
@@ -64,7 +43,7 @@ public:
 
     void displayMessages(std::vector<std::string> messageIds) const
     {
-        std::vector<TDisplayEntity*> entities;
+        std::vector<ADisplayEntity*> entities;
 
         for (auto const& messageId: messageIds)
         {
@@ -73,11 +52,11 @@ public:
 
         this->displayHandler.displayBatch(entities);
     }
-    
+
     template <typename TType, typename TInputValidator>
     TType requestInput()
     {
-        return this->inputHandler.template requestInput<TType, TInputAdapter, TInputValidator>();
+        return this->inputHandler.template requestInput<TType, TInputValidator>();
     }
 
     void requestInputToCreatePlayer()
@@ -105,13 +84,3 @@ public:
         return this->players[index];
     }
 };
-
-//#include "Application.h"
-//#include "InputHandler.h"
-//#include "ConsoleInputAdapter.h"
-//#include "ConsoleDisplayHandler.h"
-//#include "ConsoleDisplayEntity.h"
-//
-//using TApplication = Application<InputHandler, ConsoleInputAdapter, ConsoleDisplayHandler, ConsoleDisplayEntity>;
-
-#endif // __APPLICATION_H_INCLUDED__

@@ -1,5 +1,4 @@
-#ifndef __CONSOLE_DISPLAY_ENTITY_H_INCLUDED__
-#define __CONSOLE_DISPLAY_ENTITY_H_INCLUDED__
+#pragma once
 
 #include <string>
 #include <utility>
@@ -20,5 +19,3 @@ public:
 
     bool hasEndLine() const;
 };
-
-#endif // __CONSOLE_DISPLAY_ENTITY_H_INCLUDED__

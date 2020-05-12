@@ -1,15 +1,10 @@
-#ifndef __ABSTRACT_INPUT_ADAPTER_H_INCLUDED__
-#define __ABSTRACT_INPUT_ADAPTER_H_INCLUDED__
+#pragma once
 
-#include "BaseApplication.h"
-#include "BaseInputAdapter.h"
 #include "AbstractInputValidator.h"
 
 template <typename T>
-class AbstractInputAdapter: public BaseInputAdapter
+class AbstractInputAdapter
 {
 public:
     virtual T input() const = 0;
 };
-
-#endif // __ABSTRACT_INPUT_ADAPTER_H_INCLUDED__

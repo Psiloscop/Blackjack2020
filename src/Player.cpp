@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Application.h"
 
 void Player::increaseCash(u32 amount)
 {
@@ -20,9 +21,8 @@ u32 Player::getCash() const
     return this->cash;
 }
 
-//
-//template<typename T>
-//T Player::requestInput(const AbstractInputValidator& validator)
-//{
-//    this->app;
-//}
+template <typename TType, typename TInputValidator>
+TType Player::requestInput()
+{
+    return this->app->requestInput<TType, TInputValidator>();
+}

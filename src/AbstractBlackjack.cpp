@@ -4,7 +4,7 @@
 #include "AppTypes.h"
 #include "AbstractBlackjack.h"
 
-std::vector<Card*>& AbstractBlackjack::createShoe(u8 deckCount)
+std::vector<Card>& AbstractBlackjack::createShoe(u8 deckCount)
 {
 	while (deckCount > 0)
 	{
@@ -12,7 +12,9 @@ std::vector<Card*>& AbstractBlackjack::createShoe(u8 deckCount)
 		{
 			for (u8 cardNumber = 2; cardNumber <= 14; cardNumber++)
 			{
-				this->shoe.push_back(new Card(cardNumber, CardSuit(suitNumber)));
+			    Card card(cardNumber, CardSuit(suitNumber));
+
+				this->shoe.push_back(std::move(card));
 			}
 		}
 
@@ -22,7 +24,7 @@ std::vector<Card*>& AbstractBlackjack::createShoe(u8 deckCount)
 	return this->shoe;
 }
 
-std::vector<Card*>& AbstractBlackjack::shuffleShoe()
+std::vector<Card>& AbstractBlackjack::shuffleShoe()
 {
 //    auto rng = std::default_random_engine(std::random_device{}());
 //    std::shuffle(std::begin(this->shoe), std::end(this->shoe), rng);

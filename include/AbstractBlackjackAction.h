@@ -1,11 +1,8 @@
-#ifndef __ABSTRACT_BLACKJACK_ACTION_H_INCLUDED__
-#define __ABSTRACT_BLACKJACK_ACTION_H_INCLUDED__
+#pragma once
 
 class AbstractBlackjack;
 
 #include <string>
-
-#include "AbstractBlackjack.h"
 
 class AbstractBlackjackAction
 {
@@ -17,5 +14,3 @@ public:
 
 	virtual bool execute() = 0;
 };
-
-#endif // __ABSTRACT_BLACKJACK_ACTION_H_INCLUDED__

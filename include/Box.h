@@ -1,7 +1,6 @@
-#ifndef __BOX_H_INCLUDED__
-#define __BOX_H_INCLUDED__
+#pragma once
 
-class Player;
+//class Player;
 
 #include <vector>
 
@@ -23,5 +22,3 @@ public:
 
     void giveCard(Card*);
 };
-
-#endif // __BOX_H_INCLUDED__

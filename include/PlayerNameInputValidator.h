@@ -1,5 +1,4 @@
-#ifndef __PLAYER_NAME_INPUT_VALIDATOR_H_INCLUDED__
-#define __PLAYER_NAME_INPUT_VALIDATOR_H_INCLUDED__
+#pragma once
 
 #include <string>
 
@@ -23,5 +22,3 @@ public:
         return "mes_id_info_player_enter_name";
     }
 };
-
-#endif // __PLAYER_NAME_INPUT_VALIDATOR_H_INCLUDED__

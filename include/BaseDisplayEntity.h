@@ -1,8 +1,0 @@
-#ifndef __BASE_DISPLAY_ENTITY_H_INCLUDED__
-#define __BASE_DISPLAY_ENTITY_H_INCLUDED__
-
-class BaseDisplayEntity
-{
-};
-
-#endif // __BASE_DISPLAY_ENTITY_H_INCLUDED__

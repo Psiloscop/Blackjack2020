@@ -1,5 +1,4 @@
-#ifndef __CARD_H_INCLUDED__
-#define __CARD_H_INCLUDED__
+#pragma once
 
 #include <string>
 
@@ -41,5 +40,3 @@ public:
 
 	u8 getCardSuit();
 };
-
-#endif // __CARD_H_INCLUDED__

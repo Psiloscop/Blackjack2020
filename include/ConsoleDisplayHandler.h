@@ -1,5 +1,4 @@
-#ifndef __CONSOLE_DISPLAY_HANDLER_H_INCLUDED__
-#define __CONSOLE_DISPLAY_HANDLER_H_INCLUDED__
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -16,5 +15,3 @@ public:
     void display(ConsoleDisplayEntity*) const override;
     void displayBatch(std::vector<ConsoleDisplayEntity*>) const override;
 };
-
-#endif // __CONSOLE_DISPLAY_HANDLER_H_INCLUDED__

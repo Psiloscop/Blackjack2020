@@ -1,5 +1,4 @@
-#ifndef __APP_TYPES_H_INCLUDED__
-#define __APP_TYPES_H_INCLUDED__
+#pragma once
 
 //! 8 bit unsigned variable.
 /** This is a typedef for unsigned char. */
@@ -44,5 +43,3 @@ typedef float f32;
 //! 64 bit floating point variable.
 /** This is a typedef for double. */
 typedef double f64;
-
-#endif // __APP_TYPES_H_INCLUDED__

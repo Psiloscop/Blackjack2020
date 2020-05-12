@@ -1,10 +1,8 @@
-#ifndef __CONSOLE_INPUT_ADAPTER_H_INCLUDED__
-#define __CONSOLE_INPUT_ADAPTER_H_INCLUDED__
+#pragma once
 
 #include <iostream>
 #include <algorithm>
 
-#include "BaseApplication.h"
 #include "AbstractInputAdapter.h"
 
 template <typename T>
@@ -26,5 +24,3 @@ public:
         return value;
     };
 };
-
-#endif // __CONSOLE_INPUT_ADAPTER_H_INCLUDED__

@@ -8,7 +8,7 @@
 #include <string>
 
 #include "Application.h"
-#include "InputHandler.h"
+#include "ConsoleInputHandler.h"
 #include "AbstractInputAdapter.h"
 #include "AbstractDisplayEntity.h"
 #include "Player.h"

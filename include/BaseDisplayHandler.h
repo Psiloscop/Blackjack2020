@@ -1,8 +1,0 @@
-#ifndef __BASE_DISPLAY_HANDLER_H_INCLUDED__
-#define __BASE_DISPLAY_HANDLER_H_INCLUDED__
-
-class BaseDisplayHandler
-{
-};
-
-#endif // __BASE_DISPLAY_HANDLER_H_INCLUDED__

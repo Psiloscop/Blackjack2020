@@ -1,9 +1,7 @@
-#ifndef __ABSTRACT_INPUT_VALIDATOR_H_INCLUDED__
-#define __ABSTRACT_INPUT_VALIDATOR_H_INCLUDED__
+#pragma once
 
 #include <string>
 
-#include "BaseApplication.h"
 #include "AppTypes.h"
 
 template <typename T>
@@ -16,5 +14,3 @@ public:
 
 	virtual std::string getRequestMessageId() = 0;
 };
-
-#endif // __ABSTRACT_INPUT_VALIDATOR_H_INCLUDED__

@@ -22,7 +22,6 @@ TEST(ApplicationUnitTest, createPlayer)
 {
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
-
     Application app(inputHandler, displayHandler);
 
     std:: string playerName1 = "Test1";

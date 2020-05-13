@@ -1,11 +1,21 @@
 #include "Box.h"
 
-void Box::assignPlayer(Player* pPlayer)
+Box::Box(Player& player)
+    : player(player)
+{}
+
+void Box::assignPlayer(Player& _player)
 {
-    this->player = pPlayer;
+    this->player = _player;
 }
 
-void Box::giveCard(Card* card)
+Player& Box::getPlayer()
+{
+    return this->player;
+}
+
+
+void Box::giveCard(Card& card)
 {
     this->cards.push_back(card);
 }

@@ -35,3 +35,19 @@ std::vector<Card>& AbstractBlackjack::shuffleShoe()
 
     return this->shoe;
 }
+
+std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u8 boxCount)
+{
+    u8 playerCount = players.size();
+
+    for (u8 boxNumber = 1, playerIndex = 0;
+            boxNumber <= boxCount && boxNumber <= playerCount;
+            boxNumber++, playerIndex++)
+    {
+        Box box(players[playerIndex]);
+
+        this->boxes.push_back(box);
+    }
+
+    return this->boxes;
+}

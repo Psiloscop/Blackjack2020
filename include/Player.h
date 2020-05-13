@@ -30,10 +30,4 @@ public:
 
     template <typename TType, typename TInputValidator>
     TType requestInput();
-
-//    template <typename TType, typename TInputValidator>
-//    TType requestInput()
-//    {
-//        return this->app->requestInput<TType, TInputValidator>();
-//    }
 };

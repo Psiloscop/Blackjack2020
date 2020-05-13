@@ -2,11 +2,13 @@
 
 #include <vector>
 
-#include "Application.h"
 #include "AppTypes.h"
 #include "AbstractBlackjackAction.h"
 #include "Box.h"
 #include "Card.h"
+#include "Player.h"
+
+class Application;
 
 class AbstractBlackjack
 {
@@ -23,4 +25,6 @@ public:
     virtual std::vector<Card>& createShoe(u8 deckCount);
 
     std::vector<Card>& shuffleShoe();
+
+    virtual std::vector<Box>& createBoxes(std::vector<Player>& players, u8 boxCount);
 };

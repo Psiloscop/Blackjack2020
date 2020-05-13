@@ -84,4 +84,9 @@ public:
 
         return this->players[index];
     }
+
+    std::vector<Player>& getPlayers()
+    {
+        return this->players;
+    }
 };

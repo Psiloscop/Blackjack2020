@@ -1,7 +1,5 @@
 #pragma once
 
-//class Player;
-
 #include <vector>
 
 #include "Player.h"
@@ -10,15 +8,20 @@
 class Box
 {
 private:
-	Player* player;
+    Player& player;
 
-	std::vector<Card*> cards;
+	std::vector<Card> cards;
 
 	unsigned short int activeHand = 1;
 
 public:
+    Box(Player& player);
 
-    void assignPlayer(Player*);
+    void assignPlayer(Player&);
 
-    void giveCard(Card*);
+    Player& getPlayer();
+
+    void giveCard(Card&);
+
+    Box();
 };

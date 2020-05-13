@@ -1,16 +1,26 @@
 cmake_minimum_required(VERSION 3.5)
-project(Blackjack2020)
-
 set(CMAKE_CXX_STANDARD 17)
 
+set(BJ2020_PROJECT_NAME Blackjack2020)
+project(${BJ2020_PROJECT_NAME})
+
+# Include cmake configs
 include(cmake/main.cmake)
 include(cmake/libs.cmake)
 include(cmake/tests.cmake)
 
+# Setting up macro var for test build
+if (CMAKE_BUILD_TYPE MATCHES Test)
+    add_compile_definitions(BJ2020_TEST_MODE=TRUE)
+endif()
+
 # Setting up output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BJ2020_BIN_DIR})
 
-add_executable(Blackjack2020
+# Linking headers
+include_directories(${BJ2020_INCLUDE_DIR})
+
+add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/Application.h
         ${BJ2020_SOURCE_DIR}/Application.cpp
         ${BJ2020_INCLUDE_DIR}/AppTypes.h
@@ -19,15 +29,20 @@ add_executable(Blackjack2020
         ${BJ2020_SOURCE_DIR}/AbstractBlackjack.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjackAction.h
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayHandler.h
+        ${BJ2020_INCLUDE_DIR}/MockDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayHandler.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayEntity.h
+        ${BJ2020_INCLUDE_DIR}/MockDisplayEntity.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayEntity.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayEntity.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractInputAdapter.h
+        ${BJ2020_INCLUDE_DIR}/MockInputAdapter.h
         ${BJ2020_INCLUDE_DIR}/ConsoleInputAdapter.h
         ${BJ2020_SOURCE_DIR}/ConsoleInputAdapter.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractInputHandler.h
+        ${BJ2020_INCLUDE_DIR}/MockInputHandler.h
+        ${BJ2020_INCLUDE_DIR}/ConsoleInputHandler.h
         ${BJ2020_INCLUDE_DIR}/AbstractInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerStartCashInputValidator.h

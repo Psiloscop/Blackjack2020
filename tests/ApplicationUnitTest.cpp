@@ -8,40 +8,10 @@
 #include <string>
 
 #include "Application.h"
-#include "ConsoleInputHandler.h"
-#include "AbstractInputAdapter.h"
-#include "AbstractDisplayEntity.h"
 #include "Player.h"
 
-template <typename T>
-class MockInputAdapter: public AbstractInputAdapter<T>
-{
-public:
-    T input() const
-    {
-        return T();
-    }
-};
-
-class MockDisplayEntity: public AbstractDisplayEntity<std::string>
-{
-public:
-    std::string& getDisplayEntity() override
-    {
-    }
-};
-
-class MockDisplayHandler: public AbstractDisplayHandler<MockDisplayEntity>
-{
-public:
-    void display(MockDisplayEntity*) const override
-    {
-    }
-
-    void displayBatch(std::vector<MockDisplayEntity*>) const override
-    {
-    }
-};
+#include "MockDisplayHandler.h"
+#include "MockInputHandler.h"
 
 /**
  * Player creation test
@@ -50,7 +20,10 @@ public:
  */
 TEST(ApplicationUnitTest, createPlayer)
 {
-    Application<InputHandler, MockInputAdapter, MockDisplayHandler, MockDisplayEntity> app;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+
+    Application app(inputHandler, displayHandler);
 
     std:: string playerName1 = "Test1";
     u32 playerCash1 = 500;

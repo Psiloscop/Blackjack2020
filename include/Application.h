@@ -9,6 +9,7 @@ class AbstractBlackjack;
 #include "Player.h"
 #include "PlayerNameInputValidator.h"
 #include "PlayerStartCashInputValidator.h"
+
 #include "AppAliases.h"
 
 class Application

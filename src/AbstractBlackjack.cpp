@@ -14,7 +14,7 @@ std::vector<Card>& AbstractBlackjack::createShoe(u8 deckCount)
 			{
 			    Card card(cardNumber, CardSuit(suitNumber));
 
-				this->shoe.push_back(std::move(card));
+				this->shoe.push_back(card);
 			}
 		}
 

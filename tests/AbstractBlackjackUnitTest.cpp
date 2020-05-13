@@ -9,10 +9,10 @@
 #include "Card.h"
 
 MATCHER(CardEq, "") {
-    Card* card1 = std::get<0>(arg);
-    Card* card2 = std::get<1>(arg);
+    Card card1 = std::get<0>(arg);
+    Card card2 = std::get<1>(arg);
 
-    return *card1 == *card2;
+    return card1 == card2;
 }
 
 /**
@@ -28,7 +28,7 @@ TEST(AbstractBlackjack, createShoe)
     // Make sure that size of created shoe is equal to count of 2 * 52
     EXPECT_EQ(shoe.size(), 52 * 2);
 
-    std::vector<Card*> cards;
+    std::vector<Card> cards;
 
     for (u8 deckNumber = 1; deckNumber <= deckCount; deckNumber++)
     {
@@ -36,7 +36,9 @@ TEST(AbstractBlackjack, createShoe)
         {
             for (u8 cardNumber = 2; cardNumber <= 14; cardNumber++)
             {
-                cards.push_back(new Card(cardNumber, CardSuit(suitNumber)));
+                Card card(cardNumber, CardSuit(suitNumber));
+
+                cards.push_back(card);
             }
         }
     }
@@ -57,18 +59,18 @@ TEST(AbstractBlackjack, shuffleShoe)
 
     auto& shoe = abstractBlackjack->createShoe(deckCount);
 
-    Card* cardEx1 = new Card(2, CardSuit(1));
-    Card* cardEx2 = new Card(3, CardSuit(1));
-    Card* cardEx3 = new Card(4, CardSuit(1));
+    Card cardEx1(2, CardSuit(1));
+    Card cardEx2(3, CardSuit(1));
+    Card cardEx3(4, CardSuit(1));
 
-    Card* card1 = shoe[0];
-    Card* card2 = shoe[1];
-    Card* card3 = shoe[2];
+    Card& card1 = shoe[0];
+    Card& card2 = shoe[1];
+    Card& card3 = shoe[2];
 
     // Check if cards are in their expected positions
-    ASSERT_TRUE(*cardEx1 == *card1);
-    ASSERT_TRUE(*cardEx2 == *card2);
-    ASSERT_TRUE(*cardEx3 == *card3);
+    ASSERT_TRUE(cardEx1 == card1);
+    ASSERT_TRUE(cardEx2 == card2);
+    ASSERT_TRUE(cardEx3 == card3);
 
     abstractBlackjack->shuffleShoe();
 
@@ -77,7 +79,7 @@ TEST(AbstractBlackjack, shuffleShoe)
     card3 = shoe[2];
 
     // Check if at least one card changed its position after shuffling
-    ASSERT_TRUE(*cardEx1 != *card1 || *cardEx2 != *card2 || *cardEx3 != *card3);
+    ASSERT_TRUE(cardEx1 != card1 || cardEx2 != card2 || cardEx3 != card3);
 }
 
 #endif // __ABSTRACT_BLACKJACK_UNIT_TEST_CPP_INCLUDED__

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AbstractInputHandler.h"
+#include "TemplateInputHandler.h"
 #include "MockInputAdapter.h"
 
-class MockInputHandler: public AbstractInputHandler<MockInputAdapter>
+class MockInputHandler: public TemplateInputHandler<MockInputAdapter>
 {
 };

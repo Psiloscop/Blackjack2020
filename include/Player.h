@@ -3,7 +3,7 @@
 #include <string>
 
 #include "AppTypes.h"
-#include "TemplateInputValidator.h"
+#include "AbstractInputValidator.h"
 
 class Application;
 
@@ -29,6 +29,5 @@ public:
 
     u32 getCash() const;
 
-    template <typename TType>
-    TType requestInput(AbstractInputValidator*);
+    u32 requestBet() const;
 };

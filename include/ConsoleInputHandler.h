@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 
-#include "AbstractInputHandler.h"
+#include "TemplateInputHandler.h"
 #include "ConsoleInputAdapter.h"
 
-class ConsoleInputHandler: public AbstractInputHandler<ConsoleInputAdapter>
+class ConsoleInputHandler: public TemplateInputHandler<ConsoleInputAdapter>
 {
 };

@@ -7,7 +7,7 @@
 class Application;
 
 template <template <class> typename TInputAdapter>
-class AbstractInputHandler
+class TemplateInputHandler
 {
 protected:
     Application* app;
@@ -19,11 +19,11 @@ public:
     }
 
 	template<typename TType>
-    TType requestInput(AbstractInputValidator* validator) const
+    TType requestInput(AbstractInputValidator& validator) const
     {
         TType value;
         TInputAdapter<TType> adapter;
-        auto& castedValidator = dynamic_cast<TemplateInputValidator<TType>&>(*validator);
+        auto& castedValidator = dynamic_cast<TemplateInputValidator<TType>&>(validator);
 
         auto errMesParams = castedValidator.getErrorMessageParams();
         auto reqMesParams = castedValidator.getRequestMessageParams();

@@ -21,8 +21,9 @@ u32 Player::getCash() const
     return this->cash;
 }
 
-template <typename TType>
-TType Player::requestInput(AbstractInputValidator* validator)
+u32 Player::requestBet() const
 {
-    return this->app->requestInput<TType>(validator);
+    PlayerBetInputValidator validator(*this);
+
+    return this->app->template requestInput<u32>(validator);
 }

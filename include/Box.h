@@ -24,6 +24,4 @@ public:
     Player& getPlayer();
 
     void giveCard(Card&);
-
-    Box();
 };

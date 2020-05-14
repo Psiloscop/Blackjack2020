@@ -12,6 +12,11 @@ public:
         return true;
     }
 
+    std::string getValue() override
+    {
+        return this->value;
+    }
+
     std::map<std::string, std::string> getErrorMessageParams() override
     {
 //        std::map<std::string, std::string> params = {

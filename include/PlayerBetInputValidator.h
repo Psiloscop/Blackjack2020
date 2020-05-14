@@ -6,16 +6,21 @@
 class PlayerBetInputValidator: public TemplateInputValidator<u32>
 {
 protected:
-    Player& player;
+    const Player& player;
 
 public:
-    PlayerBetInputValidator(Player& player)
+    PlayerBetInputValidator(const Player& player)
         : player{player}
     {}
 
 	bool validateValue(const u32& value) override
     {
         return value > 0 && value <= this->player.getCash();
+    }
+
+    u32 getValue() override
+    {
+        return this->value;
     }
 
     std::map<std::string, std::string> getErrorMessageParams() override

@@ -12,6 +12,11 @@ public:
         return value > 0 && value <= 1000;
     }
 
+    u32 getValue() override
+    {
+	    return this->value;
+    }
+
     std::map<std::string, std::string> getErrorMessageParams() override
     {
         return {

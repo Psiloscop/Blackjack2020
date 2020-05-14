@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <random>
 
+#include "Application.h"
 #include "AppTypes.h"
 #include "AbstractBlackjack.h"
 
@@ -54,8 +55,8 @@ std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u
 
 void AbstractBlackjack::requestBets()
 {
-//    for (auto& box : this->boxes)
-//    {
-//        box.getPlayer().requestInput<u32, PlayerBetInputValidator>();
-//    }
+    for (auto& box : this->boxes)
+    {
+        box.getPlayer().requestBet();
+    }
 }

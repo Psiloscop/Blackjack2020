@@ -14,7 +14,6 @@ Player& Box::getPlayer()
     return this->player;
 }
 
-
 void Box::giveCard(Card& card)
 {
     this->cards[this->activeHand].push_back(card);

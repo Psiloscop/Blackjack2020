@@ -16,19 +16,22 @@ public:
     std::string processText(const std::string& text, const std::map<std::string, std::string>& params) const
     {
         unsigned int pos;
-        std::string _text, _key;
+        std::string _text = text, _key;
 
-//        for (const auto& [key, value] : params)
         for (const auto& kv : params)
         {
             _key = AbstractDisplayHandler::leftBorder + kv.first + AbstractDisplayHandler::rightBorder;
-            _text = text;
+
+            if (kv.first == "id")
+            {
+                continue;
+            }
 
             try
             {
                 while((pos = _text.find(_key)) != std::string::npos)
                 {
-                    _text.replace(pos, _key.length(), kv.second);
+                    _text = _text.replace(pos, _key.length(), kv.second);
                 }
             }
             catch (const std::out_of_range& e)

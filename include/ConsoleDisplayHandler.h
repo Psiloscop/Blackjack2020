@@ -12,6 +12,6 @@ protected:
     void clearConsole() const;
 
 public:
-    void display(ConsoleDisplayEntity*) const override;
-    void displayBatch(std::vector<ConsoleDisplayEntity*>) const override;
+    void display(ConsoleDisplayEntity*, std::map<std::string, std::string>) const override;
+    void displayBatch(std::vector<ConsoleDisplayEntity*>, std::vector<std::map<std::string, std::string>>) const override;
 };

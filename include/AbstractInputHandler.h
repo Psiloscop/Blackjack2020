@@ -1,7 +1,8 @@
 #pragma once
 
-#include <string>
 #include <vector>
+#include <string>
+#include <map>
 
 class Application;
 
@@ -17,23 +18,22 @@ public:
         this->app = app;
     }
 
-	template<typename TType, typename TInputValidator>
-    TType requestInput() const
+	template<typename TType>
+    TType requestInput(AbstractInputValidator* validator) const
     {
         TType value;
-
         TInputAdapter<TType> adapter;
-        TInputValidator validator;
+        auto& castedValidator = dynamic_cast<TemplateInputValidator<TType>&>(*validator);
 
-        std::string errMesId = validator.getErrorMessageId();
-        std::string reqMesId = validator.getRequestMessageId();
-        std::vector<std::string> messageIds = {errMesId, reqMesId};
+        auto errMesParams = castedValidator.getErrorMessageParams();
+        auto reqMesParams = castedValidator.getRequestMessageParams();
+        auto messageIds = {errMesParams, reqMesParams};
 
-        this->app->displayMessage(reqMesId);
+        this->app->displayMessage(reqMesParams);
 
         value = adapter.input();
 
-        while (!validator.validateValue(value))
+        while (!castedValidator.validateValue(value))
         {
             this->app->displayMessages(messageIds);
 

@@ -44,8 +44,10 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/MockInputHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleInputHandler.h
         ${BJ2020_INCLUDE_DIR}/AbstractInputValidator.h
+        ${BJ2020_INCLUDE_DIR}/TemplateInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerStartCashInputValidator.h
+        ${BJ2020_INCLUDE_DIR}/PlayerBetInputValidator.h
         ${BJ2020_INCLUDE_DIR}/Box.h
         ${BJ2020_SOURCE_DIR}/Box.cpp
         ${BJ2020_INCLUDE_DIR}/Player.h

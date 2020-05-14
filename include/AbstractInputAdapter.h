@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AbstractInputValidator.h"
+#include "TemplateInputValidator.h"
 
 template <typename T>
 class AbstractInputAdapter

@@ -7,6 +7,7 @@
 #include "Box.h"
 #include "Card.h"
 #include "Player.h"
+#include "PlayerBetInputValidator.h"
 
 class Application;
 
@@ -27,4 +28,6 @@ public:
     std::vector<Card>& shuffleShoe();
 
     virtual std::vector<Box>& createBoxes(std::vector<Player>& players, u8 boxCount);
+
+    virtual void requestBets();
 };

@@ -1,4 +1,5 @@
 #include "ConsoleDisplayHandler.h"
+#include "AppTypes.h"
 
 void ConsoleDisplayHandler::clearConsole() const
 {
@@ -9,11 +10,11 @@ void ConsoleDisplayHandler::clearConsole() const
 #endif
 }
 
-void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity) const
+void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity, std::map<std::string, std::string> params) const
 {
     this->clearConsole();
 
-    std::string cache = entity->getDisplayEntity();
+    std::string cache = this->processText(entity->getDisplayEntity(), params);
 
     if (entity->hasEndLine())
     {
@@ -23,15 +24,16 @@ void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity) const
     std::cout << cache << std::flush;
 }
 
-void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities) const
+void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities, std::vector<std::map<std::string, std::string>> params) const
 {
     this->clearConsole();
 
     std::string cache;
+    u8 index = 0;
 
     for (auto const& entity: entities)
     {
-        cache += entity->getDisplayEntity();
+        cache += this->processText(entity->getDisplayEntity(), params[index]);
 
         if (entity->hasEndLine())
         {

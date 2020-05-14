@@ -51,3 +51,11 @@ std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u
 
     return this->boxes;
 }
+
+void AbstractBlackjack::requestBets()
+{
+//    for (auto& box : this->boxes)
+//    {
+//        box.getPlayer().requestInput<u32, PlayerBetInputValidator>();
+//    }
+}

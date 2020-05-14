@@ -1,6 +1,7 @@
 #pragma once
 
 class AbstractBlackjack;
+//class TemplateInputValidator;
 
 #include <map>
 #include <string>
@@ -37,33 +38,60 @@ public:
         this->displayEntityList.insert(std::pair<std::string, ADisplayEntity*>(key, entity));
     }
 
-    void displayMessage(std::string messageId) const
+    void displayMessage(std::map<std::string, std::string> params) const
     {
-        this->displayHandler.display(this->displayEntityList.at(messageId));
+        try
+        {
+            std::string messageId = params.at("id");
+
+            this->displayHandler.display(this->displayEntityList.at(messageId), params);
+        }
+        catch (const std::out_of_range& e)
+        {
+            std::cout << "Application: message ID not found" << std::endl;
+        }
     }
 
-    void displayMessages(std::vector<std::string> messageIds) const
+    void displayMessages(std::vector<std::map<std::string, std::string>> messageParamList) const
     {
         std::vector<ADisplayEntity*> entities;
 
-        for (auto const& messageId: messageIds)
+        for (auto& params : messageParamList)
         {
-            entities.push_back(this->displayEntityList.at(messageId));
+            for (const auto& kv : params)
+            {
+                try
+                {
+                    std::string messageId = params.at("id");
+
+                    entities.push_back(this->displayEntityList.at(messageId));
+                }
+                catch (const std::out_of_range& e)
+                {
+                    std::cout << "Application: message ID not found" << std::endl;
+                }
+            }
         }
 
-        this->displayHandler.displayBatch(entities);
+        this->displayHandler.displayBatch(entities, messageParamList);
     }
 
-    template <typename TType, typename TInputValidator>
-    TType requestInput()
+    template <typename TType>
+    TType requestInput(AbstractInputValidator* validator)
     {
-        return this->inputHandler.template requestInput<TType, TInputValidator>();
+        return this->inputHandler.template requestInput<TType>(validator);
     }
 
     void requestInputToCreatePlayer()
     {
-        std::string playerName = this->requestInput<std::string, PlayerNameInputValidator>();
-        u32 playerCash = this->requestInput<u32, PlayerStartCashInputValidator>();
+//        std::string playerName = this->requestInput<std::string, PlayerNameInputValidator>();
+//        u32 playerCash = this->requestInput<u32, PlayerStartCashInputValidator>();
+
+        auto playerNameValidator = new PlayerNameInputValidator();
+        auto playerStartCashValidator = new PlayerStartCashInputValidator();
+
+        std::string playerName = this->requestInput<std::string>(playerNameValidator);
+        u32 playerCash = this->requestInput<u32>(playerStartCashValidator);
 
         this->createPlayer(playerName, playerCash);
     }

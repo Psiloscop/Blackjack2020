@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "AbstractInputValidator.h"
+#include "TemplateInputValidator.h"
 
-class PlayerStartCashInputValidator: public AbstractInputValidator<u32>
+class PlayerStartCashInputValidator: public TemplateInputValidator<u32>
 {
 public:
 	bool validateValue(const u32& value) override
@@ -12,13 +12,17 @@ public:
         return value > 0 && value <= 1000;
     }
 
-	std::string getErrorMessageId() override
+    std::map<std::string, std::string> getErrorMessageParams() override
     {
-        return "mes_id_error_player_cash_invalid";
+        return {
+            std::pair<std::string, std::string>("id", "mes_id_error_player_cash_invalid")
+        };
     }
 
-	std::string getRequestMessageId() override
+    std::map<std::string, std::string> getRequestMessageParams() override
     {
-        return "mes_id_info_player_enter_start_cash";
+        return {
+            std::pair<std::string, std::string>("id", "mes_id_info_player_enter_start_cash")
+        };
     }
 };

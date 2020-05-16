@@ -6,9 +6,9 @@
 class MockDisplayHandler: public AbstractDisplayHandler<MockDisplayEntity>
 {
 public:
-    void display(MockDisplayEntity*) const override
+    void display(MockDisplayEntity*, std::map<std::string, std::string>) const override
     {}
 
-    void displayBatch(std::vector<MockDisplayEntity*>) const override
+    void displayBatch(std::vector<MockDisplayEntity*>, std::vector<std::map<std::string, std::string>>) const override
     {}
 };

@@ -29,5 +29,5 @@ public:
 
     u32 getCash() const;
 
-    u32 requestBet() const;
+    virtual u32 requestBet() const;
 };

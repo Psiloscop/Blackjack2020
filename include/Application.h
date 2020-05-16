@@ -7,6 +7,7 @@ class AbstractBlackjack;
 #include <string>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 #include "AbstractBlackjack.h"
 #include "Player.h"

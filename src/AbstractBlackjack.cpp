@@ -5,6 +5,11 @@
 #include "AppTypes.h"
 #include "AbstractBlackjack.h"
 
+std::vector<Box>& AbstractBlackjack::getBoxes()
+{
+    return this->boxes;
+}
+
 std::vector<Card>& AbstractBlackjack::createShoe(u8 deckCount)
 {
 	while (deckCount > 0)
@@ -55,8 +60,32 @@ std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u
 
 void AbstractBlackjack::requestBets()
 {
-    for (auto& box : this->boxes)
+    for (auto& box : this->getBoxes())
     {
-        box.getPlayer().requestBet();
+        box.setBet(box.getPlayer().requestBet());
     }
+}
+
+void AbstractBlackjack::dealCardsToBoxes(u8 cardPerBox)
+{
+    for (auto& box : this->getBoxes())
+    {
+        for (u8 cardNumber = 1; cardNumber <= cardPerBox; cardNumber++)
+        {
+            box.giveCard(this->shoe[this->shoeIndex++]);
+        }
+    }
+}
+
+void AbstractBlackjack::dealCardsToDealer(u8 cardToDealer)
+{
+    for (u8 cardNumber = 1; cardNumber <= cardToDealer; cardNumber++)
+    {
+        this->dealerCards.push_back(&(this->shoe[this->shoeIndex++]));
+    }
+}
+
+std::vector<Card*>& AbstractBlackjack::getDealerCards()
+{
+    return this->dealerCards;
 }

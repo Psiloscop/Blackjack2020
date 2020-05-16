@@ -20,9 +20,10 @@
  */
 TEST(ApplicationUnitTest, createPlayer)
 {
+    AbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
-    Application app(inputHandler, displayHandler);
+    Application app(game, inputHandler, displayHandler);
 
     std:: string playerName1 = "Test1";
     u32 playerCash1 = 500;

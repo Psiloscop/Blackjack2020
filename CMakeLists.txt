@@ -26,6 +26,7 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/AppTypes.h
         ${BJ2020_INCLUDE_DIR}/AppAliases.h
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjack.h
+        ${BJ2020_INCLUDE_DIR}/MockAbstractBlackjack.h
         ${BJ2020_SOURCE_DIR}/AbstractBlackjack.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjackAction.h
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayHandler.h

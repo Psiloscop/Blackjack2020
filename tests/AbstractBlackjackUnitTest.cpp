@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Application.h"
-#include "AbstractBlackjack.h"
+#include "MockAbstractBlackjack.h"
 #include "MockDisplayHandler.h"
 #include "MockInputHandler.h"
 #include "MockInputAdapter.h"
@@ -28,7 +28,7 @@ MATCHER(CardEq, "")
  */
 TEST(AbstractBlackjack, createShoe)
 {
-    auto abstractBlackjack = new AbstractBlackjack();
+    auto abstractBlackjack = new MockAbstractBlackjack();
 
     u8 deckCount = 2;
 
@@ -63,7 +63,7 @@ TEST(AbstractBlackjack, createShoe)
  */
 TEST(AbstractBlackjack, shuffleShoe)
 {
-    auto abstractBlackjack = new AbstractBlackjack();
+    auto abstractBlackjack = new MockAbstractBlackjack();
 
     u8 deckCount = 1;
 
@@ -97,7 +97,7 @@ TEST(AbstractBlackjack, shuffleShoe)
  */
 TEST(AbstractBlackjack, createBoxes)
 {
-    AbstractBlackjack game;
+    MockAbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
     Application app(game, inputHandler, displayHandler);
@@ -134,7 +134,7 @@ TEST(AbstractBlackjack, createBoxes)
  */
 TEST(AbstractBlackjack, createBoxesWithApp)
 {
-    AbstractBlackjack game;
+    MockAbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
     Application app(game, inputHandler, displayHandler);
@@ -172,7 +172,7 @@ TEST(AbstractBlackjack, createBoxesWithApp)
  */
 TEST(AbstractBlackjack, dealCardsToBoxes)
 {
-    AbstractBlackjack game;
+    MockAbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
     Application app(game, inputHandler, displayHandler);
@@ -194,16 +194,20 @@ TEST(AbstractBlackjack, dealCardsToBoxes)
 }
 
 /**
- * Testing dealCardsToDealer() method
+ * Testing both dealCardsToDealer() and getDealerCards() method
  */
-TEST(AbstractBlackjack, dealCardsToDealer)
+TEST(AbstractBlackjack, dealCardsToDealer_getDealerCards)
 {
-    AbstractBlackjack game;
+    MockAbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
     Application app(game, inputHandler, displayHandler);
 
+    app.createPlayer("Test1", 250);
+    std::vector<Player>& players = app.getPlayers();
+    game.createBoxes(players, 1);
     auto& shoe = game.createShoe(1);
+
     game.dealCardsToDealer(2);
     auto& dealerCards = game.getDealerCards();
 
@@ -211,12 +215,199 @@ TEST(AbstractBlackjack, dealCardsToDealer)
     EXPECT_TRUE(*dealerCards[1] == shoe[1]);
 }
 
+/**
+ * Testing getBoxStatus() method
+ */
+TEST(AbstractBlackjack, getBoxStatus)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 250);
+    std::vector<Player>& players = app.getPlayers();
+    auto& box = game.createBoxes(players, 1)[0];
+    auto& shoe = game.createShoe(1);
+
+    auto card1 = new Card(CardFace::king, CardSuit::club);
+    auto card2 = new Card(CardFace::ace, CardSuit::heart);
+    box.giveCard(card1);
+    box.giveCard(card2);
+    auto status = game.getBoxStatus();
+    delete card1;
+    delete card2;
+
+    EXPECT_TRUE(status == BoxStatus::blackjack);
+
+    box.resetBox();
+
+    card1 = new Card(CardFace::king, CardSuit::club);
+    card2 = new Card(CardFace::queen, CardSuit::heart);
+    auto card3 = new Card(CardFace::jack, CardSuit::diamond);
+    box.giveCard(card1);
+    box.giveCard(card2);
+    box.giveCard(card3);
+    status = game.getBoxStatus();
+    delete card1;
+    delete card2;
+    delete card3;
+
+    EXPECT_TRUE(status == BoxStatus::overtook);
+
+    box.resetBox();
+
+    card1 = new Card(CardFace::king, CardSuit::club);
+    card2 = new Card(9, CardSuit::heart);
+    box.giveCard(card1);
+    box.giveCard(card2);
+    status = game.getBoxStatus();
+    delete card1;
+    delete card2;
+
+    EXPECT_TRUE(status == BoxStatus::ok);
+}
 
 
-//
+/**
+ * Testing getRoundResult() method
+ */
+TEST(AbstractBlackjack, getRoundResult)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 250);
+    std::vector<Player>& players = app.getPlayers();
+    auto& box = game.createBoxes(players, 1)[0];
+    auto& dealerBox = game.getDealerBox();
+    auto& shoe = game.createShoe(1);
+
+    auto card1 = new Card(CardFace::king, CardSuit::club);
+    auto card2 = new Card(CardFace::queen, CardSuit::heart);
+    box.giveCard(card1);
+    box.giveCard(card2);
+    dealerBox.giveCard(card1);
+    dealerBox.giveCard(card2);
+    auto result = game.getRoundResult();
+    delete card1;
+    delete card2;
+
+    EXPECT_TRUE(result == RoundResult::tie);
+
+    box.resetBox();
+    dealerBox.resetBox();
+
+    card1 = new Card(CardFace::king, CardSuit::club);
+    card2 = new Card(CardFace::jack, CardSuit::heart);
+    box.giveCard(card1);
+    box.giveCard(card2);
+    dealerBox.giveCard(card1);
+    result = game.getRoundResult();
+    delete card1;
+    delete card2;
+
+    EXPECT_TRUE(result == RoundResult::win);
+
+    box.resetBox();
+    dealerBox.resetBox();
+
+    card1 = new Card(CardFace::king, CardSuit::club);
+    card2 = new Card(9, CardSuit::heart);
+    box.giveCard(card1);
+    dealerBox.giveCard(card1);
+    dealerBox.giveCard(card2);
+    result = game.getRoundResult();
+    delete card1;
+    delete card2;
+
+    EXPECT_TRUE(result == RoundResult::lose);
+}
+
+/**
+ * Testing payToPlayerForBlackjack() method
+ */
+TEST(AbstractBlackjack, payToPlayerForBlackjack)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 1000);
+    std::vector<Player>& players = app.getPlayers();
+    auto& box = game.createBoxes(players, 1)[0];
+    auto& player = box.getPlayer();
+
+    EXPECT_TRUE(player.getCash() == 1000);
+
+    box.setBet(1000);
+
+    EXPECT_TRUE(player.getCash() == 0);
+
+    game.payToPlayerForBlackjack();
+
+    EXPECT_TRUE(player.getCash() == 2500);
+}
+
+/**
+ * Testing payToPlayerForCommonWin() method
+ */
+TEST(AbstractBlackjack, payToPlayerForCommonWin)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 1000);
+    std::vector<Player>& players = app.getPlayers();
+    auto& box = game.createBoxes(players, 1)[0];
+    auto& player = box.getPlayer();
+
+    EXPECT_TRUE(player.getCash() == 1000);
+
+    box.setBet(1000);
+
+    EXPECT_TRUE(player.getCash() == 0);
+
+    game.payToPlayerForCommonWin();
+
+    EXPECT_TRUE(player.getCash() == 2000);
+}
+
+/**
+ * Testing returnToPlayerItsBet() method
+ */
+TEST(AbstractBlackjack, returnToPlayerItsBet)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 1000);
+    std::vector<Player>& players = app.getPlayers();
+    auto& box = game.createBoxes(players, 1)[0];
+    auto& player = box.getPlayer();
+
+    EXPECT_TRUE(player.getCash() == 1000);
+
+    box.setBet(1000);
+
+    EXPECT_TRUE(player.getCash() == 0);
+
+    game.returnToPlayerItsBet();
+
+    EXPECT_TRUE(player.getCash() == 1000);
+}
+
+
 // Commented because Gmock is fucked up
 //
-// class MockPlayer: public Player
+//class MockPlayer: public Player
 //{
 //public:
 //    using Player::Player;
@@ -227,21 +418,19 @@ TEST(AbstractBlackjack, dealCardsToDealer)
 //class MockBox: public Box
 //{
 //protected:
-//    MockPlayer& mPlayer;
+//    MockPlayer* mPlayer;
 //
 //public:
-//    MockBox(MockPlayer &player)
-//        : Box(player), mPlayer(player)
-//    {}
+//    MockBox(u8 allowedMaxValue = 21) : Box(allowedMaxValue) {}
 //};
 //
-//class MockAbstractBlackjack: public AbstractBlackjack
+//class MockMockAbstractBlackjack: public MockAbstractBlackjack
 //{
 //protected:
 //    std::vector<MockBox> mockBoxes;
 //
 //public:
-//    MockAbstractBlackjack() = default;
+//    MockMockAbstractBlackjack() = default;
 //
 //    void assignBoxes(std::vector<MockBox> _mockBoxes)
 //    {
@@ -258,7 +447,7 @@ TEST(AbstractBlackjack, dealCardsToDealer)
 //    void delegateBoxGetterToFake()
 //    {
 //        ON_CALL(*this, getBoxes())
-//                .WillByDefault(::testing::Invoke(this, &MockAbstractBlackjack::mockGetBoxes));
+//                .WillByDefault(::testing::Invoke(this, &MockMockAbstractBlackjack::mockGetBoxes));
 //    }
 //};
 //
@@ -288,7 +477,7 @@ TEST(AbstractBlackjack, dealCardsToDealer)
 // */
 //TEST(AbstractBlackjack, requestBets)
 //{
-//    MockAbstractBlackjack game;
+//    MockMockAbstractBlackjack game;
 //    MockInputHandler inputHandler;
 //    MockDisplayHandler displayHandler;
 //    MockApplication app(game, inputHandler, displayHandler);
@@ -298,7 +487,8 @@ TEST(AbstractBlackjack, dealCardsToDealer)
 //    app.createPlayer("Test1", 500);
 //
 //    auto& mockPlayer = static_cast<MockPlayer&>(app.getPlayer(0));
-//    MockBox box(mockPlayer);
+//    MockBox box(0);
+//    box.assignPlayer(&mockPlayer);
 //
 //    game.delegateBoxGetterToFake();
 //    EXPECT_CALL(game, getBoxes());
@@ -311,8 +501,6 @@ TEST(AbstractBlackjack, dealCardsToDealer)
 //            .WillOnce(::testing::Return(250));
 //
 //    game.requestBets();
-//
-//    EXPECT_EQ(box.getBet(), 250);
 //}
 
 #endif // __ABSTRACT_BLACKJACK_UNIT_TEST_CPP_INCLUDED__

@@ -9,11 +9,18 @@
 #include "Player.h"
 #include "PlayerBetInputValidator.h"
 
+enum RoundResult
+{
+    win,
+    lose,
+    tie
+};
+
 class Application;
 
 class AbstractBlackjack
 {
-private:
+protected:
     Application* app;
 
     std::vector<AbstractBlackjackAction> actions;
@@ -22,12 +29,26 @@ private:
 
     std::vector<Card> shoe;
 
+    Box* dealerBox;
+
     u16 shoeIndex = 0;
 
-    std::vector<Card*> dealerCards = {};
+    u8 boxIndex = 0;
+
+    u8 allowedMaxValueForPlayer = 21;
+
+    u8 allowedMaxValueForDealer= 17;
 
 public:
+    virtual void prepareGame() = 0;
+
+    virtual void playGame() = 0;
+
+    virtual void finishGame() = 0;
+
     std::vector<Box>& getBoxes();
+
+    Box& getDealerBox();
 
     virtual std::vector<Card>& createShoe(u8 deckCount);
 
@@ -42,4 +63,14 @@ public:
     virtual void dealCardsToDealer(u8 cardToDealer);
 
     std::vector<Card*>& getDealerCards();
+
+    virtual BoxStatus getBoxStatus();
+
+    virtual RoundResult getRoundResult();
+
+    virtual void payToPlayerForBlackjack();
+
+    virtual void payToPlayerForCommonWin();
+
+    virtual void returnToPlayerItsBet();
 };

@@ -52,3 +52,13 @@ u8 Card::getCardSuit()
 {
 	return this->suit;
 }
+
+u8 Card::getMinAceCardValue()
+{
+    return 1;
+}
+
+u8 Card::getMaxAceCardValue()
+{
+    return 11;
+}

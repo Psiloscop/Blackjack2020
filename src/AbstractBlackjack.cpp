@@ -10,6 +10,11 @@ std::vector<Box>& AbstractBlackjack::getBoxes()
     return this->boxes;
 }
 
+Box& AbstractBlackjack::getDealerBox()
+{
+    return *this->dealerBox;
+}
+
 std::vector<Card>& AbstractBlackjack::createShoe(u8 deckCount)
 {
 	while (deckCount > 0)
@@ -50,10 +55,13 @@ std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u
             boxNumber <= boxCount && boxNumber <= playerCount;
             boxNumber++, playerIndex++)
     {
-        Box box(players[playerIndex]);
+        Box box(this->allowedMaxValueForPlayer);
+        box.assignPlayer(&players[playerIndex]);
 
         this->boxes.push_back(box);
     }
+
+    this->dealerBox = new Box(this->allowedMaxValueForDealer);
 
     return this->boxes;
 }
@@ -72,20 +80,78 @@ void AbstractBlackjack::dealCardsToBoxes(u8 cardPerBox)
     {
         for (u8 cardNumber = 1; cardNumber <= cardPerBox; cardNumber++)
         {
-            box.giveCard(this->shoe[this->shoeIndex++]);
+            box.giveCard(&(this->shoe[this->shoeIndex++]));
         }
     }
 }
 
 void AbstractBlackjack::dealCardsToDealer(u8 cardToDealer)
 {
+    Card* card = nullptr;
+
     for (u8 cardNumber = 1; cardNumber <= cardToDealer; cardNumber++)
     {
-        this->dealerCards.push_back(&(this->shoe[this->shoeIndex++]));
+        card = &this->shoe[this->shoeIndex++];
+
+        this->dealerBox->giveCard(card);
     }
 }
 
 std::vector<Card*>& AbstractBlackjack::getDealerCards()
 {
-    return this->dealerCards;
+    return this->dealerBox->getHandCards();
+}
+
+BoxStatus AbstractBlackjack::getBoxStatus()
+{
+    bool hasBlackjack = this->boxes[this->boxIndex].hasBlackjack();
+    bool hasOvertake = this->boxes[this->boxIndex].hasOvertake();
+
+    if (hasBlackjack)
+    {
+        return BoxStatus::blackjack;
+    }
+    else if (hasOvertake)
+    {
+        return BoxStatus::overtook;
+    }
+    else
+    {
+        return BoxStatus::ok;
+    }
+}
+
+RoundResult AbstractBlackjack::getRoundResult()
+{
+    u8 dealerValue = this->dealerBox->getHandCardsValue();
+    u8 playerValue = this->boxes[this->boxIndex].getHandCardsValue();
+
+    if (playerValue > dealerValue)
+    {
+        return RoundResult::win;
+    }
+    else if (playerValue < dealerValue)
+    {
+        return RoundResult::lose;
+    }
+    else
+    {
+        return RoundResult::tie;
+    }
+}
+
+void AbstractBlackjack::payToPlayerForBlackjack()
+{
+    this->boxes[this->boxIndex].getPlayer().increaseCash(
+            this->boxes[this->boxIndex].getBet() + this->boxes[this->boxIndex].getBet() * 1.5);
+}
+
+void AbstractBlackjack::payToPlayerForCommonWin()
+{
+    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() * 2);
+}
+
+void AbstractBlackjack::returnToPlayerItsBet()
+{
+    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
 }

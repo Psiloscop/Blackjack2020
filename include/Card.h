@@ -39,4 +39,8 @@ public:
 	u8 getCardValue();
 
 	u8 getCardSuit();
+
+    static u8 getMinAceCardValue();
+
+    static u8 getMaxAceCardValue();
 };

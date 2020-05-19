@@ -1,17 +1,17 @@
 #include "Box.h"
 
-Box::Box(Player& player)
-    : player(player)
+Box::Box(u8 allowedMaxValue)
+    : allowedMaxValue{allowedMaxValue}
 {}
 
-void Box::assignPlayer(Player& _player)
+void Box::assignPlayer(Player* _player)
 {
     this->player = _player;
 }
 
 Player& Box::getPlayer() const
 {
-    return this->player;
+    return *(this->player);
 }
 
 void Box::resetBox()
@@ -23,7 +23,7 @@ void Box::resetBox()
     this->activeHand = 0;
 }
 
-void Box::giveCard(Card& card)
+void Box::giveCard(Card* card)
 {
     if (this->hands.empty() || this->activeHand >= this->hands.size())
     {
@@ -31,17 +31,46 @@ void Box::giveCard(Card& card)
         this->hands[this->activeHand] = {};
     }
 
-    this->hands[this->activeHand].push_back(&card);
+    this->hands[this->activeHand].push_back(card);
 }
 
-std::vector<Card*>& Box::getHandCards(u8 handNumber)
+std::vector<Card*>& Box::getHandCards()
 {
-    if (handNumber > this->hands.size() || handNumber <= 0)
+    return this->hands[this->activeHand];
+}
+
+u8 Box::getHandCardsCount()
+{
+    return this->hands[this->activeHand].size();
+}
+
+
+u8 Box::getHandCardsValue()
+{
+    u8 value = 0;
+    u8 aceCardCount = 0;
+
+    for (auto& card : this->hands[this->activeHand])
     {
-        throw std::out_of_range("Box::getHandCards(handNumber) - handNumber is out of range");
+        if (card->getCardSuit() != CardFace::ace)
+        {
+            value += card->getCardValue();
+        }
+        else
+        {
+            aceCardCount++;
+        }
     }
 
-    return this->hands[handNumber - 1];
+    while (aceCardCount > 0)
+    {
+        value += (this->allowedMaxValue - (value + Card::getMinAceCardValue() * aceCardCount) >= Card::getMaxAceCardValue())
+                ? Card::getMaxAceCardValue() : Card::getMinAceCardValue();
+
+        aceCardCount--;
+    }
+
+    return value;
 }
 
 void Box::switchHand(u8 number)
@@ -57,9 +86,29 @@ void Box::switchHand(u8 number)
 void Box::setBet(u32 value)
 {
     this->bets[this->activeHand] = value;
+
+    this->player->decreaseCash(value);
 }
 
 u32 Box::getBet()
 {
     return this->bets[this->activeHand];
+}
+
+bool Box::isBoxInSplit()
+{
+    return this->bets.size() > 1;
+}
+
+bool Box::hasBlackjack()
+{
+    auto& cards = this->hands[this->activeHand];
+
+    return cards.size() == 2 && (cards[0]->getCardValue() == 10 && cards[1]->getCardValue() == 11 ||
+        cards[1]->getCardValue() == 10 && cards[0]->getCardValue() == 11);
+}
+
+bool Box::hasOvertake()
+{
+    return this->getHandCardsValue() > this->allowedMaxValue;
 }

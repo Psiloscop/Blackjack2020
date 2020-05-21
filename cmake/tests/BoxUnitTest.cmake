@@ -6,6 +6,7 @@ target_link_libraries(BOX_UNIT_TEST
         APPLICATION_SOURCE
         ABSTRACT_BLACKJACK_SOURCE
         PLAYER_SOURCE
+        DEALER_SOURCE
         BOX_SOURCE
         CARD_SOURCE)
 

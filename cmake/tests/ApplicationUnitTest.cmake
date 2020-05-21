@@ -4,7 +4,10 @@ add_executable(APPLICATION_UNIT_TEST ${BJ2020_TEST_DIR}/ApplicationUnitTest.cpp)
 # Adding array source
 target_link_libraries(APPLICATION_UNIT_TEST
         APPLICATION_SOURCE
+        ABSTRACT_BLACKJACK_SOURCE
         PLAYER_SOURCE
+        DEALER_SOURCE
+        BOX_SOURCE
         CARD_SOURCE)
 
 # Standard linking to gtest stuff

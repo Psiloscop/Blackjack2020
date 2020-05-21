@@ -15,7 +15,7 @@ enum BoxStatus
 class Box
 {
 protected:
-    Player* player;
+    Player& player;
 
 	std::vector<std::vector<Card*>> hands = {};
 
@@ -26,9 +26,9 @@ protected:
     u8 activeHand = 0;
 
 public:
-    Box(u8);
+    Box(Player&, u8);
 
-    void assignPlayer(Player*);
+    void assignPlayer(Player&);
 
     void resetBox();
 

@@ -11,24 +11,45 @@ bool Card::operator!=(const Card& card) const
     return this->number != card.number && this->suit != card.suit;
 }
 
-std::string Card::getCardFace()
+CardFace Card::getCardFace()
 {
-	switch (this->number)
-	{
-	case CardFace::jack:
-		return "J";
+    switch (this->number)
+    {
+        case CardFace::jack:
+            return CardFace::jack;
 
-	case CardFace::queen:
-		return "Q";
+        case CardFace::queen:
+            return CardFace::queen;
 
-	case CardFace::king:
-		return "K";
+        case CardFace::king:
+            return CardFace::king;
 
-	case CardFace::ace:
-		return "A";
-	}
+        case CardFace::ace:
+            return CardFace::ace;
 
-	return std::to_string(this->number);
+        default:
+            return CardFace::number;
+    }
+}
+
+std::string Card::getCardLetter()
+{
+    switch (this->number)
+    {
+        case CardFace::jack:
+            return "J";
+
+        case CardFace::queen:
+            return "Q";
+
+        case CardFace::king:
+            return "K";
+
+        case CardFace::ace:
+            return "A";
+    }
+
+    return std::to_string(this->number);
 }
 
 u8 Card::getCardValue()

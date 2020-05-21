@@ -17,7 +17,8 @@ enum CardFace
 	jack = 11,
 	queen = 12,
 	king = 13,
-	ace = 14
+	ace = 14,
+	number = 15
 };
 
 class Card
@@ -34,9 +35,11 @@ public:
     bool operator==(const Card& card) const;
     bool operator!=(const Card& card) const;
 
-	std::string getCardFace();
+	std::string getCardLetter();
 
 	u8 getCardValue();
+
+	CardFace getCardFace();
 
 	u8 getCardSuit();
 

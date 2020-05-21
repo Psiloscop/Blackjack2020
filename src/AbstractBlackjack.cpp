@@ -55,13 +55,12 @@ std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u
             boxNumber <= boxCount && boxNumber <= playerCount;
             boxNumber++, playerIndex++)
     {
-        Box box(this->allowedMaxValueForPlayer);
-        box.assignPlayer(&players[playerIndex]);
+        Box box(players[playerIndex], this->allowedMaxValueForPlayer);
 
         this->boxes.push_back(box);
     }
 
-    this->dealerBox = new Box(this->allowedMaxValueForDealer);
+    this->dealerBox = new Box(this->dealer, this->allowedMaxValueForDealer);
 
     return this->boxes;
 }

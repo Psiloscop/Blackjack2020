@@ -6,6 +6,7 @@
 #include "AbstractBlackjackAction.h"
 #include "Box.h"
 #include "Card.h"
+#include "Dealer.h"
 #include "Player.h"
 #include "PlayerBetInputValidator.h"
 
@@ -28,6 +29,8 @@ protected:
     std::vector<Box> boxes;
 
     std::vector<Card> shoe;
+
+    Dealer dealer;
 
     Box* dealerBox;
 

@@ -4,7 +4,9 @@ add_library(APPLICATION_SOURCE ${BJ2020_SOURCE_DIR}/Application.cpp)
 add_library(BOX_SOURCE ${BJ2020_SOURCE_DIR}/Box.cpp)
 add_library(CARD_SOURCE ${BJ2020_SOURCE_DIR}/Card.cpp)
 add_library(PLAYER_SOURCE ${BJ2020_SOURCE_DIR}/Player.cpp)
+add_library(DEALER_SOURCE ${BJ2020_SOURCE_DIR}/Dealer.cpp)
 
 # Including test sources
 include(cmake/tests/ApplicationUnitTest.cmake)
 include(cmake/tests/AbstractBlackjackUnitTest.cmake)
+include(cmake/tests/BoxUnitTest.cmake)

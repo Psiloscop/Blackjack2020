@@ -1,8 +1,9 @@
 #include "Application.h"
+#include "AmericanBlackjack.h"
 
 void initConsoleApplication()
 {
-    AbstractBlackjack game;
+    AmericanBlackjack game;
     ConsoleInputHandler inputHandler;
     ConsoleDisplayHandler displayHandler;
 

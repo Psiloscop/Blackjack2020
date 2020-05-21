@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "Player.h"
 
+#include "MockAbstractBlackjack.h"
 #include "MockDisplayHandler.h"
 #include "MockInputHandler.h"
 
@@ -20,7 +21,7 @@
  */
 TEST(ApplicationUnitTest, createPlayer)
 {
-    AbstractBlackjack game;
+    MockAbstractBlackjack game;
     MockInputHandler inputHandler;
     MockDisplayHandler displayHandler;
     Application app(game, inputHandler, displayHandler);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 #include "AppTypes.h"
 #include "AbstractInputValidator.h"
@@ -18,7 +19,7 @@ protected:
 
 public:
     Player(Application* app, std::string name, u32 cash)
-        : app{app}, name{name}, cash{cash}
+        : app{app}, name{std::move(name)}, cash{cash}
     {}
 
 	void increaseCash(u32 amount);

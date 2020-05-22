@@ -3,6 +3,7 @@
 Application::Application(AbstractBlackjack& game, AInputHandler& inputHandler, ADisplayHandler& displayHandler)
 : game{game}, inputHandler{inputHandler}, displayHandler{displayHandler}
 {
+    this->game.assignApp(this);
     this->inputHandler.assignApp(this);
 }
 
@@ -65,7 +66,7 @@ void Application::createPlayer(const std::string& playerName, u32 playerCash)
 {
     Player player(this, playerName, playerCash);
 
-    this->players.push_back(std::move(player));
+    this->players.push_back(player);
 }
 
 Player& Application::getPlayer(u8 index)
@@ -81,4 +82,11 @@ Player& Application::getPlayer(u8 index)
 std::vector<Player>& Application::getPlayers()
 {
     return this->players;
+}
+
+void Application::startGame()
+{
+    this->game.prepareGame();
+    this->game.playGame();
+    this->game.finishGame();
 }

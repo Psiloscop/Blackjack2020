@@ -27,11 +27,28 @@ public:
 
         auto errMesParams = castedValidator.getErrorMessageParams();
         auto reqMesParams = castedValidator.getRequestMessageParams();
-        auto messageIds = {errMesParams, reqMesParams};
+        auto addMesParams = castedValidator.getAdditionalMessageParams();
+        std::vector<std::map<std::string, std::string>> messageIds = {reqMesParams};
 
-        this->app->displayMessage(reqMesParams);
+        if (addMesParams.size())
+        {
+            u8 insertionIndex = 0;
+
+            for (auto& messageParams : addMesParams)
+            {
+                messageIds.insert(messageIds.begin() + insertionIndex++, messageParams);
+            }
+
+            this->app->displayMessages(messageIds);
+        }
+        else
+        {
+            this->app->displayMessage(reqMesParams);
+        }
 
         value = adapter.input();
+
+        messageIds.insert(messageIds.begin(), errMesParams);
 
         while (!castedValidator.validateValue(value))
         {

@@ -18,11 +18,8 @@ class AbstractBlackjack;
 
 class Application
 {
-public:
-    AbstractBlackjack& game; // Temporary
-
 protected:
-//    AbstractBlackjack& game;
+    AbstractBlackjack& game;
 
     AInputHandler inputHandler;
 
@@ -54,4 +51,6 @@ public:
     Player& getPlayer(u8 index);
 
     std::vector<Player>& getPlayers();
+
+    void startGame();
 };

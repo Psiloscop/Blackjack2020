@@ -33,7 +33,7 @@ void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> enti
 
     for (auto const& entity: entities)
     {
-        cache += this->processText(entity->getDisplayEntity(), params[index]);
+        cache += this->processText(entity->getDisplayEntity(), params[index++]);
 
         if (entity->hasEndLine())
         {

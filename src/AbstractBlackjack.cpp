@@ -5,9 +5,32 @@
 #include "AppTypes.h"
 #include "AbstractBlackjack.h"
 
+void AbstractBlackjack::assignApp(Application* _app)
+{
+    this->app = _app;
+}
+
+std::vector<std::string> AbstractBlackjack::getActionNames()
+{
+    std::vector<std::string> actionNames;
+
+    for (auto action : this->actions)
+    {
+        actionNames.push_back(action->getName());
+    }
+
+    return actionNames;
+}
+
+
 std::vector<Box>& AbstractBlackjack::getBoxes()
 {
     return this->boxes;
+}
+
+Box& AbstractBlackjack::getCurrentBox()
+{
+    return this->boxes[this->boxIndex];
 }
 
 Box& AbstractBlackjack::getDealerBox()
@@ -45,6 +68,16 @@ std::vector<Card>& AbstractBlackjack::shuffleShoe()
     std::shuffle(std::begin(this->shoe), std::end(this->shoe), e);
 
     return this->shoe;
+}
+
+Card* AbstractBlackjack::getNextCard()
+{
+    if (this->shoeIndex >= this->shoe.size())
+    {
+        throw std::out_of_range("AbstractBlackjack::getNextCard() - shoeIndex is out of range");
+    }
+
+    return &this->shoe[this->shoeIndex++];
 }
 
 std::vector<Box>& AbstractBlackjack::createBoxes(std::vector<Player>& players, u8 boxCount)

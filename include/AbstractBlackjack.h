@@ -18,13 +18,14 @@ enum RoundResult
 };
 
 class Application;
+class AbstractBlackjackAction;
 
 class AbstractBlackjack
 {
 protected:
     Application* app;
 
-    std::vector<AbstractBlackjackAction> actions;
+    std::vector<AbstractBlackjackAction*> actions;
 
     std::vector<Box> boxes;
 
@@ -49,13 +50,21 @@ public:
 
     virtual void finishGame() = 0;
 
+    void assignApp(Application*);
+
+    std::vector<std::string> getActionNames(); // new
+
     std::vector<Box>& getBoxes();
+
+    Box& getCurrentBox(); // new
 
     Box& getDealerBox();
 
     virtual std::vector<Card>& createShoe(u8 deckCount);
 
     std::vector<Card>& shuffleShoe();
+
+    Card* getNextCard(); // new
 
     virtual std::vector<Box>& createBoxes(std::vector<Player>& players, u8 boxCount);
 

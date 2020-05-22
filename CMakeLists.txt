@@ -31,6 +31,8 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/AmericanBlackjack.h
         ${BJ2020_SOURCE_DIR}/AmericanBlackjack.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjackAction.h
+        ${BJ2020_INCLUDE_DIR}/HitBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/HitBlackjackAction.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/MockDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h
@@ -51,6 +53,7 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerStartCashInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerBetInputValidator.h
+        ${BJ2020_INCLUDE_DIR}/ActionInputValidator.h
         ${BJ2020_INCLUDE_DIR}/Box.h
         ${BJ2020_SOURCE_DIR}/Box.cpp
         ${BJ2020_INCLUDE_DIR}/Player.h
@@ -59,4 +62,4 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_SOURCE_DIR}/Dealer.cpp
         ${BJ2020_INCLUDE_DIR}/Card.h
         ${BJ2020_SOURCE_DIR}/Card.cpp
-        ${BJ2020_SOURCE_DIR}/main.cpp)
+        ${BJ2020_SOURCE_DIR}/main.cpp src/HitBlackjackAction.cpp)

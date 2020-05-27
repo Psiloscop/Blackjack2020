@@ -39,6 +39,8 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayHandler.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayEntity.h
         ${BJ2020_INCLUDE_DIR}/MockDisplayEntity.h
+        ${BJ2020_INCLUDE_DIR}/CardsDisplayEntity.h
+        ${BJ2020_SOURCE_DIR}/CardsDisplayEntity.cpp
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayEntity.h
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayEntity.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractInputAdapter.h
@@ -53,7 +55,8 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerStartCashInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerBetInputValidator.h
-        ${BJ2020_INCLUDE_DIR}/ActionInputValidator.h
+        ${BJ2020_INCLUDE_DIR}/OptionInputValidator.h
+        ${BJ2020_INCLUDE_DIR}/ActionSelectInputValidator.h
         ${BJ2020_INCLUDE_DIR}/Box.h
         ${BJ2020_SOURCE_DIR}/Box.cpp
         ${BJ2020_INCLUDE_DIR}/Player.h

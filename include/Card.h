@@ -35,13 +35,13 @@ public:
     bool operator==(const Card& card) const;
     bool operator!=(const Card& card) const;
 
-	std::string getCardLetter();
+	std::string getCardLetter() const;
 
 	u8 getCardValue();
 
 	CardFace getCardFace();
 
-	u8 getCardSuit();
+    CardSuit getCardSuit();
 
     static u8 getMinAceCardValue();
 

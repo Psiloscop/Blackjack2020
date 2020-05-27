@@ -11,4 +11,6 @@ public:
         : entity(value) {}
 
 	virtual T& getDisplayEntity() = 0;
+
+	virtual void setDisplayEntity(T) = 0;
 };

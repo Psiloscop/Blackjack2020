@@ -17,5 +17,7 @@ public:
 
     std::string& getDisplayEntity() override;
 
+    void setDisplayEntity(std::string) override;
+
     bool hasEndLine() const;
 };

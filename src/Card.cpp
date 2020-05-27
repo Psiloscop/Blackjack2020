@@ -32,7 +32,7 @@ CardFace Card::getCardFace()
     }
 }
 
-std::string Card::getCardLetter()
+std::string Card::getCardLetter() const
 {
     switch (this->number)
     {
@@ -69,9 +69,24 @@ u8 Card::getCardValue()
 	}
 }
 
-u8 Card::getCardSuit()
+CardSuit Card::getCardSuit()
 {
-	return this->suit;
+    this->suit;
+
+//    switch (this->suit)
+//    {
+//        case CardSuit::spade:
+//            return "♠"; // L"\u2660"
+//
+//        case CardSuit::club:
+//            return "♣"; // L"\u2663"
+//
+//        case CardSuit::heart:
+//            return "♥"; // "L"\u2665"
+//
+//        case CardSuit::diamond:
+//            return "♦"; // L"\u2666"
+//    }
 }
 
 u8 Card::getMinAceCardValue()

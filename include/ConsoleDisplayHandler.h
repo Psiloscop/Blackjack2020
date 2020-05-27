@@ -14,4 +14,6 @@ protected:
 public:
     void display(ConsoleDisplayEntity*, std::map<std::string, std::string>) const override;
     void displayBatch(std::vector<ConsoleDisplayEntity*>, std::vector<std::map<std::string, std::string>>) const override;
+
+    void transformCardListEntity(ConsoleDisplayEntity*, std::vector<Card*>) override;
 };

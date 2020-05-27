@@ -4,10 +4,13 @@
 
 #include "AbstractBlackjack.h"
 #include "HitBlackjackAction.h"
-#include "ActionInputValidator.h"
+#include "OptionInputValidator.h"
 
 class AmericanBlackjack: public AbstractBlackjack
 {
+protected:
+    u8 chooseAction();
+
 public:
     AmericanBlackjack();
 

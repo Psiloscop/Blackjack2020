@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+#include "TemplateInputValidator.h"
+
 class Application;
 
 template <template <class> typename TInputAdapter>

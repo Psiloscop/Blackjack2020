@@ -13,6 +13,7 @@ class AbstractBlackjack;
 #include "Player.h"
 #include "PlayerNameInputValidator.h"
 #include "PlayerStartCashInputValidator.h"
+#include "CardsDisplayEntity.h"
 
 #include "AppAliases.h"
 
@@ -31,6 +32,8 @@ protected:
 
 public:
     Application(AbstractBlackjack& game, AInputHandler& inputHandler, ADisplayHandler& displayHandler);
+
+    ADisplayHandler& getDisplayHandler();
 
     void addMessageEntity(const std::string& key, ADisplayEntity* entity);
 

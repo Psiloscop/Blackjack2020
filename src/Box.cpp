@@ -34,6 +34,11 @@ void Box::giveCard(Card* card)
     this->hands[this->activeHand].push_back(card);
 }
 
+std::vector<std::vector<Card*>>& Box::getAllCards()
+{
+    return this->hands;
+}
+
 std::vector<Card*>& Box::getHandCards()
 {
     return this->hands[this->activeHand];

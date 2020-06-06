@@ -5,6 +5,7 @@
 #include <map>
 
 #include "TemplateInputValidator.h"
+#include "TemplateDisplayMessageParam.h"
 
 class Application;
 
@@ -30,7 +31,7 @@ public:
         auto errMesParams = castedValidator.getErrorMessageParams();
         auto reqMesParams = castedValidator.getRequestMessageParams();
         auto addMesParams = castedValidator.getAdditionalMessageParams();
-        std::vector<std::map<std::string, std::string>> messageIds = {reqMesParams};
+        std::vector<std::vector<ADisplayMessageParam*>> messageIds = {reqMesParams};
 
         if (addMesParams.size())
         {

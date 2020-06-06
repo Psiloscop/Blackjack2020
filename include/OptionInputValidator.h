@@ -18,15 +18,15 @@ public:
     OptionInputValidator(u8 optionCount, std::string optionName, std::vector<std::string>& options)
         : optionCount{optionCount}, optionName{optionName}, options{options}
     {
-        std::vector<std::map<std::string, std::string>> messageParamList;
+        std::vector<std::vector<ADisplayMessageParam*>> messageParamList;
         u8 number = 1;
 
         for (auto& option : this->options)
         {
             messageParamList.push_back({
-                std::pair<std::string, std::string>("id", "mes_id_info_option_name"),
-                std::pair<std::string, std::string>("number", std::to_string(number++)),
-                std::pair<std::string, std::string>("option", option)
+                new ADisplayMessageParam("id", "mes_id_info_option_name"),
+                new ADisplayMessageParam("number", std::to_string(number++)),
+                new ADisplayMessageParam("option", option)
             });
         }
 
@@ -43,21 +43,21 @@ public:
         return this->value;
     }
 
-    std::map<std::string, std::string> getErrorMessageParams() override
+    std::vector<ADisplayMessageParam*> getErrorMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_error_invalid_choice"),
-            std::pair<std::string, std::string>("optionName", this->optionName)
+            new ADisplayMessageParam("id", "mes_id_error_invalid_choice"),
+            new ADisplayMessageParam("optionName", this->optionName)
         };
     }
 
-    std::map<std::string, std::string> getRequestMessageParams() override
+    std::vector<ADisplayMessageParam*> getRequestMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_info_choose_option"),
-            std::pair<std::string, std::string>("min", std::to_string(1)),
-            std::pair<std::string, std::string>("max", std::to_string(this->optionCount)),
-            std::pair<std::string, std::string>("optionName", this->optionName)
+            new ADisplayMessageParam("id", "mes_id_info_choose_option"),
+            new ADisplayMessageParam("min", std::to_string(1)),
+            new ADisplayMessageParam("max", std::to_string(this->optionCount)),
+            new ADisplayMessageParam("optionName", this->optionName)
         };
     }
 };

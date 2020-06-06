@@ -17,17 +17,17 @@ public:
 	    return this->value;
     }
 
-    std::map<std::string, std::string> getErrorMessageParams() override
+    std::vector<ADisplayMessageParam*> getErrorMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_error_player_cash_invalid")
+            new ADisplayMessageParam("id", "mes_id_error_player_cash_invalid")
         };
     }
 
-    std::map<std::string, std::string> getRequestMessageParams() override
+    std::vector<ADisplayMessageParam*> getRequestMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_info_player_enter_start_cash")
+            new ADisplayMessageParam("id", "mes_id_info_player_enter_start_cash")
         };
     }
 };

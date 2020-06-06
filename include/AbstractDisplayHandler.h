@@ -5,6 +5,7 @@
 #include <map>
 
 #include "AbstractDisplayEntity.h"
+#include "AppAliasDisplayMessageParam.h"
 #include "Card.h"
 
 template <typename T>
@@ -17,7 +18,7 @@ protected:
 //    std::map<std::string, u16> arrLastIndexes = {};
 
 public:
-    std::string processText(const std::string& text, const std::map<std::string, std::string>& params) const
+    std::string processText(const std::string& text, const std::vector<ADisplayMessageParam*>& params) const
     {
         unsigned int pos;
         std::string _text = text, _strKey, _arrKey;
@@ -25,9 +26,9 @@ public:
         // Searching for string vars
         for (const auto& kv : params)
         {
-            _strKey = AbstractDisplayHandler::strLB + kv.first + AbstractDisplayHandler::strRB;
+            _strKey = AbstractDisplayHandler::strLB + kv->getKey() + AbstractDisplayHandler::strRB;
 
-            if (kv.first == "id")
+            if (kv->getKey() == "id")
             {
                 continue;
             }
@@ -36,7 +37,7 @@ public:
             {
                 while ((pos = _text.find(_strKey)) != std::string::npos)
                 {
-                    _text = _text.replace(pos, _strKey.length(), kv.second);
+                    _text = _text.replace(pos, _strKey.length(), kv->getValue());
                 }
             }
             catch (const std::out_of_range& e)
@@ -77,8 +78,8 @@ public:
         return _text;
     }
 
-	virtual void display(T*, std::map<std::string, std::string>) const = 0;
-    virtual void displayBatch(std::vector<T*>, std::vector<std::map<std::string, std::string>>) const = 0;
+	virtual void display(T*, std::vector<ADisplayMessageParam*>) const = 0;
+    virtual void displayBatch(std::vector<T*>, std::vector<std::vector<ADisplayMessageParam*>>) const = 0;
 
-    virtual void transformCardListEntity(T*, std::vector<Card*>) = 0;
+    virtual void transformCardListEntity(ADisplayMessageParam*, std::vector<Card*>&) = 0;
 };

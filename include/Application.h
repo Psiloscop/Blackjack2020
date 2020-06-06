@@ -37,9 +37,9 @@ public:
 
     void addMessageEntity(const std::string& key, ADisplayEntity* entity);
 
-    void displayMessage(std::map<std::string, std::string> params) const;
+    void displayMessage(std::vector<ADisplayMessageParam*> params) const;
 
-    void displayMessages(std::vector<std::map<std::string, std::string>> messageParamList) const;
+    void displayMessages(std::vector<std::vector<ADisplayMessageParam*>> messageParamList) const;
 
     template <typename TType>
     TType requestInput(AbstractInputValidator& validator)

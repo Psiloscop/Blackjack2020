@@ -1,5 +1,17 @@
 #include "ConsoleDisplayHandler.h"
+#include "AppAliasDisplayMessageParam.h"
 #include "AppTypes.h"
+
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#endif
+
+ConsoleDisplayHandler::ConsoleDisplayHandler()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+}
 
 void ConsoleDisplayHandler::clearConsole() const
 {
@@ -10,7 +22,7 @@ void ConsoleDisplayHandler::clearConsole() const
 #endif
 }
 
-void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity, std::map<std::string, std::string> params) const
+void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity, std::vector<ADisplayMessageParam*> params) const
 {
     this->clearConsole();
 
@@ -24,7 +36,7 @@ void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity, std::map<std::
     std::cout << cache << std::flush;
 }
 
-void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities, std::vector<std::map<std::string, std::string>> params) const
+void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities, std::vector<std::vector<ADisplayMessageParam*>> params) const
 {
     this->clearConsole();
 
@@ -44,9 +56,9 @@ void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> enti
     std::cout << cache << std::flush;
 }
 
-void ConsoleDisplayHandler::transformCardListEntity(ConsoleDisplayEntity* entity, std::vector<Card*> cards)
+void ConsoleDisplayHandler::transformCardListEntity(ADisplayMessageParam* entity, std::vector<Card*>& cards)
 {
-    std::string strCards = "";
+    std::string strCards;
 
     for (auto card : cards)
     {
@@ -54,27 +66,25 @@ void ConsoleDisplayHandler::transformCardListEntity(ConsoleDisplayEntity* entity
 
         switch (card->getCardSuit())
         {
-            case CardSuit::spade:
+            case spade:
                 strCards += "♠"; // L"\u2660"
+                break;
 
-            case CardSuit::club:
+            case club:
                 strCards += "♣"; // L"\u2663"
+                break;
 
-            case CardSuit::heart:
+            case heart:
                 strCards += "♥"; // "L"\u2665"
+                break;
 
-            case CardSuit::diamond:
+            case diamond:
                 strCards += "♦"; // L"\u2666"
+                break;
         }
 
         strCards += " ";
     }
 
-    std::map<std::string, std::string> messageParamList;
-    messageParamList.insert({
-        std::pair<std::string, std::string>("cards", strCards),
-    });
-
-//    entity->setDisplayEntity(this->processText(entity->getDisplayEntity(), messageParamList));
-    this->processText(entity->getDisplayEntity(), messageParamList);
+    entity->setValue(strCards);
 }

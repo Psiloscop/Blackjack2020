@@ -23,19 +23,19 @@ public:
         return this->value;
     }
 
-    std::map<std::string, std::string> getErrorMessageParams() override
+    std::vector<ADisplayMessageParam*> getErrorMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_error_player_bet_invalid"),
-            std::pair<std::string, std::string>("cash", std::to_string(player.getCash()))
+            new ADisplayMessageParam("id", "mes_id_error_player_bet_invalid"),
+            new ADisplayMessageParam("cash", std::to_string(player.getCash()))
         };
     }
 
-    std::map<std::string, std::string> getRequestMessageParams() override
+    std::vector<ADisplayMessageParam*> getRequestMessageParams() override
     {
         return {
-            std::pair<std::string, std::string>("id", "mes_id_info_player_enter_bet"),
-            std::pair<std::string, std::string>("cash", std::to_string(player.getCash()))
+            new ADisplayMessageParam("id", "mes_id_info_player_enter_bet"),
+            new ADisplayMessageParam("cash", std::to_string(player.getCash()))
         };
     }
 };

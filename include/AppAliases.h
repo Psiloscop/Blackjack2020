@@ -14,7 +14,6 @@ using ADisplayEntity = MockDisplayEntity;
 #else
 
 #include "ConsoleInputHandler.h"
-#include "ConsoleInputAdapter.h"
 #include "ConsoleDisplayHandler.h"
 #include "ConsoleDisplayEntity.h"
 

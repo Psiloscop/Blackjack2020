@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "AbstractDisplayHandler.h"
 #include "ConsoleDisplayEntity.h"
+#include "AppAliasDisplayMessageParam.h"
 
 class ConsoleDisplayHandler: public AbstractDisplayHandler<ConsoleDisplayEntity>
 {
@@ -12,8 +14,10 @@ protected:
     void clearConsole() const;
 
 public:
-    void display(ConsoleDisplayEntity*, std::map<std::string, std::string>) const override;
-    void displayBatch(std::vector<ConsoleDisplayEntity*>, std::vector<std::map<std::string, std::string>>) const override;
+    ConsoleDisplayHandler();
 
-    void transformCardListEntity(ConsoleDisplayEntity*, std::vector<Card*>) override;
+    void display(ConsoleDisplayEntity*, std::vector<ADisplayMessageParam*>) const override;
+    void displayBatch(std::vector<ConsoleDisplayEntity*>, std::vector<std::vector<ADisplayMessageParam*>>) const override;
+
+    void transformCardListEntity(ADisplayMessageParam*, std::vector<Card*>&) override;
 };

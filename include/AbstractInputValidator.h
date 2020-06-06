@@ -1,28 +1,30 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <map>
 
 #include "AppTypes.h"
+#include "AppAliasDisplayMessageParam.h"
 
 class AbstractInputValidator
 {
 protected:
-    std::vector<std::map<std::string, std::string>> additionalMessageParams;
+    std::vector<std::vector<ADisplayMessageParam*>> additionalMessageParams;
 
 public:
-	virtual std::map<std::string, std::string> getErrorMessageParams() = 0;
+	virtual std::vector<ADisplayMessageParam*> getErrorMessageParams() = 0;
 
-	virtual std::map<std::string, std::string> getRequestMessageParams() = 0;
+	virtual std::vector<ADisplayMessageParam*> getRequestMessageParams() = 0;
 
-	virtual std::vector<std::map<std::string, std::string>> getAdditionalMessageParams()
+	virtual std::vector<std::vector<ADisplayMessageParam*>>& getAdditionalMessageParams()
     {
 	    return this->additionalMessageParams;
     }
 
-    virtual void setAdditionalMessageParams(std::vector<std::map<std::string, std::string>> additionalMessageParams)
+    virtual void setAdditionalMessageParams(std::vector<std::vector<ADisplayMessageParam*>> _additionalMessageParams)
     {
-        this->additionalMessageParams = additionalMessageParams;
+        this->additionalMessageParams = std::move(_additionalMessageParams);
     }
 };

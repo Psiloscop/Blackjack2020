@@ -36,6 +36,8 @@ public:
 
     void giveCard(Card*);
 
+    std::vector<std::vector<Card*>>& getAllCards();
+
     std::vector<Card*>& getHandCards();
 
     u8 getHandCardsCount();

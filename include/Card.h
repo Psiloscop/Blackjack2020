@@ -29,7 +29,7 @@ private:
 
 public:
 	Card(u8 number, CardSuit suit)
-		: number(number), suit(suit)
+		: number{number}, suit{suit}
 	{}
 
     bool operator==(const Card& card) const;

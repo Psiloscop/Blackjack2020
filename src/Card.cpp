@@ -71,22 +71,7 @@ u8 Card::getCardValue()
 
 CardSuit Card::getCardSuit()
 {
-    this->suit;
-
-//    switch (this->suit)
-//    {
-//        case CardSuit::spade:
-//            return "♠"; // L"\u2660"
-//
-//        case CardSuit::club:
-//            return "♣"; // L"\u2663"
-//
-//        case CardSuit::heart:
-//            return "♥"; // "L"\u2665"
-//
-//        case CardSuit::diamond:
-//            return "♦"; // L"\u2666"
-//    }
+    return this->suit;
 }
 
 u8 Card::getMinAceCardValue()

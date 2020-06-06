@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "AppTypes.h"
 #include "AmericanBlackjack.h"
+#include "ActionSelectInputValidator.h"
 
 AmericanBlackjack::AmericanBlackjack()
 {
@@ -9,6 +10,8 @@ AmericanBlackjack::AmericanBlackjack()
 
 void AmericanBlackjack::prepareGame()
 {
+    this->createShoe(1);
+    this->shuffleShoe();
     this->createBoxes(this->app->getPlayers(), 4);
 }
 
@@ -19,8 +22,19 @@ void AmericanBlackjack::playGame()
     this->dealCardsToDealer(2);
 
     auto actionNames = this->getActionNames();
-    auto validator = OptionInputValidator(this->getActionNames().size(), "Action", actionNames);
+    auto validator = ActionSelectInputValidator(this->getActionNames().size(), "Action", actionNames,
+            this->getCurrentBox().getAllCards(), this->getDealerCards());
 
+
+//    std::vector<std::vector<DisplayMessageParamCards>> messageParamList;
+//    messageParamList.push_back({
+//        DisplayMessageParamCards("id", "mes_id_info_player_cards", this->getCurrentBox().getHandCards())
+//    });
+//    messageParamList.push_back({
+//        DisplayMessageParamCards("id", "mes_id_info_dealer_cards", this->getDealerBox().getHandCards())
+//    });
+//
+//    validator.setAdditionalMessageParams(messageParamList);
 
 
 //    std::vector<std::map<std::string, std::string>> messageParamList = {};

@@ -24,6 +24,7 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/Application.h
         ${BJ2020_SOURCE_DIR}/Application.cpp
         ${BJ2020_INCLUDE_DIR}/AppTypes.h
+        ${BJ2020_INCLUDE_DIR}/AppAliasDisplayMessageParam.h
         ${BJ2020_INCLUDE_DIR}/AppAliases.h
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjack.h
         ${BJ2020_INCLUDE_DIR}/MockAbstractBlackjack.h
@@ -36,6 +37,13 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/MockDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h
+        ${BJ2020_INCLUDE_DIR}/TemplateDisplayMessageParam.h
+        ${BJ2020_INCLUDE_DIR}/ConsoleDisplayMessageParam.h
+        ${BJ2020_SOURCE_DIR}/ConsoleDisplayMessageParam.cpp
+        ${BJ2020_INCLUDE_DIR}/DisplayMessageParamDealerCards.h
+        ${BJ2020_SOURCE_DIR}/DisplayMessageParamDealerCards.cpp
+        ${BJ2020_INCLUDE_DIR}/DisplayMessageParamPlayerCards.h
+        ${BJ2020_SOURCE_DIR}/DisplayMessageParamPlayerCards.cpp
         ${BJ2020_SOURCE_DIR}/ConsoleDisplayHandler.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayEntity.h
         ${BJ2020_INCLUDE_DIR}/MockDisplayEntity.h
@@ -65,4 +73,4 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_SOURCE_DIR}/Dealer.cpp
         ${BJ2020_INCLUDE_DIR}/Card.h
         ${BJ2020_SOURCE_DIR}/Card.cpp
-        ${BJ2020_SOURCE_DIR}/main.cpp src/HitBlackjackAction.cpp)
+        ${BJ2020_SOURCE_DIR}/main.cpp)

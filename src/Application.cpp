@@ -18,33 +18,60 @@ void Application::addMessageEntity(const std::string& key, ADisplayEntity* entit
     this->displayEntityList.insert(std::pair<std::string, ADisplayEntity*>(key, entity));
 }
 
-void Application::displayMessage(std::map<std::string, std::string> params) const
+void Application::displayMessage(std::vector<ADisplayMessageParam*> params) const
 {
-    try
-    {
-        std::string messageId = params.at("id");
+    auto* app = const_cast<Application*>(this);
 
+    std::string messageId;
+
+    for (auto& kv : params)
+    {
+        try
+        {
+            if (kv->getKey() == "id")
+            {
+                messageId = kv->getValue();
+            }
+            else
+            {
+                kv->transformValue(app);
+            }
+        }
+        catch (const std::out_of_range& e)
+        {
+            std::cout << "Application: message ID not found" << std::endl;
+        }
+    }
+
+    if (!messageId.empty())
+    {
         this->displayHandler.display(this->displayEntityList.at(messageId), params);
     }
-    catch (const std::out_of_range& e)
+    else
     {
-        std::cout << "Application: message ID not found" << std::endl;
+        throw std::out_of_range("Application: message ID not found");
     }
 }
 
-void Application::displayMessages(std::vector<std::map<std::string, std::string>> messageParamList) const
+void Application::displayMessages(std::vector<std::vector<ADisplayMessageParam*>> messageParamList) const
 {
+    auto* app = const_cast<Application*>(this);
+
     std::vector<ADisplayEntity*> entities;
 
     for (auto& params : messageParamList)
     {
-        for (const auto& kv : params)
+        for (auto& kv : params)
         {
             try
             {
-                if (kv.first == "id")
+                if (kv->getKey() == "id")
                 {
-                    entities.push_back(this->displayEntityList.at(kv.second));
+                    entities.push_back(this->displayEntityList.at(kv->getValue()));
+                }
+                else
+                {
+                    kv->transformValue(app);
                 }
             }
             catch (const std::out_of_range& e)

@@ -40,6 +40,8 @@ public:
 
     std::vector<Card*>& getHandCards();
 
+    u8 getCurrentHandNumber() const; // new
+
     u8 getHandCardsCount();
 
     u8 getHandCardsValue();

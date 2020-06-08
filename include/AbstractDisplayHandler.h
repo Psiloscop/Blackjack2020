@@ -82,4 +82,5 @@ public:
     virtual void displayBatch(std::vector<T*>, std::vector<std::vector<ADisplayMessageParam*>>) const = 0;
 
     virtual void transformCardListEntity(ADisplayMessageParam*, std::vector<Card*>&) = 0;
+    virtual void transformCardListEntities(ADisplayMessageParam*, std::vector<std::vector<Card*>>&, u8 currentHand) = 0;
 };

@@ -63,9 +63,20 @@ std::vector<Card>& AbstractBlackjack::shuffleShoe()
 //    auto rng = std::default_random_engine(std::random_device{}());
 //    std::shuffle(std::begin(this->shoe), std::end(this->shoe), rng);
 
-    std::random_device rd;
-    std::mt19937 e{rd()}; // or std::default_random_engine e{rd()};
-    std::shuffle(std::begin(this->shoe), std::end(this->shoe), e);
+//    std::random_device rd;
+//    std::mt19937 e{rd()}; // or std::default_random_engine e{rd()};
+//    std::shuffle(std::begin(this->shoe), std::end(this->shoe), e);
+
+    std::srand(time(nullptr));
+
+    u16 firstIdx, secondIdx, size = this->shoe.size();
+
+    for (u16 idx = 0; idx < size; idx++) {
+        firstIdx = std::rand() % size;
+        secondIdx = std::rand() % size;
+
+        std::swap(this->shoe[firstIdx], this->shoe[secondIdx]);
+    }
 
     return this->shoe;
 }

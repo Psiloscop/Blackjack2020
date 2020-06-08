@@ -14,6 +14,17 @@ protected:
     std::vector<std::vector<ADisplayMessageParam*>> additionalMessageParams;
 
 public:
+    ~AbstractInputValidator()
+    {
+        for (auto& params : this->additionalMessageParams)
+        {
+            for (auto param : params)
+            {
+                delete param;
+            }
+        }
+    }
+
 	virtual std::vector<ADisplayMessageParam*> getErrorMessageParams() = 0;
 
 	virtual std::vector<ADisplayMessageParam*> getRequestMessageParams() = 0;

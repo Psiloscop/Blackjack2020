@@ -17,42 +17,65 @@ void AmericanBlackjack::prepareGame()
 
 void AmericanBlackjack::playGame()
 {
+    // Loop must be here. It will be breaking if all boxes are empty.
+
     this->requestBets();
     this->dealCardsToBoxes(2);
     this->dealCardsToDealer(2);
 
-    auto actionNames = this->getActionNames();
-    auto validator = ActionSelectInputValidator(this->getActionNames().size(), "Action", actionNames,
-            this->getCurrentBox().getAllCards(), this->getDealerCards());
+    u16 actionNumber = 0;
+    bool continueGame = true;
 
+    u8 currBoxValue = 0, dealerBoxValue = 0;
 
-//    std::vector<std::vector<DisplayMessageParamCards>> messageParamList;
-//    messageParamList.push_back({
-//        DisplayMessageParamCards("id", "mes_id_info_player_cards", this->getCurrentBox().getHandCards())
-//    });
-//    messageParamList.push_back({
-//        DisplayMessageParamCards("id", "mes_id_info_dealer_cards", this->getDealerBox().getHandCards())
-//    });
-//
-//    validator.setAdditionalMessageParams(messageParamList);
+    for (auto& currBox : this->getBoxes())
+    {
+        if (currBox.hasBlackjack())
+        {
+            // Check if dealer has one. If it hasn't then pay for Blackjack otherwise offer insurance.
+        }
 
+        while (continueGame)
+        {
+            // Append/Remove actions depending on game state.
 
-//    std::vector<std::map<std::string, std::string>> messageParamList = {};
-//    u8 number = 1;
-//
-//    for (Card* card : this->getCurrentBox().getHandCards())
-//    {
-//        messageParamList.push_back({
-//            std::pair<std::string, std::string>("id", "mes_id_info_player_cards"),
-//            std::pair<std::string, std::string>("cards", card->getCardLetter() + L" " + card->getCardSuit()),
-//        });
-//    }
-//
-//    this->setAdditionalMessageParams(messageParamList);
+            auto actionNames = this->getActionNames();
+            auto validator = ActionSelectInputValidator(this->getActionNames().size(), "Action", actionNames,
+                                                        this->getDealerBox(), this->getCurrentBox());
+            actionNumber = this->app->requestInput<u16>(validator);
+            actionNumber--;
 
+            continueGame = this->actions[actionNumber]->execute();
+        }
 
+        if (!currBox.hasOvertake())
+        {
+            currBoxValue = currBox.getHandCardsValue();
+            dealerBoxValue = this->dealerBox->getHandCardsValue();
 
-    u8 actionNumber = this->app->requestInput<u8>(validator);
+            if (currBoxValue == dealerBoxValue)
+            {
+                this->returnToPlayerItsBet();
+            }
+            else if (currBoxValue > dealerBoxValue)
+            {
+                this->payToPlayerForCommonWin();
+            }
+            else if (currBoxValue < dealerBoxValue)
+            {
+                // Display Lose message.
+            }
+        }
+        else
+        {
+            // Display Lose message.
+        }
+
+        // Display dealer and player cards
+        // Display round status (win, lose, tie)
+
+        // Remove box if its player lost all money
+    }
 }
 
 void AmericanBlackjack::finishGame()

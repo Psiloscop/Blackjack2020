@@ -20,4 +20,5 @@ public:
     void displayBatch(std::vector<ConsoleDisplayEntity*>, std::vector<std::vector<ADisplayMessageParam*>>) const override;
 
     void transformCardListEntity(ADisplayMessageParam*, std::vector<Card*>&) override;
+    void transformCardListEntities(ADisplayMessageParam*, std::vector<std::vector<Card*>>&, u8 currentHand) override;
 };

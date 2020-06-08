@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <ctime>
 
 #include "AppTypes.h"
 #include "AbstractBlackjackAction.h"

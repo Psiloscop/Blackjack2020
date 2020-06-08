@@ -5,21 +5,21 @@
 #include "TemplateInputValidator.h"
 #include "Player.h"
 
-class OptionInputValidator: public TemplateInputValidator<u8>
+class OptionInputValidator: public TemplateInputValidator<u16>
 {
 protected:
-    u8 optionCount;
+    u16 optionCount;
 
     std::string optionName;
 
     std::vector<std::string>& options;
 
 public:
-    OptionInputValidator(u8 optionCount, std::string optionName, std::vector<std::string>& options)
+    OptionInputValidator(u16 optionCount, std::string optionName, std::vector<std::string>& options)
         : optionCount{optionCount}, optionName{optionName}, options{options}
     {
         std::vector<std::vector<ADisplayMessageParam*>> messageParamList;
-        u8 number = 1;
+        u16 number = 1;
 
         for (auto& option : this->options)
         {
@@ -33,12 +33,12 @@ public:
         this->setAdditionalMessageParams(messageParamList);
     }
 
-	bool validateValue(const u8& value) override
+	bool validateValue(const u16& value) override
     {
         return value >= 1 && value <= this->optionCount;
     }
 
-    u8 getValue() override
+    u16 getValue() override
     {
         return this->value;
     }

@@ -24,7 +24,7 @@ enum CardFace
 class Card
 {
 private:
-	u8 number;
+	u16 number;
 	CardSuit suit;
 
 public:

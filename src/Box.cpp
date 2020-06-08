@@ -44,6 +44,12 @@ std::vector<Card*>& Box::getHandCards()
     return this->hands[this->activeHand];
 }
 
+u8 Box::getCurrentHandNumber() const
+{
+    return this->activeHand + 1;
+}
+
+
 u8 Box::getHandCardsCount()
 {
     if (this->hands.size() == 0)

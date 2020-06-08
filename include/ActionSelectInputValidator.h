@@ -11,16 +11,17 @@ class ActionSelectInputValidator: public OptionInputValidator
 {
 public:
     ActionSelectInputValidator(u8 optionCount, std::string optionName, std::vector<std::string>& options,
-                               std::vector<std::vector<Card*>>& playerCards, std::vector<Card*>& dealerCards)
+                               Box& dealerBox, Box& playerBox)
         : OptionInputValidator(optionCount, optionName, options)
     {
         this->additionalMessageParams.insert(this->additionalMessageParams.begin(), {
             new ADisplayMessageParam("id", "mes_id_info_dealer_cards"),
-            new DisplayMessageParamDealerCards("cards", "", dealerCards)
+            new DisplayMessageParamDealerCards("cards", "", dealerBox.getHandCards())
         });
         this->additionalMessageParams.insert(this->additionalMessageParams.begin() + 1, {
             new ADisplayMessageParam("id", "mes_id_info_player_cards"),
-            new DisplayMessageParamPlayerCards("cards", "", playerCards)
+            new ADisplayMessageParam("name", playerBox.getPlayer().getName()),
+            new DisplayMessageParamPlayerCards("cards", "", playerBox.getAllCards(), playerBox.getCurrentHandNumber())
         });
     }
 };

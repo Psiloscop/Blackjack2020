@@ -13,6 +13,8 @@ protected:
 
     std::string value;
 
+    bool isValueTransformed = false;
+
 public:
     TemplateDisplayMessageParam(std::string key, std::string value)
         : key{std::move(key)}, value{std::move(value)}

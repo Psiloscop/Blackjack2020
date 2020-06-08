@@ -58,7 +58,7 @@ void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> enti
 
 void ConsoleDisplayHandler::transformCardListEntity(ADisplayMessageParam* entity, std::vector<Card*>& cards)
 {
-    std::string strCards;
+    std::string strCards = entity->getValue();
 
     for (auto card : cards)
     {
@@ -87,4 +87,36 @@ void ConsoleDisplayHandler::transformCardListEntity(ADisplayMessageParam* entity
     }
 
     entity->setValue(strCards);
+}
+
+void ConsoleDisplayHandler::transformCardListEntities(ADisplayMessageParam* entity, std::vector<std::vector<Card*>>& cards, u8 currentHand)
+{
+    if (cards.size() > 1)
+    {
+        entity->setValue("\n" + entity->getValue());
+
+        u8 number = 1;
+
+        for (auto& cardList : cards)
+        {
+            entity->setValue(entity->getValue() + std::to_string(number) + ". ");
+
+            if (number == currentHand)
+            {
+                entity->setValue(entity->getValue() + "-> ");
+            }
+
+            this->transformCardListEntity(entity, cardList);
+
+            entity->setValue(entity->getValue() + "\n");
+
+            number++;
+        }
+    }
+    else
+    {
+        this->transformCardListEntity(entity, cards[0]);
+
+        entity->setValue(entity->getValue() + "\n");
+    }
 }

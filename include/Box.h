@@ -15,7 +15,7 @@ enum BoxStatus
 class Box
 {
 protected:
-    Player& player;
+    Player* player;
 
 	std::vector<std::vector<Card*>> hands = {};
 
@@ -40,11 +40,15 @@ public:
 
     std::vector<Card*>& getHandCards();
 
+    u8 getHandCount() const; // new
+
     u8 getCurrentHandNumber() const; // new
 
     u8 getHandCardsCount();
 
     u8 getHandCardsValue();
+
+    bool isAllowedMaxValueReached(); // new
 
     void switchHand(u8);
 
@@ -52,9 +56,13 @@ public:
 
     u32 getBet();
 
+    bool isAbleToSwitch(); // new
+
+    std::vector<u8> getPlayableHandNumbers(); // new
+
     bool isBoxInSplit();
 
     bool hasBlackjack();
 
-    bool hasOvertake();
+    bool hasOvertake(bool = false); // new
 };

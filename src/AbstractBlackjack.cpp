@@ -183,18 +183,40 @@ RoundResult AbstractBlackjack::getRoundResult()
     }
 }
 
-void AbstractBlackjack::payToPlayerForBlackjack()
+u32 AbstractBlackjack::payToPlayerForBlackjack()
 {
-    this->boxes[this->boxIndex].getPlayer().increaseCash(
-            this->boxes[this->boxIndex].getBet() + this->boxes[this->boxIndex].getBet() * 1.5);
+    u32 winCash = this->boxes[this->boxIndex].getBet() * 1.5;
+
+    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() + winCash);
+
+    return winCash;
 }
 
-void AbstractBlackjack::payToPlayerForCommonWin()
+u32 AbstractBlackjack::payToPlayerForCommonWin()
 {
-    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() * 2);
+    u32 winCash = this->boxes[this->boxIndex].getBet();
+
+    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() + winCash);
+
+    return winCash;
 }
 
-void AbstractBlackjack::returnToPlayerItsBet()
+u32 AbstractBlackjack::returnToPlayerItsBet()
 {
     this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
+
+    return 0;
+}
+
+void AbstractBlackjack::clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList)
+{
+    for (auto& params : messageParamList)
+    {
+        for (auto param : params)
+        {
+            delete param;
+        }
+    }
+
+    messageParamList.clear();
 }

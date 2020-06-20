@@ -81,9 +81,11 @@ public:
 
     virtual RoundResult getRoundResult();
 
-    virtual void payToPlayerForBlackjack();
+    virtual u32 payToPlayerForBlackjack(); // new
 
-    virtual void payToPlayerForCommonWin();
+    virtual u32 payToPlayerForCommonWin(); // new
 
-    virtual void returnToPlayerItsBet();
+    virtual u32 returnToPlayerItsBet(); // new
+
+    static void clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList); // new
 };

@@ -9,7 +9,8 @@ enum CardSuit
 	club = 1,
 	diamond = 2,
 	heart = 3,
-	spade = 4
+	spade = 4,
+	hidden = 5
 };
 
 enum CardFace
@@ -18,12 +19,12 @@ enum CardFace
 	queen = 12,
 	king = 13,
 	ace = 14,
-	number = 15
+	number = 15,
 };
 
 class Card
 {
-private:
+protected:
 	u16 number;
 	CardSuit suit;
 

@@ -11,6 +11,6 @@ bool HitBlackjackAction::execute()
 
     box.giveCard(this->blackjack->getNextCard());
 
-    return !box.hasOvertake();
+    return true;
 }
 

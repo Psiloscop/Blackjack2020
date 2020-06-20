@@ -1,17 +1,17 @@
 #include "Box.h"
 
 Box::Box(Player& player, u8 allowedMaxValue)
-    : player{player}, allowedMaxValue{allowedMaxValue}
+    : player{&player}, allowedMaxValue{allowedMaxValue}
 {}
 
 void Box::assignPlayer(Player& _player)
 {
-    this->player = _player;
+    this->player = &_player;
 }
 
 Player& Box::getPlayer() const
 {
-    return this->player;
+    return *this->player;
 }
 
 void Box::resetBox()
@@ -42,6 +42,11 @@ std::vector<std::vector<Card*>>& Box::getAllCards()
 std::vector<Card*>& Box::getHandCards()
 {
     return this->hands[this->activeHand];
+}
+
+u8 Box::getHandCount() const
+{
+    return this->hands.size();;
 }
 
 u8 Box::getCurrentHandNumber() const
@@ -89,6 +94,11 @@ u8 Box::getHandCardsValue()
     return value;
 }
 
+bool Box::isAllowedMaxValueReached()
+{
+    return this->getHandCardsValue() >= this->allowedMaxValue;
+}
+
 void Box::switchHand(u8 number)
 {
     if (number > this->hands.size() + 1 || number <= 0)
@@ -103,12 +113,51 @@ void Box::setBet(u32 value)
 {
     this->bets[this->activeHand] = value;
 
-    this->player.decreaseCash(value);
+    this->player->decreaseCash(value);
 }
 
 u32 Box::getBet()
 {
     return this->bets[this->activeHand];
+}
+
+bool Box::isAbleToSwitch()
+{
+    u8 handCount = this->hands.size();
+
+    for (u8 index = 0; index < handCount; index++)
+    {
+        this->activeHand = index;
+
+        if (!this->hasOvertake())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+std::vector<u8> Box::getPlayableHandNumbers()
+{
+    std::vector<u8> playableHands;
+
+    u8 handCount = this->hands.size();
+    u8 _activeHand = this->activeHand;
+
+    for (u8 index = 0; index < handCount; index++)
+    {
+        this->activeHand = index;
+
+        if (this->getHandCardsValue() <= this->allowedMaxValue)
+        {
+            playableHands.push_back(index + 1);
+        }
+    }
+
+    this->activeHand = _activeHand;
+
+    return playableHands;
 }
 
 bool Box::isBoxInSplit()
@@ -129,8 +178,31 @@ bool Box::hasBlackjack()
         cards[1]->getCardValue() == 10 && cards[0]->getCardValue() == 11);
 }
 
-bool Box::hasOvertake()
+bool Box::hasOvertake(bool checkAllHands)
 {
+    if (checkAllHands)
+    {
+        u8 handCount = this->hands.size();
+        u8 _activeHand = this->activeHand;
 
-    return this->getHandCardsValue() > this->allowedMaxValue;
+        for (u8 index = 0; index < handCount; index++)
+        {
+            this->activeHand = index;
+
+            if (this->getHandCardsValue() > this->allowedMaxValue)
+            {
+                this->activeHand = _activeHand;
+
+                return true;
+            }
+        }
+
+        this->activeHand = _activeHand;
+
+        return false;
+    }
+    else
+    {
+        return this->getHandCardsValue() > this->allowedMaxValue;
+    }
 }

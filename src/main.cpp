@@ -21,6 +21,18 @@ void initConsoleApplication()
     app.addMessageEntity("mes_id_error_player_bet_invalid", new ADisplayEntity("Player's bet must be non-negative integer and no greater than player's cash"));
     app.addMessageEntity("mes_id_info_dealer_cards", new CardsDisplayEntity("Dealer: {cards}"));
     app.addMessageEntity("mes_id_info_player_cards", new CardsDisplayEntity("Player ({name}): {cards}"));
+    
+    app.addMessageEntity("mes_id_info_game_result_dealer_cards", new CardsDisplayEntity("Dealer: {cards}"));
+    app.addMessageEntity("mes_id_info_game_result_player_cards", new CardsDisplayEntity("Player ({name}): {cards}"));
+    app.addMessageEntity("mes_id_info_game_result_win", new ADisplayEntity("Player {name} win! Received ${winCash}", true, true));
+    app.addMessageEntity("mes_id_info_game_result_lose", new ADisplayEntity("Player {name} lose! Lost ${lostCash}", true, true));
+    app.addMessageEntity("mes_id_info_game_result_tie", new ADisplayEntity("Player {name} tie! He's received his bet back.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_overtake", new ADisplayEntity("Player {name} have taken more than 21.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_split", new ADisplayEntity("Player {name} split:", true, true));
+    app.addMessageEntity("mes_id_info_game_result_split_hand_win", new ADisplayEntity("Hand {number}: Win! Received ${winCash}", true, true));
+    app.addMessageEntity("mes_id_info_game_result_split_hand_lose", new ADisplayEntity("Hand {number}: Lose! Received ${lostCash}", true, true));
+    app.addMessageEntity("mes_id_info_game_result_split_hand_tie", new ADisplayEntity("Hand {number}: Tie!", true, true));
+    app.addMessageEntity("mes_id_info_game_result_player_left", new ADisplayEntity("Player {name} lose all his money and left us.", true, true));
 
     app.requestInputToCreatePlayer();
 

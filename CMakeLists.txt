@@ -73,4 +73,5 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_SOURCE_DIR}/Dealer.cpp
         ${BJ2020_INCLUDE_DIR}/Card.h
         ${BJ2020_SOURCE_DIR}/Card.cpp
+        ${BJ2020_INCLUDE_DIR}/CardHidden.h
         ${BJ2020_SOURCE_DIR}/main.cpp)

@@ -12,6 +12,7 @@ class ConsoleDisplayHandler: public AbstractDisplayHandler<ConsoleDisplayEntity>
 {
 protected:
     void clearConsole() const;
+    void pauseConsole() const;
 
 public:
     ConsoleDisplayHandler();

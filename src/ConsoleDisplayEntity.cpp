@@ -14,3 +14,8 @@ bool ConsoleDisplayEntity::hasEndLine() const
 {
     return this->endLine;
 }
+
+bool ConsoleDisplayEntity::pauseAfterDisplay() const
+{
+    return this->pause;
+}

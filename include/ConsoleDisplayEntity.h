@@ -10,9 +10,11 @@ class ConsoleDisplayEntity: public AbstractDisplayEntity<std::string>
 protected:
     bool endLine;
 
+    bool pause;
+
 public:
-    ConsoleDisplayEntity(std::string value, bool endLine = true)
-        : AbstractDisplayEntity(std::move(value)), endLine{endLine}
+    ConsoleDisplayEntity(std::string value, bool endLine = true, bool pause = false)
+        : AbstractDisplayEntity(std::move(value)), endLine{endLine}, pause{pause}
     {}
 
     std::string& getDisplayEntity() override;
@@ -20,4 +22,6 @@ public:
     void setDisplayEntity(std::string) override;
 
     bool hasEndLine() const;
+
+    bool pauseAfterDisplay() const;
 };

@@ -4,6 +4,8 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#else
+#include "istream"
 #endif
 
 ConsoleDisplayHandler::ConsoleDisplayHandler()
@@ -22,18 +24,35 @@ void ConsoleDisplayHandler::clearConsole() const
 #endif
 }
 
+void ConsoleDisplayHandler::pauseConsole() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    system("pause");
+#else
+    std::cin.get();
+#endif
+}
+
 void ConsoleDisplayHandler::display(ConsoleDisplayEntity* entity, std::vector<ADisplayMessageParam*> params) const
 {
     this->clearConsole();
 
     std::string cache = this->processText(entity->getDisplayEntity(), params);
+    bool pause = false;
 
     if (entity->hasEndLine())
     {
         cache += "\n";
     }
 
+    pause = entity->pauseAfterDisplay();
+
     std::cout << cache << std::flush;
+
+    if (pause)
+    {
+        this->pauseConsole();
+    }
 }
 
 void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> entities, std::vector<std::vector<ADisplayMessageParam*>> params) const
@@ -42,6 +61,7 @@ void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> enti
 
     std::string cache;
     u8 index = 0;
+    bool pause = false;
 
     for (auto const& entity: entities)
     {
@@ -51,9 +71,16 @@ void ConsoleDisplayHandler::displayBatch(std::vector<ConsoleDisplayEntity*> enti
         {
             cache += "\n";
         }
+
+        pause = entity->pauseAfterDisplay();
     }
 
     std::cout << cache << std::flush;
+
+    if (pause)
+    {
+        this->pauseConsole();
+    }
 }
 
 void ConsoleDisplayHandler::transformCardListEntity(ADisplayMessageParam* entity, std::vector<Card*>& cards)
@@ -80,6 +107,11 @@ void ConsoleDisplayHandler::transformCardListEntity(ADisplayMessageParam* entity
 
             case diamond:
                 strCards += "♦"; // L"\u2666"
+                break;
+
+            case hidden:
+                strCards.pop_back();
+                strCards += "##";
                 break;
         }
 

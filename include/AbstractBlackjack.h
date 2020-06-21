@@ -44,6 +44,8 @@ protected:
 
     u8 allowedMaxValueForDealer= 17;
 
+    std::vector<u8> insuredBoxIndexes;
+
 public:
     virtual void prepareGame() = 0;
 
@@ -53,9 +55,13 @@ public:
 
     void assignApp(Application*);
 
-    std::vector<std::string> getActionNames(); // new
+    std::vector<u8> getAvailableActionIndexes(); // new
+
+    std::vector<std::string> getActionNames(const std::vector<u8>&); // new
 
     std::vector<Box>& getBoxes();
+
+    u8 getCurrentBoxIndex() const; // new
 
     Box& getCurrentBox(); // new
 
@@ -86,6 +92,14 @@ public:
     virtual u32 payToPlayerForCommonWin(); // new
 
     virtual u32 returnToPlayerItsBet(); // new
+
+    void addInsuredBoxIndex(u8); // new
+
+    bool hasInsuredBoxIndex(u8) const; // new
+
+    std::vector<u8>& getInsuredBoxList(); // new
+
+    void clearInsuredBoxList(); // new
 
     static void clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList); // new
 };

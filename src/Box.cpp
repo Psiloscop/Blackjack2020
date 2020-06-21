@@ -57,7 +57,7 @@ u8 Box::getCurrentHandNumber() const
 
 u8 Box::getHandCardsCount()
 {
-    if (this->hands.size() == 0)
+    if (this->hands.empty())
     {
         return 0;
     }
@@ -68,7 +68,12 @@ u8 Box::getHandCardsCount()
 
 u8 Box::getHandCardsValue()
 {
-    u8 value = 0;
+    if (this->hasBlackjack())
+    {
+        return 21;
+    }
+
+    u16 value = 0;
     u8 aceCardCount = 0;
 
     for (auto& card : this->hands[this->activeHand])

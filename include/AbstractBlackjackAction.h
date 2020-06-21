@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "AbstractBlackjack.h"
 
 class AbstractBlackjackAction
@@ -16,4 +17,6 @@ public:
 	virtual std::string	getName() = 0;
 
 	virtual bool execute() = 0;
+
+    virtual bool isAvailable() = 0;
 };

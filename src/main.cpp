@@ -27,7 +27,11 @@ void initConsoleApplication()
     app.addMessageEntity("mes_id_info_game_result_win", new ADisplayEntity("Player {name} win! Received ${winCash}", true, true));
     app.addMessageEntity("mes_id_info_game_result_lose", new ADisplayEntity("Player {name} lose! Lost ${lostCash}", true, true));
     app.addMessageEntity("mes_id_info_game_result_tie", new ADisplayEntity("Player {name} tie! He's received his bet back.", true, true));
-    app.addMessageEntity("mes_id_info_game_result_overtake", new ADisplayEntity("Player {name} have taken more than 21.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_overtake", new ADisplayEntity("Player {name} has taken more than 21.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_blackjack", new ADisplayEntity("Player {name} has Blackjack!", true, true));
+    app.addMessageEntity("mes_id_info_game_result_blackjack_tie", new ADisplayEntity("Player {name} has Blackjack, but the dealer too. Tie.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_blackjack_lose", new ADisplayEntity("Dealer has blackjack. Player {name} lose.", true, true));
+    app.addMessageEntity("mes_id_info_game_result_blackjack_insurance", new ADisplayEntity("Dealer has blackjack. Player {name} received his bet back.", true, true));
     app.addMessageEntity("mes_id_info_game_result_split", new ADisplayEntity("Player {name} split:", true, true));
     app.addMessageEntity("mes_id_info_game_result_split_hand_win", new ADisplayEntity("Hand {number}: Win! Received ${winCash}", true, true));
     app.addMessageEntity("mes_id_info_game_result_split_hand_lose", new ADisplayEntity("Hand {number}: Lose! Received ${lostCash}", true, true));

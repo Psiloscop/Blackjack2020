@@ -7,10 +7,14 @@ std::string HitBlackjackAction::getName()
 
 bool HitBlackjackAction::execute()
 {
-    Box& box = this->blackjack->getCurrentBox();
+    auto& box = this->blackjack->getCurrentBox();
 
     box.giveCard(this->blackjack->getNextCard());
 
     return true;
 }
 
+bool HitBlackjackAction::isAvailable()
+{
+    return true;
+}

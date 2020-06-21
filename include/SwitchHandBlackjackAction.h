@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
 
 #include "AbstractBlackjackAction.h"
 
-class HitBlackjackAction: public AbstractBlackjackAction
+class SwitchHandBlackjackAction: public AbstractBlackjackAction
 {
 public:
     using AbstractBlackjackAction::AbstractBlackjackAction;

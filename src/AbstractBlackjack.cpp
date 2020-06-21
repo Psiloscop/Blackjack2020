@@ -10,22 +10,43 @@ void AbstractBlackjack::assignApp(Application* _app)
     this->app = _app;
 }
 
-std::vector<std::string> AbstractBlackjack::getActionNames()
+std::vector<u8> AbstractBlackjack::getAvailableActionIndexes()
+{
+    std::vector<u8> availableActionIndexes;
+    u8 index = 0;
+
+    for (auto& action : this->actions)
+    {
+        if (action->isAvailable())
+        {
+            availableActionIndexes.push_back(index++);
+        }
+    }
+
+    return availableActionIndexes;
+}
+
+std::vector<std::string> AbstractBlackjack::getActionNames(const std::vector<u8>& actionIndexes)
 {
     std::vector<std::string> actionNames;
+    actionNames.reserve(actionIndexes.size());
 
-    for (auto action : this->actions)
+    for (u8 index : actionIndexes)
     {
-        actionNames.push_back(action->getName());
+        actionNames.push_back(this->actions[index]->getName());
     }
 
     return actionNames;
 }
 
-
 std::vector<Box>& AbstractBlackjack::getBoxes()
 {
     return this->boxes;
+}
+
+u8 AbstractBlackjack::getCurrentBoxIndex() const
+{
+    return this->boxIndex;
 }
 
 Box& AbstractBlackjack::getCurrentBox()
@@ -138,6 +159,9 @@ void AbstractBlackjack::dealCardsToDealer(u8 cardToDealer)
 
         this->dealerBox->giveCard(card);
     }
+
+//    this->dealerBox->giveCard(new Card(CardFace::ace, CardSuit::club));
+//    this->dealerBox->giveCard(new Card(10, CardSuit::diamond));
 }
 
 std::vector<Card*>& AbstractBlackjack::getDealerCards()
@@ -203,9 +227,49 @@ u32 AbstractBlackjack::payToPlayerForCommonWin()
 
 u32 AbstractBlackjack::returnToPlayerItsBet()
 {
-    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
+    auto tmpIt = find(this->insuredBoxIndexes.begin(), this->insuredBoxIndexes.end(), boxIndex);
+
+    if (tmpIt != this->insuredBoxIndexes.end())
+    {
+        this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() / 3 * 2);
+    }
+    else
+    {
+        this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
+    }
 
     return 0;
+}
+
+void AbstractBlackjack::addInsuredBoxIndex(u8 index)
+{
+    if (!this->hasInsuredBoxIndex(index))
+    {
+        this->insuredBoxIndexes.push_back(index);
+    }
+}
+
+bool AbstractBlackjack::hasInsuredBoxIndex(u8 index) const
+{
+    for (auto _index : this->insuredBoxIndexes)
+    {
+        if (index == _index)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+std::vector<u8>& AbstractBlackjack::getInsuredBoxList()
+{
+    return this->insuredBoxIndexes;
+}
+
+void AbstractBlackjack::clearInsuredBoxList()
+{
+    this->insuredBoxIndexes.clear();
 }
 
 void AbstractBlackjack::clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList)

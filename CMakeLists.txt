@@ -34,6 +34,16 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/AbstractBlackjackAction.h
         ${BJ2020_INCLUDE_DIR}/HitBlackjackAction.h
         ${BJ2020_SOURCE_DIR}/HitBlackjackAction.cpp
+        ${BJ2020_INCLUDE_DIR}/StandBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/StandBlackjackAction.cpp
+        ${BJ2020_INCLUDE_DIR}/DoubleBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/DoubleBlackjackAction.cpp
+        ${BJ2020_INCLUDE_DIR}/InsuranceBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/InsuranceBlackjackAction.cpp
+        ${BJ2020_INCLUDE_DIR}/SplitBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/SplitBlackjackAction.cpp
+        ${BJ2020_INCLUDE_DIR}/SwitchHandBlackjackAction.h
+        ${BJ2020_SOURCE_DIR}/SwitchHandBlackjackAction.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/MockDisplayHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleDisplayHandler.h

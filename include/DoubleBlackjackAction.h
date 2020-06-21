@@ -4,7 +4,7 @@
 
 #include "AbstractBlackjackAction.h"
 
-class HitBlackjackAction: public AbstractBlackjackAction
+class DoubleBlackjackAction: public AbstractBlackjackAction
 {
 public:
     using AbstractBlackjackAction::AbstractBlackjackAction;

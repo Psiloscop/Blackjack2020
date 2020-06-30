@@ -10,7 +10,7 @@ bool DoubleBlackjackAction::execute()
     auto& currentBox = this->blackjack->getCurrentBox();
     u32 currentBet = currentBox.getBet();
 
-    currentBox.getPlayer().decreaseCash(currentBet);
+    currentBox.getPlayer().increaseCash(currentBet);
     currentBox.setBet(currentBet * 2);
     currentBox.giveCard(this->blackjack->getNextCard());
 

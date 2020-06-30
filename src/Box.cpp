@@ -114,16 +114,48 @@ void Box::switchHand(u8 number)
     this->activeHand = number - 1;
 }
 
-void Box::setBet(u32 value)
+void Box::setBet(u32 value, bool add)
 {
-    this->bets[this->activeHand] = value;
+    if (this->activeHand == this->bets.size())
+    {
+        this->bets.push_back(value);
+    }
+    else
+    {
+        this->bets[this->activeHand] = add ? this->bets[this->activeHand] + value : value;
+    }
 
     this->player->decreaseCash(value);
+}
+
+void Box::updateBet(u32 value)
+{
+    if (this->activeHand == this->bets.size())
+    {
+        this->bets.push_back(value);
+    }
+    else
+    {
+        this->bets[this->activeHand] = value;
+    }
 }
 
 u32 Box::getBet()
 {
     return this->bets[this->activeHand];
+}
+
+u32 Box::getAllBets()
+{
+    u32 betSum = 0;
+    u8 betCount = this->bets.size();
+
+    for (u8 index = 0; index < betCount; index++)
+    {
+        betSum += this->bets[index];
+    }
+
+    return betSum;
 }
 
 bool Box::isAbleToSwitch()
@@ -189,6 +221,8 @@ bool Box::hasOvertake(bool checkAllHands)
     {
         u8 handCount = this->hands.size();
         u8 _activeHand = this->activeHand;
+        u8 overtakeCount = 0;
+        bool overtakeOnActiveHand = false;
 
         for (u8 index = 0; index < handCount; index++)
         {
@@ -196,15 +230,48 @@ bool Box::hasOvertake(bool checkAllHands)
 
             if (this->getHandCardsValue() > this->allowedMaxValue)
             {
+                overtakeCount++;
+
+                if (this->activeHand == _activeHand)
+                {
+                    overtakeOnActiveHand = true;
+                }
+            }
+        }
+
+        if (overtakeOnActiveHand)
+        {
+            if (overtakeCount == handCount)
+            {
                 this->activeHand = _activeHand;
 
                 return true;
             }
+            else
+            {
+                auto playableHandNumbers = this->getPlayableHandNumbers();
+
+                if (playableHandNumbers.size() == 1 || playableHandNumbers[playableHandNumbers.size() - 1] == _activeHand)
+                {
+                    this->switchHand(playableHandNumbers[0]);
+                }
+                else
+                {
+                    auto it = std::find_if(playableHandNumbers.begin(), playableHandNumbers.end(),
+                            [_activeHand](const u8 number) { return number > _activeHand; });
+
+                    this->switchHand(*it);
+                }
+
+                return false;
+            }
         }
+        else
+        {
+            this->activeHand = _activeHand;
 
-        this->activeHand = _activeHand;
-
-        return false;
+            return false;
+        }
     }
     else
     {

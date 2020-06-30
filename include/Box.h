@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 #include "Player.h"
 #include "Card.h"
@@ -52,9 +53,13 @@ public:
 
     void switchHand(u8);
 
-    void setBet(u32);
+    void setBet(u32, bool = false); // new
+
+    void updateBet(u32); // new
 
     u32 getBet();
+
+    u32 getAllBets(); // new
 
     bool isAbleToSwitch(); // new
 

@@ -19,8 +19,10 @@ std::vector<u8> AbstractBlackjack::getAvailableActionIndexes()
     {
         if (action->isAvailable())
         {
-            availableActionIndexes.push_back(index++);
+            availableActionIndexes.push_back(index);
         }
+
+        index++;
     }
 
     return availableActionIndexes;
@@ -140,28 +142,32 @@ void AbstractBlackjack::requestBets()
 
 void AbstractBlackjack::dealCardsToBoxes(u8 cardPerBox)
 {
-    for (auto& box : this->getBoxes())
-    {
-        for (u8 cardNumber = 1; cardNumber <= cardPerBox; cardNumber++)
-        {
-            box.giveCard(&(this->shoe[this->shoeIndex++]));
-        }
-    }
+//    for (auto& box : this->getBoxes())
+//    {
+//        for (u8 cardNumber = 1; cardNumber <= cardPerBox; cardNumber++)
+//        {
+//            box.giveCard(this->getNextCard());
+//        }
+//    }
+
+    // For "Split" action testing
+    this->getBoxes()[0].giveCard(new Card(10, CardSuit::club));
+    this->getBoxes()[0].giveCard(new Card(10, CardSuit::diamond));
 }
 
 void AbstractBlackjack::dealCardsToDealer(u8 cardToDealer)
 {
-    Card* card = nullptr;
+//    Card* card = nullptr;
+//
+//    for (u8 cardNumber = 1; cardNumber <= cardToDealer; cardNumber++)
+//    {
+//        this->dealerBox->giveCard(this->getNextCard());
+//    }
 
-    for (u8 cardNumber = 1; cardNumber <= cardToDealer; cardNumber++)
-    {
-        card = &this->shoe[this->shoeIndex++];
-
-        this->dealerBox->giveCard(card);
-    }
-
-//    this->dealerBox->giveCard(new Card(CardFace::ace, CardSuit::club));
+    // For "Insurance" action testing
+    this->dealerBox->giveCard(new Card(CardFace::ace, CardSuit::club));
 //    this->dealerBox->giveCard(new Card(10, CardSuit::diamond));
+    this->dealerBox->giveCard(new Card(5, CardSuit::spade));
 }
 
 std::vector<Card*>& AbstractBlackjack::getDealerCards()
@@ -227,16 +233,7 @@ u32 AbstractBlackjack::payToPlayerForCommonWin()
 
 u32 AbstractBlackjack::returnToPlayerItsBet()
 {
-    auto tmpIt = find(this->insuredBoxIndexes.begin(), this->insuredBoxIndexes.end(), boxIndex);
-
-    if (tmpIt != this->insuredBoxIndexes.end())
-    {
-        this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet() / 3 * 2);
-    }
-    else
-    {
-        this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
-    }
+    this->boxes[this->boxIndex].getPlayer().increaseCash(this->boxes[this->boxIndex].getBet());
 
     return 0;
 }

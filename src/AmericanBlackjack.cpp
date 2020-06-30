@@ -22,27 +22,31 @@ void AmericanBlackjack::prepareGame()
 
 void AmericanBlackjack::playGame()
 {
-    u16 actionNumber = 0;
     bool continueGame = true;
-    u32 winCash = 0;
+    bool dealerHasBlackjack = false;
+    bool dealerHasOvertake = false;
+    bool playerHasBlackjack = false;
+    bool isInsurancePlayed = false;
+    bool isBoxInSplit = false;
     u8 dealerBoxValue = 0;
     u8 currBoxValue = 0;
-    bool dealerHasBlackjack = false;
-    bool playerHasBlackjack = false;
-    bool isBoxInSplit = false;
+    u16 actionNumber = 0;
+    u32 winCash = 0;
 
     std::vector<std::vector<ADisplayMessageParam*>> messageParamList;
 
     while (!this->boxes.empty())
     {
-        actionNumber = 0;
         continueGame = true;
-        winCash = 0;
+        dealerHasBlackjack = false;
+        dealerHasOvertake = false;
+        playerHasBlackjack = false;
+        isInsurancePlayed = false;
+        isBoxInSplit = false;
         dealerBoxValue = 0;
         currBoxValue = 0;
-        dealerHasBlackjack = false;
-        playerHasBlackjack = false;
-        isBoxInSplit = false;
+        actionNumber = 0;
+        winCash = 0;
 
         AbstractBlackjack::clearMessageParamList(messageParamList);
 
@@ -104,7 +108,7 @@ void AmericanBlackjack::playGame()
                 messageParamList.push_back({
                     new ADisplayMessageParam("id", "mes_id_info_game_result_lose"),
                     new ADisplayMessageParam("name", currBox.getPlayer().getName()),
-                    new ADisplayMessageParam("lostCash", std::to_string(currBox.getBet()))
+                    new ADisplayMessageParam("lostCash", std::to_string(currBox.getAllBets()))
                 });
                 messageParamList.push_back({
                     new ADisplayMessageParam("id", "mes_id_info_game_result_overtake"),
@@ -116,11 +120,29 @@ void AmericanBlackjack::playGame()
             }
         }
 
-        if (!this->insuredBoxIndexes.empty() && !this->dealerBox->hasBlackjack())
+        if (!isInsurancePlayed && !this->insuredBoxIndexes.empty() && !this->dealerBox->hasBlackjack())
         {
             boxIndexes.clear();
             boxIndexes.resize(this->insuredBoxIndexes.size());
             boxIndexes.assign(this->insuredBoxIndexes.begin(), this->insuredBoxIndexes.end());
+
+            // Grab user's insurances
+            for (u8 boxIndex : boxIndexes)
+            {
+                auto& currBox = boxes[boxIndex];
+
+                currBox.updateBet(currBox.getBet() / 3 * 2);
+            }
+
+            messageParamList.push_back({
+                new ADisplayMessageParam("id", "mes_id_info_game_result_insurance_lose")
+            });
+            this->app->displayMessages(messageParamList);
+
+            AbstractBlackjack::clearMessageParamList(messageParamList);
+
+            continueGame = true;
+            isInsurancePlayed = true;
 
             goto loopBoxes; // I know it's awful but it fits perfectly in this case.
         }
@@ -130,16 +152,16 @@ void AmericanBlackjack::playGame()
             this->dealerBox->giveCard(this->getNextCard());
         }
 
-        messageParamList.push_back({
-            new ADisplayMessageParam("id", "mes_id_info_dealer_cards"),
-            new DisplayMessageParamDealerCards("cards", "", this->dealerBox->getHandCards(), false)
-        });
-
         dealerBoxValue = this->dealerBox->getHandCardsValue();
         dealerHasBlackjack = this->dealerBox->hasBlackjack();
+        dealerHasOvertake = this->dealerBox->getHandCardsValue() > 21;
 
         for (auto boxIt = boxes.begin(); boxIt != boxes.end();)
         {
+            messageParamList.push_back({
+                new ADisplayMessageParam("id", "mes_id_info_dealer_cards"),
+                new DisplayMessageParamDealerCards("cards", "", this->dealerBox->getHandCards(), false)
+            });
             messageParamList.push_back({
                 new ADisplayMessageParam("id", "mes_id_info_player_cards"),
                 new ADisplayMessageParam("name", boxIt->getPlayer().getName()),
@@ -155,12 +177,38 @@ void AmericanBlackjack::playGame()
                 if (isBoxInSplit)
                 {
                     messageParamList.push_back({
-                        new ADisplayMessageParam("id", "mes_id_info_game_result_split")
+                        new ADisplayMessageParam("id", "mes_id_info_game_result_split"),
+                        new ADisplayMessageParam("name", boxIt->getPlayer().getName())
                     });
 
-                    for (u8 handNumber = 1; handNumber <= boxIt->getHandCardsCount(); handNumber++)
+                    for (u8 handNumber = 1; handNumber <= boxIt->getHandCount(); handNumber++)
                     {
                         boxIt->switchHand(handNumber);
+
+                        if (dealerHasBlackjack)
+                        {
+                            messageParamList.push_back({
+                                new ADisplayMessageParam("id", "mes_id_info_game_result_blackjack_lose"),
+                                new ADisplayMessageParam("name", boxIt->getPlayer().getName()),
+                            });
+
+                            continue;
+                        }
+                        else if (dealerHasOvertake && !boxIt->hasOvertake())
+                        {
+                            winCash = this->payToPlayerForCommonWin();
+
+                            messageParamList.push_back({
+                                new ADisplayMessageParam("id", "mes_id_info_game_result_dealer_overtake")
+                            });
+                            messageParamList.push_back({
+                                new ADisplayMessageParam("id", "mes_id_info_game_result_split_hand_win"),
+                                new ADisplayMessageParam("number", std::to_string(handNumber)),
+                                new ADisplayMessageParam("winCash", std::to_string(winCash))
+                            });
+
+                            continue;
+                        }
 
                         if (currBoxValue == dealerBoxValue)
                         {
@@ -193,7 +241,20 @@ void AmericanBlackjack::playGame()
                 }
                 else
                 {
-                    if (dealerHasBlackjack && playerHasBlackjack)
+                    if (dealerHasOvertake)
+                    {
+                        winCash = this->payToPlayerForCommonWin();
+
+                        messageParamList.push_back({
+                            new ADisplayMessageParam("id", "mes_id_info_game_result_dealer_overtake")
+                        });
+                        messageParamList.push_back({
+                            new ADisplayMessageParam("id", "mes_id_info_game_result_win"),
+                            new ADisplayMessageParam("name", boxIt->getPlayer().getName()),
+                            new ADisplayMessageParam("winCash", std::to_string(winCash))
+                        });
+                    }
+                    else if (dealerHasBlackjack && playerHasBlackjack)
                     {
                         this->returnToPlayerItsBet();
 
@@ -271,7 +332,7 @@ void AmericanBlackjack::playGame()
                 messageParamList.push_back({
                     new ADisplayMessageParam("id", "mes_id_info_game_result_lose"),
                     new ADisplayMessageParam("name",  boxIt->getPlayer().getName()),
-                    new ADisplayMessageParam("lostCash", std::to_string(boxIt->getBet()))
+                    new ADisplayMessageParam("lostCash", std::to_string(boxIt->getAllBets()))
                 });
             }
 

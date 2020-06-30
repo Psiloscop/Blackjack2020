@@ -12,7 +12,7 @@ bool InsuranceBlackjackAction::execute()
 
     this->blackjack->addInsuredBoxIndex(currentBoxIndex);
 
-    currentBox.setBet(currentBox.getBet() + currentBox.getBet() / 2);
+    currentBox.setBet(currentBox.getBet() / 2, true);
 
     return false;
 }
@@ -24,6 +24,7 @@ bool InsuranceBlackjackAction::isAvailable()
     u8 currentBoxIndex = this->blackjack->getCurrentBoxIndex();
 
     return !this->blackjack->hasInsuredBoxIndex(currentBoxIndex) &&
+        dealerBox.getHandCards().size() == 2 &&
         dealerBox.getHandCards()[0]->getCardLetter() == "A" &&
         currentBox.getHandCount() == 1 &&
         currentBox.getHandCardsCount() == 2 &&

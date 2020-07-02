@@ -15,7 +15,7 @@ AmericanBlackjack::AmericanBlackjack()
 
 void AmericanBlackjack::prepareGame()
 {
-    this->createShoe(1);
+    this->createShoe(this->deckCount);
     this->shuffleShoe();
     this->createBoxes(this->app->getPlayers(), 4);
 }
@@ -49,6 +49,19 @@ void AmericanBlackjack::playGame()
         winCash = 0;
 
         AbstractBlackjack::clearMessageParamList(messageParamList);
+
+        if (this->shouldShoeBeReassembled(this->app->getPlayers().size()))
+        {
+            this->createShoe(this->deckCount);
+            this->shuffleShoe();
+
+            messageParamList.push_back({
+                new ADisplayMessageParam("id", "mes_id_info_shoe_is_reassembled"),
+            });
+            this->app->displayMessages(messageParamList);
+
+            AbstractBlackjack::clearMessageParamList(messageParamList);
+        }
 
         this->requestBets();
         this->dealCardsToBoxes(2);

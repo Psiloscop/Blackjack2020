@@ -58,8 +58,12 @@ Box& AbstractBlackjack::getDealerBox()
     return *this->dealerBox;
 }
 
-std::vector<Card>& AbstractBlackjack::createShoe(u8 deckCount)
+std::vector<Card>& AbstractBlackjack::createShoe(u8 _deckCount)
 {
+    this->shoe.clear();
+    this->deckCount = _deckCount;
+    this->shoeIndex = 0;
+
 	while (deckCount > 0)
 	{
 		for (u8 suitNumber = 1; suitNumber <= 4; suitNumber++)
@@ -100,6 +104,31 @@ std::vector<Card>& AbstractBlackjack::shuffleShoe()
 
     return this->shoe;
 }
+
+bool AbstractBlackjack::shouldShoeBeReassembled(u8 playerCount)
+{
+    u8 cardSumValue = 0;
+    u8 minCardCountToPlay = 0;
+    u8 minCardSumValueToWin = 21;
+    std::vector<u8> cardNumbers = {2, 3, 4, 5, 6, 7}; // Sum of these cards is min for the bust
+
+    for (auto cardNumber : cardNumbers)
+    {
+        for (u8 deckNumber = 1; deckNumber <= this->deckCount + 1; deckNumber++)
+        {
+            cardSumValue += cardNumber;
+            minCardCountToPlay++;
+
+            if (cardSumValue >= minCardSumValueToWin)
+            {
+                return minCardCountToPlay * playerCount > this->shoe.size() - this->shoeIndex;
+            }
+        }
+    }
+
+    return false;
+}
+
 
 Card* AbstractBlackjack::getNextCard()
 {

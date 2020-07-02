@@ -356,9 +356,9 @@ TEST(AbstractBlackjack, getNextCard)
 }
 
 /**
- * Testing both addInsuredBoxIndex() and hasInsuredBoxIndex() methods
+ * Testing shouldShoeBeReassembled() method
  */
-TEST(AbstractBlackjack, addInsuredBoxIndex_hasInsuredBoxIndex)
+TEST(AbstractBlackjack, shouldShoeBeReassembled)
 {
     MockAbstractBlackjack game;
     MockInputHandler inputHandler;
@@ -368,17 +368,76 @@ TEST(AbstractBlackjack, addInsuredBoxIndex_hasInsuredBoxIndex)
     app.createPlayer("Test1", 250);
 
     auto& shoe = game.createShoe(1);
-    auto& boxes = game.createBoxes(app.getPlayers(), app.getPlayers().size());
+    auto& box = game.createBoxes(app.getPlayers(), app.getPlayers().size())[0];
 
-    u8 boxIndex1 = game.getBoxIndex(boxes[0]);
+    u8 cardCount = shoe.size(); // 52
+    u8 minCardCountToPlay = 6;
+    u8 playerCount = app.getPlayers().size();
 
-    // Check if box is not insured
-    EXPECT_FALSE(game.hasInsuredBoxIndex(boxIndex1));
+    EXPECT_FALSE(game.shouldShoeBeReassembled(playerCount));
 
-    game.addInsuredBoxIndex(boxIndex1);
+    box.resetBox();
 
-    // Check if box is insured
-    EXPECT_TRUE(game.hasInsuredBoxIndex(boxIndex1));
+    for (u16 cardNumber = 0; cardNumber <= cardCount - minCardCountToPlay; cardNumber++)
+    {
+        box.giveCard(game.getNextCard());
+    }
+
+    EXPECT_TRUE(game.shouldShoeBeReassembled(playerCount));
+
+
+
+    shoe = game.createShoe(1);
+    cardCount = shoe.size();
+    minCardCountToPlay = 12;
+    playerCount = 2;
+
+    EXPECT_FALSE(game.shouldShoeBeReassembled(playerCount));
+
+    box.resetBox();
+
+    for (u16 cardNumber = 0; cardNumber <= cardCount - minCardCountToPlay; cardNumber++)
+    {
+        box.giveCard(game.getNextCard());
+    }
+
+    EXPECT_TRUE(game.shouldShoeBeReassembled(playerCount));
+
+
+
+    shoe = game.createShoe(2);
+    cardCount = shoe.size();
+    minCardCountToPlay = 6;
+    playerCount = 1;
+
+    EXPECT_FALSE(game.shouldShoeBeReassembled(playerCount));
+
+    box.resetBox();
+
+    for (u16 cardNumber = 0; cardNumber <= cardCount - minCardCountToPlay; cardNumber++)
+    {
+        box.giveCard(game.getNextCard());
+    }
+
+    EXPECT_TRUE(game.shouldShoeBeReassembled(playerCount));
+
+
+
+    shoe = game.createShoe(2);
+    cardCount = shoe.size();
+    minCardCountToPlay = 12;
+    playerCount = 2;
+
+    EXPECT_FALSE(game.shouldShoeBeReassembled(playerCount));
+
+    box.resetBox();
+
+    for (u16 cardNumber = 0; cardNumber <= cardCount - minCardCountToPlay; cardNumber++)
+    {
+        box.giveCard(game.getNextCard());
+    }
+
+    EXPECT_TRUE(game.shouldShoeBeReassembled(playerCount));
 }
 
 // Commented because Gmock is fucked up

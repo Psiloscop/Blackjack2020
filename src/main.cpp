@@ -39,6 +39,7 @@ void initConsoleApplication()
     app.addMessageEntity("mes_id_info_game_result_split_hand_lose", new ADisplayEntity("Hand {number}: Lose! Lost ${lostCash}", true, true));
     app.addMessageEntity("mes_id_info_game_result_split_hand_tie", new ADisplayEntity("Hand {number}: Tie!", true, true));
     app.addMessageEntity("mes_id_info_game_result_player_left", new ADisplayEntity("Player {name} lose all his money and left us.", true, true));
+    app.addMessageEntity("mes_id_info_shoe_is_reassembled", new ADisplayEntity("Shoe has been reassembled.", true, true));
 
     app.requestInputToCreatePlayer();
 

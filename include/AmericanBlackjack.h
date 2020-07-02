@@ -14,6 +14,9 @@
 
 class AmericanBlackjack: public AbstractBlackjack
 {
+protected:
+    const u8 deckCount = 6;
+
 public:
     AmericanBlackjack();
 

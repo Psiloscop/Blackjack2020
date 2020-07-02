@@ -31,6 +31,8 @@ protected:
 
     u16 shoeIndex = 0;
 
+    u8 deckCount = 0;
+
     u8 allowedMaxValueForPlayer = 21;
 
     u8 allowedMaxValueForDealer= 17;
@@ -59,6 +61,8 @@ public:
     virtual std::vector<Card>& createShoe(u8 deckCount);
 
     std::vector<Card>& shuffleShoe();
+
+    bool shouldShoeBeReassembled(u8 playerCount);
 
     Card* getNextCard();
 

@@ -88,6 +88,8 @@ TEST(Box, getHandCardsValue)
     Card card4(CardFace::queen, CardSuit::club);
     Card card5(CardFace::king, CardSuit::diamond);
     Card card6(CardFace::ace, CardSuit::heart);
+    Card card7(4, CardSuit::diamond);
+    Card card8(6, CardSuit::heart);
 
     u8 allowedMaxValueForPlayer = 21;
     Box box(&player, allowedMaxValueForPlayer);
@@ -130,6 +132,16 @@ TEST(Box, getHandCardsValue)
 
     // Check if cards sum value corresponding expected value
     EXPECT_EQ(box.getHandCardsValue(), 20);
+
+    box.resetBox();
+
+    box.giveCard(&card6);
+    box.giveCard(&card7);
+    box.giveCard(&card8);
+
+    // Check if cards sum value corresponding expected value
+    EXPECT_EQ(box.getHandCardsValue(), 21);
+
 
 
     // Dealer test case

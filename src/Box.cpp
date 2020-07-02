@@ -93,12 +93,19 @@ u8 Box::getHandCardsValue()
         }
     }
 
-    while (aceCardCount > 0)
+    if (aceCardCount == 1 && (this->allowedMaxValue - value) == Card::getMaxAceCardValue())
     {
-        value += (this->allowedMaxValue - (value + Card::getMinAceCardValue() * aceCardCount) >= Card::getMaxAceCardValue())
-                ? Card::getMaxAceCardValue() : Card::getMinAceCardValue();
+        value += Card::getMaxAceCardValue();
+    }
+    else
+    {
+        while (aceCardCount > 0)
+        {
+            value += (this->allowedMaxValue - (value + Card::getMinAceCardValue() * aceCardCount) >= Card::getMaxAceCardValue())
+                     ? Card::getMaxAceCardValue() : Card::getMinAceCardValue();
 
-        aceCardCount--;
+            aceCardCount--;
+        }
     }
 
     return value;

@@ -6,13 +6,6 @@
 #include "Player.h"
 #include "Card.h"
 
-enum BoxStatus
-{
-    ok,
-    overtook,
-    blackjack,
-};
-
 class Box
 {
 protected:
@@ -27,9 +20,9 @@ protected:
     u8 activeHand = 0;
 
 public:
-    Box(Player&, u8);
+    Box(Player*, u8);
 
-    void assignPlayer(Player&);
+    void assignPlayer(Player*);
 
     void resetBox();
 
@@ -41,33 +34,31 @@ public:
 
     std::vector<Card*>& getHandCards();
 
-    u8 getHandCount() const; // new
+    u8 getHandCount() const;
 
-    u8 getCurrentHandNumber() const; // new
+    u8 getCurrentHandNumber() const;
 
     u8 getHandCardsCount();
 
     u8 getHandCardsValue();
 
-    bool isAllowedMaxValueReached(); // new
+    bool isAllowedMaxValueReached();
 
     void switchHand(u8);
 
-    void setBet(u32, bool = false); // new
+    void setBet(u32, bool = false);
 
-    void updateBet(u32); // new
+    void updateBet(u32);
 
     u32 getBet();
 
-    u32 getAllBets(); // new
+    u32 getAllBets();
 
-    bool isAbleToSwitch(); // new
-
-    std::vector<u8> getPlayableHandNumbers(); // new
+    std::vector<u8> getPlayableHandNumbers();
 
     bool isBoxInSplit();
 
     bool hasBlackjack();
 
-    bool hasOvertake(bool = false); // new
+    bool hasOvertake(bool = false);
 };

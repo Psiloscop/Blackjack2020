@@ -145,7 +145,7 @@ TEST(AbstractBlackjack, createBoxesWithApp)
     app.createPlayer("Test4", 1000);
 
     std::vector<Player>& players = app.getPlayers();
-    u8 boxCount = 4;
+    u8 boxCount = players.size();
 
     auto& boxes = game.createBoxes(players, boxCount);
 
@@ -216,117 +216,6 @@ TEST(AbstractBlackjack, dealCardsToDealer_getDealerCards)
 }
 
 /**
- * Testing getBoxStatus() method
- */
-TEST(AbstractBlackjack, getBoxStatus)
-{
-    MockAbstractBlackjack game;
-    MockInputHandler inputHandler;
-    MockDisplayHandler displayHandler;
-    Application app(game, inputHandler, displayHandler);
-
-    app.createPlayer("Test1", 250);
-    std::vector<Player>& players = app.getPlayers();
-    auto& box = game.createBoxes(players, 1)[0];
-    auto& shoe = game.createShoe(1);
-
-    auto card1 = new Card(CardFace::king, CardSuit::club);
-    auto card2 = new Card(CardFace::ace, CardSuit::heart);
-    box.giveCard(card1);
-    box.giveCard(card2);
-    auto status = game.getBoxStatus();
-    delete card1;
-    delete card2;
-
-    EXPECT_TRUE(status == BoxStatus::blackjack);
-
-    box.resetBox();
-
-    card1 = new Card(CardFace::king, CardSuit::club);
-    card2 = new Card(CardFace::queen, CardSuit::heart);
-    auto card3 = new Card(CardFace::jack, CardSuit::diamond);
-    box.giveCard(card1);
-    box.giveCard(card2);
-    box.giveCard(card3);
-    status = game.getBoxStatus();
-    delete card1;
-    delete card2;
-    delete card3;
-
-    EXPECT_TRUE(status == BoxStatus::overtook);
-
-    box.resetBox();
-
-    card1 = new Card(CardFace::king, CardSuit::club);
-    card2 = new Card(9, CardSuit::heart);
-    box.giveCard(card1);
-    box.giveCard(card2);
-    status = game.getBoxStatus();
-    delete card1;
-    delete card2;
-
-    EXPECT_TRUE(status == BoxStatus::ok);
-}
-
-
-/**
- * Testing getRoundResult() method
- */
-TEST(AbstractBlackjack, getRoundResult)
-{
-    MockAbstractBlackjack game;
-    MockInputHandler inputHandler;
-    MockDisplayHandler displayHandler;
-    Application app(game, inputHandler, displayHandler);
-
-    app.createPlayer("Test1", 250);
-    std::vector<Player>& players = app.getPlayers();
-    auto& box = game.createBoxes(players, 1)[0];
-    auto& dealerBox = game.getDealerBox();
-    auto& shoe = game.createShoe(1);
-
-    auto card1 = new Card(CardFace::king, CardSuit::club);
-    auto card2 = new Card(CardFace::queen, CardSuit::heart);
-    box.giveCard(card1);
-    box.giveCard(card2);
-    dealerBox.giveCard(card1);
-    dealerBox.giveCard(card2);
-    auto result = game.getRoundResult();
-    delete card1;
-    delete card2;
-
-    EXPECT_TRUE(result == RoundResult::tie);
-
-    box.resetBox();
-    dealerBox.resetBox();
-
-    card1 = new Card(CardFace::king, CardSuit::club);
-    card2 = new Card(CardFace::jack, CardSuit::heart);
-    box.giveCard(card1);
-    box.giveCard(card2);
-    dealerBox.giveCard(card1);
-    result = game.getRoundResult();
-    delete card1;
-    delete card2;
-
-    EXPECT_TRUE(result == RoundResult::win);
-
-    box.resetBox();
-    dealerBox.resetBox();
-
-    card1 = new Card(CardFace::king, CardSuit::club);
-    card2 = new Card(9, CardSuit::heart);
-    box.giveCard(card1);
-    dealerBox.giveCard(card1);
-    dealerBox.giveCard(card2);
-    result = game.getRoundResult();
-    delete card1;
-    delete card2;
-
-    EXPECT_TRUE(result == RoundResult::lose);
-}
-
-/**
  * Testing payToPlayerForBlackjack() method
  */
 TEST(AbstractBlackjack, payToPlayerForBlackjack)
@@ -347,7 +236,7 @@ TEST(AbstractBlackjack, payToPlayerForBlackjack)
 
     EXPECT_TRUE(player.getCash() == 0);
 
-    game.payToPlayerForBlackjack();
+    game.payToPlayerForBlackjack(&box);
 
     EXPECT_TRUE(player.getCash() == 2500);
 }
@@ -373,7 +262,7 @@ TEST(AbstractBlackjack, payToPlayerForCommonWin)
 
     EXPECT_TRUE(player.getCash() == 0);
 
-    game.payToPlayerForCommonWin();
+    game.payToPlayerForCommonWin(&box);
 
     EXPECT_TRUE(player.getCash() == 2000);
 }
@@ -399,11 +288,98 @@ TEST(AbstractBlackjack, returnToPlayerItsBet)
 
     EXPECT_TRUE(player.getCash() == 0);
 
-    game.returnToPlayerItsBet();
+    game.returnToPlayerItsBet(&box);
 
     EXPECT_TRUE(player.getCash() == 1000);
 }
+/**
+ * Testing getBoxIndex() method
+ */
+TEST(AbstractBlackjack, getBoxIndex)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
 
+    app.createPlayer("Test1", 250);
+    app.createPlayer("Test2", 500);
+    app.createPlayer("Test3", 750);
+    app.createPlayer("Test4", 1000);
+
+    game.createBoxes(app.getPlayers(), app.getPlayers().size());
+
+    auto& box1 = game.getBoxes()[0];
+    auto& box2 = game.getBoxes()[1];
+    auto& box3 = game.getBoxes()[2];
+    auto& box4 = game.getBoxes()[3];
+
+    // Check if box1 index is 0
+    EXPECT_EQ(game.getBoxIndex(box1), 0);
+
+    // Check if box2 index is 1
+    EXPECT_EQ(game.getBoxIndex(box2), 1);
+
+    // Check if box3 index is 2
+    EXPECT_EQ(game.getBoxIndex(box3), 2);
+
+    // Check if box4 index is 3
+    EXPECT_EQ(game.getBoxIndex(box4), 3);
+}
+
+/**
+ * Testing getNextCard() method
+ */
+TEST(AbstractBlackjack, getNextCard)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 250);
+
+    auto& shoe = game.createShoe(1);
+    auto& boxes = game.createBoxes(app.getPlayers(), 1);
+
+    boxes[0].giveCard(game.getNextCard());
+    boxes[0].giveCard(game.getNextCard());
+    boxes[0].giveCard(game.getNextCard());
+    boxes[0].giveCard(game.getNextCard());
+
+    auto& cards = boxes[0].getHandCards();
+
+    EXPECT_TRUE(*cards[0] == shoe[0]);
+    EXPECT_TRUE(*cards[1] == shoe[1]);
+    EXPECT_TRUE(*cards[2] == shoe[2]);
+    EXPECT_TRUE(*cards[3] == shoe[3]);
+}
+
+/**
+ * Testing both addInsuredBoxIndex() and hasInsuredBoxIndex() methods
+ */
+TEST(AbstractBlackjack, addInsuredBoxIndex_hasInsuredBoxIndex)
+{
+    MockAbstractBlackjack game;
+    MockInputHandler inputHandler;
+    MockDisplayHandler displayHandler;
+    Application app(game, inputHandler, displayHandler);
+
+    app.createPlayer("Test1", 250);
+
+    auto& shoe = game.createShoe(1);
+    auto& boxes = game.createBoxes(app.getPlayers(), app.getPlayers().size());
+
+    u8 boxIndex1 = game.getBoxIndex(boxes[0]);
+
+    // Check if box is not insured
+    EXPECT_FALSE(game.hasInsuredBoxIndex(boxIndex1));
+
+    game.addInsuredBoxIndex(boxIndex1);
+
+    // Check if box is insured
+    EXPECT_TRUE(game.hasInsuredBoxIndex(boxIndex1));
+}
 
 // Commented because Gmock is fucked up
 //

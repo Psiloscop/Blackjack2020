@@ -4,6 +4,8 @@
 
 #include "AbstractBlackjack.h"
 
+class Box;
+
 class AbstractBlackjackAction
 {
 protected:
@@ -16,7 +18,7 @@ public:
 
 	virtual std::string	getName() = 0;
 
-	virtual bool execute() = 0;
+	virtual bool execute(Box*) = 0;
 
-    virtual bool isAvailable() = 0;
+    virtual bool isAvailable(Box*) = 0;
 };

@@ -68,6 +68,8 @@ add_executable(${BJ2020_PROJECT_NAME}
         ${BJ2020_INCLUDE_DIR}/TemplateInputHandler.h
         ${BJ2020_INCLUDE_DIR}/MockInputHandler.h
         ${BJ2020_INCLUDE_DIR}/ConsoleInputHandler.h
+        ${BJ2020_INCLUDE_DIR}/MockDisplayMessageParam.h
+        ${BJ2020_SOURCE_DIR}/MockDisplayMessageParam.cpp
         ${BJ2020_INCLUDE_DIR}/AbstractInputValidator.h
         ${BJ2020_INCLUDE_DIR}/TemplateInputValidator.h
         ${BJ2020_INCLUDE_DIR}/PlayerNameInputValidator.h

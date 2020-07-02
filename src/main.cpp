@@ -21,7 +21,7 @@ void initConsoleApplication()
     app.addMessageEntity("mes_id_error_player_bet_invalid", new ADisplayEntity("Player's bet must be non-negative integer and no greater than player's cash"));
     app.addMessageEntity("mes_id_info_dealer_cards", new CardsDisplayEntity("Dealer: {cards}"));
     app.addMessageEntity("mes_id_info_player_cards", new CardsDisplayEntity("Player ({name}): {cards}"));
-    
+
     app.addMessageEntity("mes_id_info_game_result_dealer_cards", new CardsDisplayEntity("Dealer: {cards}"));
     app.addMessageEntity("mes_id_info_game_result_player_cards", new CardsDisplayEntity("Player ({name}): {cards}"));
     app.addMessageEntity("mes_id_info_game_result_win", new ADisplayEntity("Player {name} win! Received ${winCash}", true, true));

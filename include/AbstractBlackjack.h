@@ -11,13 +11,6 @@
 #include "Player.h"
 #include "PlayerBetInputValidator.h"
 
-enum RoundResult
-{
-    win,
-    lose,
-    tie
-};
-
 class Application;
 class AbstractBlackjackAction;
 
@@ -38,8 +31,6 @@ protected:
 
     u16 shoeIndex = 0;
 
-    u8 boxIndex = 0;
-
     u8 allowedMaxValueForPlayer = 21;
 
     u8 allowedMaxValueForDealer= 17;
@@ -55,15 +46,13 @@ public:
 
     void assignApp(Application*);
 
-    std::vector<u8> getAvailableActionIndexes(); // new
+    std::vector<u8> getAvailableActionIndexes(Box&); // untestable
 
-    std::vector<std::string> getActionNames(const std::vector<u8>&); // new
+    std::vector<std::string> getActionNames(const std::vector<u8>&); // untestable
 
     std::vector<Box>& getBoxes();
 
-    u8 getCurrentBoxIndex() const; // new
-
-    Box& getCurrentBox(); // new
+    u8 getBoxIndex(Box&) const;
 
     Box& getDealerBox();
 
@@ -71,7 +60,7 @@ public:
 
     std::vector<Card>& shuffleShoe();
 
-    Card* getNextCard(); // new
+    Card* getNextCard();
 
     virtual std::vector<Box>& createBoxes(std::vector<Player>& players, u8 boxCount);
 
@@ -83,23 +72,15 @@ public:
 
     std::vector<Card*>& getDealerCards();
 
-    virtual BoxStatus getBoxStatus();
+    virtual u32 payToPlayerForBlackjack(Box*);
 
-    virtual RoundResult getRoundResult();
+    virtual u32 payToPlayerForCommonWin(Box*);
 
-    virtual u32 payToPlayerForBlackjack(); // new
+    virtual u32 returnToPlayerItsBet(Box*);
 
-    virtual u32 payToPlayerForCommonWin(); // new
+    void addInsuredBoxIndex(u8);
 
-    virtual u32 returnToPlayerItsBet(); // new
+    bool hasInsuredBoxIndex(u8) const;
 
-    void addInsuredBoxIndex(u8); // new
-
-    bool hasInsuredBoxIndex(u8) const; // new
-
-    std::vector<u8>& getInsuredBoxList(); // new
-
-    void clearInsuredBoxList(); // new
-
-    static void clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList); // new
+    static void clearMessageParamList(std::vector<std::vector<ADisplayMessageParam*>>& messageParamList); // untestable
 };

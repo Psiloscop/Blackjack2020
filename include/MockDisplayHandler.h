@@ -6,9 +6,15 @@
 class MockDisplayHandler: public AbstractDisplayHandler<MockDisplayEntity>
 {
 public:
-    void display(MockDisplayEntity*, std::map<std::string, std::string>) const override
+    void display(MockDisplayEntity*, std::vector<ADisplayMessageParam*>) const override
     {}
 
-    void displayBatch(std::vector<MockDisplayEntity*>, std::vector<std::map<std::string, std::string>>) const override
+    void displayBatch(std::vector<MockDisplayEntity*>, std::vector<std::vector<ADisplayMessageParam*>>) const override
+    {}
+
+    void transformCardListEntity(ADisplayMessageParam*, std::vector<Card*>&) override
+    {}
+
+    void transformCardListEntities(ADisplayMessageParam*, std::vector<std::vector<Card*>>&, u8 currentHand) override
     {}
 };

@@ -5,25 +5,23 @@ std::string DoubleBlackjackAction::getName()
     return "Double";
 }
 
-bool DoubleBlackjackAction::execute()
+bool DoubleBlackjackAction::execute(Box* currentBox)
 {
-    auto& currentBox = this->blackjack->getCurrentBox();
-    u32 currentBet = currentBox.getBet();
+    u32 currentBet = currentBox->getBet();
 
-    currentBox.getPlayer().increaseCash(currentBet);
-    currentBox.setBet(currentBet * 2);
-    currentBox.giveCard(this->blackjack->getNextCard());
+    currentBox->getPlayer().increaseCash(currentBet);
+    currentBox->setBet(currentBet * 2);
+    currentBox->giveCard(this->blackjack->getNextCard());
 
     return false;
 }
 
-bool DoubleBlackjackAction::isAvailable()
+bool DoubleBlackjackAction::isAvailable(Box* currentBox)
 {
-    auto& currentBox = this->blackjack->getCurrentBox();
-    u32 currentBet = currentBox.getBet();
+    u32 currentBet = currentBox->getBet();
 
-    return currentBox.getHandCount() == 1 &&
-        currentBox.getHandCardsCount() == 2 &&
-        currentBox.getPlayer().getCash() >= currentBet;
+    return currentBox->getHandCount() == 1 &&
+        currentBox->getHandCardsCount() == 2 &&
+        currentBox->getPlayer().getCash() >= currentBet;
 }
 

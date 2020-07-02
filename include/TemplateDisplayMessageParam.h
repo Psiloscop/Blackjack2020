@@ -9,14 +9,14 @@ template <typename TKey, typename TValue>
 class TemplateDisplayMessageParam
 {
 protected:
-    std::string key;
+    TKey key;
 
-    std::string value;
+    TValue value;
 
     bool isValueTransformed = false;
 
 public:
-    TemplateDisplayMessageParam(std::string key, std::string value)
+    TemplateDisplayMessageParam(TKey key, TValue value)
         : key{std::move(key)}, value{std::move(value)}
     {}
 

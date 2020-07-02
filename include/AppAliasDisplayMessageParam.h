@@ -2,9 +2,9 @@
 
 #ifdef BJ2020_TEST_MODE
 
-//#include "MockDisplayMessageParam.h"
-//
-//using ADisplayMessageParam = MockDisplayMessageParam;
+#include "MockDisplayMessageParam.h"
+
+using ADisplayMessageParam = MockDisplayMessageParam;
 
 #else
 

@@ -12,7 +12,7 @@ public:
 
 	std::string	getName() override;
 
-	bool execute() override;
+	bool execute(Box*) override;
 
-	bool isAvailable() override;
+	bool isAvailable(Box*) override;
 };

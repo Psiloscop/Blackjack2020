@@ -83,14 +83,14 @@ void AmericanBlackjack::playGame()
 
             while (continueGame)
             {
-                auto actionIndexes = this->getAvailableActionIndexes();
+                auto actionIndexes = this->getAvailableActionIndexes(currBox);
                 auto actionNames = this->getActionNames(actionIndexes);
                 auto validator = ActionSelectInputValidator(actionIndexes.size(), "Action", actionNames,
-                                                            this->getDealerBox(), this->getCurrentBox());
+                                                            this->getDealerBox(), currBox);
                 actionNumber = this->app->requestInput<u16>(validator);
                 actionNumber--;
 
-                continueGame = this->actions[actionIndexes[actionNumber]]->execute();
+                continueGame = this->actions[actionIndexes[actionNumber]]->execute(&currBox);
 
                 if (continueGame)
                 {
@@ -158,6 +158,8 @@ void AmericanBlackjack::playGame()
 
         for (auto boxIt = boxes.begin(); boxIt != boxes.end();)
         {
+            auto boxPtr = &(*boxIt);
+
             messageParamList.push_back({
                 new ADisplayMessageParam("id", "mes_id_info_dealer_cards"),
                 new DisplayMessageParamDealerCards("cards", "", this->dealerBox->getHandCards(), false)
@@ -196,7 +198,7 @@ void AmericanBlackjack::playGame()
                         }
                         else if (dealerHasOvertake && !boxIt->hasOvertake())
                         {
-                            winCash = this->payToPlayerForCommonWin();
+                            winCash = this->payToPlayerForCommonWin(boxPtr);
 
                             messageParamList.push_back({
                                 new ADisplayMessageParam("id", "mes_id_info_game_result_dealer_overtake")
@@ -212,7 +214,7 @@ void AmericanBlackjack::playGame()
 
                         if (currBoxValue == dealerBoxValue)
                         {
-                            this->returnToPlayerItsBet();
+                            this->returnToPlayerItsBet(boxPtr);
 
                             messageParamList.push_back({
                                 new ADisplayMessageParam("id", "mes_id_info_game_result_split_hand_tie"),
@@ -221,7 +223,7 @@ void AmericanBlackjack::playGame()
                         }
                         else if (currBoxValue > dealerBoxValue)
                         {
-                            winCash = this->payToPlayerForCommonWin();
+                            winCash = this->payToPlayerForCommonWin(boxPtr);
 
                             messageParamList.push_back({
                                 new ADisplayMessageParam("id", "mes_id_info_game_result_split_hand_win"),
@@ -243,7 +245,7 @@ void AmericanBlackjack::playGame()
                 {
                     if (dealerHasOvertake)
                     {
-                        winCash = this->payToPlayerForCommonWin();
+                        winCash = this->payToPlayerForCommonWin(boxPtr);
 
                         messageParamList.push_back({
                             new ADisplayMessageParam("id", "mes_id_info_game_result_dealer_overtake")
@@ -256,7 +258,7 @@ void AmericanBlackjack::playGame()
                     }
                     else if (dealerHasBlackjack && playerHasBlackjack)
                     {
-                        this->returnToPlayerItsBet();
+                        this->returnToPlayerItsBet(boxPtr);
 
                         messageParamList.push_back({
                             new ADisplayMessageParam("id", "mes_id_info_game_result_blackjack_tie"),
@@ -270,7 +272,7 @@ void AmericanBlackjack::playGame()
 
                         if (tmpIt != this->insuredBoxIndexes.end())
                         {
-                            this->returnToPlayerItsBet();
+                            this->returnToPlayerItsBet(boxPtr);
 
                             messageParamList.push_back({
                                 new ADisplayMessageParam("id", "mes_id_info_game_result_blackjack_insurance"),
@@ -287,7 +289,7 @@ void AmericanBlackjack::playGame()
                     }
                     else if (!dealerHasBlackjack && playerHasBlackjack)
                     {
-                        this->payToPlayerForBlackjack();
+                        this->payToPlayerForBlackjack(boxPtr);
 
                         messageParamList.push_back({
                             new ADisplayMessageParam("id", "mes_id_info_game_result_blackjack"),
@@ -296,7 +298,7 @@ void AmericanBlackjack::playGame()
                     }
                     else if (currBoxValue == dealerBoxValue)
                     {
-                        this->returnToPlayerItsBet();
+                        this->returnToPlayerItsBet(boxPtr);
 
                         messageParamList.push_back({
                             new ADisplayMessageParam("id", "mes_id_info_game_result_tie"),
@@ -305,7 +307,7 @@ void AmericanBlackjack::playGame()
                     }
                     else if (currBoxValue > dealerBoxValue)
                     {
-                        winCash = this->payToPlayerForCommonWin();
+                        winCash = this->payToPlayerForCommonWin(boxPtr);
 
                         messageParamList.push_back({
                             new ADisplayMessageParam("id", "mes_id_info_game_result_win"),

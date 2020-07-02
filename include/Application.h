@@ -1,7 +1,6 @@
 #pragma once
 
 class AbstractBlackjack;
-//class TemplateInputValidator;
 
 #include <map>
 #include <string>

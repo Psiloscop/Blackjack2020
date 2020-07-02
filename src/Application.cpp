@@ -12,7 +12,6 @@ ADisplayHandler& Application::getDisplayHandler()
     return this->displayHandler;
 }
 
-
 void Application::addMessageEntity(const std::string& key, ADisplayEntity* entity)
 {
     this->displayEntityList.insert(std::pair<std::string, ADisplayEntity*>(key, entity));

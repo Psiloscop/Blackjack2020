@@ -34,7 +34,7 @@ public:
 	    return this->additionalMessageParams;
     }
 
-    virtual void setAdditionalMessageParams(std::vector<std::vector<ADisplayMessageParam*>> _additionalMessageParams)
+    virtual void setAdditionalMessageParams(std::vector<std::vector<ADisplayMessageParam*>>& _additionalMessageParams)
     {
         this->additionalMessageParams = std::move(_additionalMessageParams);
     }

@@ -1,12 +1,12 @@
 #include "Box.h"
 
-Box::Box(Player& player, u8 allowedMaxValue)
-    : player{&player}, allowedMaxValue{allowedMaxValue}
+Box::Box(Player* player, u8 allowedMaxValue)
+    : player{player}, allowedMaxValue{allowedMaxValue}
 {}
 
-void Box::assignPlayer(Player& _player)
+void Box::assignPlayer(Player* _player)
 {
-    this->player = &_player;
+    this->player = _player;
 }
 
 Player& Box::getPlayer() const
@@ -46,7 +46,7 @@ std::vector<Card*>& Box::getHandCards()
 
 u8 Box::getHandCount() const
 {
-    return this->hands.size();;
+    return this->hands.size();
 }
 
 u8 Box::getCurrentHandNumber() const
@@ -75,6 +75,11 @@ u8 Box::getHandCardsValue()
 
     u16 value = 0;
     u8 aceCardCount = 0;
+
+    if (this->hands.empty())
+    {
+        return 0;
+    }
 
     for (auto& card : this->hands[this->activeHand])
     {
@@ -116,6 +121,12 @@ void Box::switchHand(u8 number)
 
 void Box::setBet(u32 value, bool add)
 {
+    if (value > this->player->getCash())
+    {
+        throw std::overflow_error("Box::setBet(value, add) - value is bigger than user's cash: " +
+            std::to_string(this->player->getCash()));
+    }
+
     if (this->activeHand == this->bets.size())
     {
         this->bets.push_back(value);
@@ -158,23 +169,6 @@ u32 Box::getAllBets()
     return betSum;
 }
 
-bool Box::isAbleToSwitch()
-{
-    u8 handCount = this->hands.size();
-
-    for (u8 index = 0; index < handCount; index++)
-    {
-        this->activeHand = index;
-
-        if (!this->hasOvertake())
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 std::vector<u8> Box::getPlayableHandNumbers()
 {
     std::vector<u8> playableHands;
@@ -204,7 +198,7 @@ bool Box::isBoxInSplit()
 
 bool Box::hasBlackjack()
 {
-    if (this->hands.size() > 1)
+    if (this->hands.empty() || this->hands.size() > 1)
     {
         return false;
     }
